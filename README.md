@@ -13,7 +13,7 @@ System will have such options as:
 * check others players profiles and review about them to find your perfect team
 
 System will help you find team for:
-* boards games
+* board games
 * RPGs like D&D
 * computer games
 * card games 
