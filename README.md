@@ -7,10 +7,10 @@
 ## General Info:
 The aim of the project is to create a web system that will help with finding other people to game with. 
 The system will have the following options:
-* Look for people playing certain games.
-* Edit your profile (add bio, avatar, games you like).
-* Create a lobby for a certain game and make an announcement that you need a certain amount of other players.
-* Check other players' profiles and reviews about them to find your perfect team
+* Looking for people playing a certain game of your choice.
+* An option to edit your profile (add a bio, choose an avatar, pick games of your liking).
+* Create a lobby for the game you pick stating the exact number of teammates you need.
+* The ability to check other players’ profiles and give them reviews based on their performance and behaviour during the games you’ve played together.
 
 System will help you find a team for:
 * Board games
