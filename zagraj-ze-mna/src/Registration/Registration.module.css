@@ -1,0 +1,116 @@
+.registration{
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: auto;
+    min-height: 100vh;
+    width: 100vw;
+   
+    background-color: gray;
+    background-image: url('src/assets/back-image.png');
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center;
+    font-family: "IBM Plex Mono", monospace;
+}
+.registrationForm{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+
+    background-image: url('src/assets/rejestracja.png');
+    background-size: contain ;
+    background-position: center;
+    background-repeat: no-repeat;
+
+    padding: 200px; 
+    width: 800px;
+ 
+    height: 900px;
+  
+
+}
+
+.registerTitle{
+    font-family: "IBM Plex Mono", monospace;
+    font-weight: bold;
+    font-size: 3.5rem;
+}
+.indata{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+
+    
+}
+.inputy{
+    margin-top: 10px;
+    font-size: 18px;
+    width: 350px;
+    font-weight: bold;
+    border-radius: 100px;
+    border: 3px solid black;
+    font-family: "IBM Plex Mono", monospace;
+    padding: 20px 40px 20px 10px;
+}
+input::placeholder{
+    color: black;
+    font-weight: light;
+}
+
+.btn{
+    margin-top: 30px;
+    font-size: 2.5rem;
+    border-radius: 50px;
+    cursor:pointer;
+    padding: 20px;
+
+
+    font-size: 2.5rem;
+    border-radius: 50px;
+    background-color: black;
+    color:white;
+    font-weight: bold;
+    width: 300px;
+    cursor: pointer;
+}
+
+.btn:hover{
+    background-color: #646669;
+}
+.btn:active{
+    background-color: #323437;
+}
+.errorsy{
+    font-size: 15px;
+    padding: 3px;
+    color: rgb(104, 34, 34);
+    text-align: center;
+}
+
+.error{
+    margin-top: 20px;
+    font-size: 15px;
+    padding: 3px;
+    color: rgb(104, 34, 34);
+    text-align: center;
+}
+
+.textToLogin{
+    margin-top: 10px;
+    text-align: center;
+}
+.textToLogin {
+    margin-top: 10px;
+}
+.textToLogin a{
+    color: black;
+    text-decoration: none;
+    font-weight: 600;
+}
+.textToLogin a:hover{
+    text-decoration: underline;
+}

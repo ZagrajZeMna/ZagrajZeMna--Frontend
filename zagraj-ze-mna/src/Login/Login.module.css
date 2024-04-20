@@ -1,0 +1,130 @@
+.parent {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: auto;
+    min-height: 100vh;
+    width: 100vw;
+   
+    background-color: gray;
+    background-image: url('src/assets/back-image.png');
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center;
+    font-family: "IBM Plex Mono", monospace;
+}
+
+.login {
+    background-image: url('src/assets/login_tlo.png');
+    background-size: contain ;
+    background-position: center;
+    background-repeat: no-repeat;
+
+    padding: 200px;
+
+    height: 600px;
+    width: 800px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+
+.formContainer {
+    text-align: center;
+    width: 100%;
+}
+
+.title {
+    font-size: 3.5rem;
+    font-weight: bold;
+    margin-top: 60px;
+    font-family: "IBM Plex Mono", monospace;
+}
+.inputbox {
+    position: relative;
+    margin-bottom: 20px;
+    display: flex;
+    align-items: center; 
+}
+.inpBox {
+    width: calc(100% - 40px);
+    padding: 20px 40px 20px 10px;
+    border: 3px solid black;
+    border-radius: 100px;
+    font-size: 18px;
+    font-weight: bold;
+    color: black;
+    font-family: "IBM Plex Mono", monospace;
+    width: 400px;
+
+
+}
+.inpBox::placeholder{
+    color: black;
+}
+
+
+.inputbox .icon {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    right: 22px;
+    
+}
+
+.icon_lock {
+    position: absolute;
+    top: 50%;
+    right: 20px;
+    cursor: pointer;
+    transform: translateY(-50%);
+    font-size: 20px;
+}
+.error {
+    font-size: 14px;
+
+}
+
+.forgot {
+    text-align: right;
+    margin-top: -15px;
+}
+.forgot a {
+    color: gray;
+    font-size: 14px;
+    text-decoration: none;
+}
+.forgot a:hover{
+    text-decoration: underline;
+
+}
+.btnSub {
+    padding: 10px;
+    font-size: 2.5rem;
+    border-radius: 50px;
+    background-color: black;
+    color:white;
+    font-weight: bold;
+    width: 300px;
+    margin-top: 10px;
+    cursor: pointer;
+}
+.btnSub:hover{
+    background-color: #646669;
+}
+.btnSub:active{
+    background-color: #323437;
+}
+.taxtToSignup {
+    margin-top: 10px;
+}
+.taxtToSignup a{
+    color: black;
+    text-decoration: none;
+    font-weight: 600;
+}
+.taxtToSignup a:hover{
+    text-decoration: underline;
+}
+
