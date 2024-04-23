@@ -4,6 +4,7 @@ import Home from "./Home/Home"
 import { Routes, Route } from 'react-router-dom';
 import ConfirmEmail from "./ConfirmEmail/ConfirmEmail";
 import ResetPassword from "./ResetPassword/ResetPassword";
+import GameCategory from './GameCategory';
 
 function App() {
   
@@ -15,6 +16,7 @@ function App() {
         <Route path="/login" element={<Login />} />
         <Route path="/confirm/:confirmationCode" element={<ConfirmEmail />} />
         <Route path="/resetPassword" element={<ResetPassword/>}/>
+        <Route path="/category/:game" element={<GameCategory />} />
       </Routes>
   )
 }
