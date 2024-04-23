@@ -1,0 +1,273 @@
+/*NAVABAR*/
+
+.mynavbar
+{
+    padding-top: 10px !important;
+    z-index: 1;
+    position: fixed !important;
+    width: 100%;
+    opacity: 1;
+    background-image: linear-gradient(to right, black, #777);
+    margin: 0;
+}
+
+.mynavbarBig
+{
+    padding-bottom: 35px !important;
+    height: 100px;
+}
+
+.mynavbarSmall
+{
+    padding-bottom: 20px !important;
+    padding-left: 1%;
+    
+   
+}
+
+/*BANNER = logo + pngs*/
+
+.banner
+{
+    color: white !important;
+    float: left;
+}
+
+.banner p
+{
+    letter-spacing: 2px;
+    font-weight: bolder;
+    margin: 0px;
+    padding-right: 3%;
+    float :left;
+}
+
+.bannerSmall p
+{
+    font-size: 27px;
+    padding-left: 1%;
+    
+    
+}
+
+.bannerBig p
+{
+    font-size: 40px;
+    padding-left: 3%;
+}
+
+.bannerBig
+{
+    text-align: center;
+    height: 50px;
+    padding-top: 10px;
+    padding-left: 1%;
+}
+
+.bannerBig:hover
+{
+    color: white !important;
+}
+
+.smallBannerLinks a
+{
+    border-bottom: 1px dashed #bbb;
+    color: white !important;
+}
+
+/*IMAGES*/
+.myimage
+{
+    float: left;
+    padding: 0;
+    padding-top: 5px;
+    margin: 0;
+}
+
+
+/*Right side of navbar*/
+
+.mynavbarRight
+{
+    float: left;
+    font-size: 25px;
+    padding-right: 2%;
+    width: 100%;
+    
+}
+
+.RightConteiner
+{
+    float: right;
+    width: auto;
+    margin-right: 3%;
+    margin-top: 10px;
+    
+}
+
+.mynavbarRight a
+{
+    width: 100px;
+}
+
+.login_div
+{
+    width: 30%;
+    margin-top: 15px;
+    background-color: #2f2f2f;
+}
+
+.register_div
+{
+    width: 25%;
+    background-color: #2f2f2f;
+}
+
+.register_div, .login_div, .accountImage, .not_img
+{
+    border-radius: 25px;
+    margin-top:  15px;
+    text-align: center !important;
+    margin-bottom: 15px;
+    height: 50px;
+    
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: lighter;
+}
+
+.register_div:hover, .login_div:hover
+{
+    font-weight: lighter;
+    font-size: 28px;
+    animation-name: animTextHover;
+    animation-duration: 0.2s;
+}
+
+.accountImage:hover, .not_img:hover
+{
+    border-left: 3px black solid;
+    border-right: 3px black solid;
+    border-radius: 15px;
+    scale: 1.1;
+    animation-name: animIconHover;
+    animation-duration: 0.2s;
+}
+
+.accountImage, .not_img
+{
+    min-width: 10%;
+    
+}
+
+.not_img
+{
+    font-size: 50px;
+}
+
+.accountImage
+{
+    font-size: 40px;
+}
+
+
+/*CLEARER*/
+
+.clear
+{
+    clear: both;
+    margin: 0;
+    padding: 0;
+    height: 0;
+    background-color: white;
+}
+
+
+
+/*ANIMAJCE, PRZYCISK MAŁY NAVBAR*/
+
+.buttonSmall
+{
+    color: white !important;
+    border: 3px solid white !important;
+    font-size: 150%;
+}
+
+.navbar-light .navbar-toggler-icon
+{
+    background-image: url('../assets/arrow.png') !important;
+    color: white !important;
+    transform: rotate(90deg);
+}
+
+.animOn
+{
+    animation-name: rotatebutton;
+    animation-duration: 0.5s;
+    transform: rotate(180deg);
+}
+
+.animOff
+{
+    animation-name: rotatebutton2;
+    animation-duration: 0.5s;
+    
+}
+
+@keyframes rotatebutton {
+
+    0%
+    {
+        transform: rotate(0);
+    }
+    100%
+    {
+        transform: rotate(180deg);
+    }
+    
+}
+
+@keyframes rotatebutton2 {
+
+    0%
+    {
+        transform: rotate(180deg);
+    }
+    100%
+    {
+        transform: rotate(0);
+    }
+    
+}
+
+@keyframes animTextHover {
+
+    0%
+    {
+        font-size: 25px;
+    }
+    100%
+    {
+        font-size: 28px;
+    }
+    
+}
+
+@keyframes animIconHover 
+{
+    0%
+    {
+        scale: 1;
+        border-left: 0px solid black;
+        border-right: 0px solid black;
+    }
+    
+    100%
+    {
+        scale: 1.1;
+        border-left: 3px solid black;
+        border-right: 3px solid black;
+    }
+}
