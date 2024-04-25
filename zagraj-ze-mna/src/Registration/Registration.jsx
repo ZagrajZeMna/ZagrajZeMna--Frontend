@@ -100,7 +100,7 @@ function Registration() {
             }
         } else if (name === "password") {
             if(value.length < 8 || value.length > 20 || !letterRegex.test(value) || !digitRegex.test(value) || !specialCharRegex.test(value)){
-              errorMessage = "8-20 characters, at least 1 number 1 letter and 1 special character";
+              errorMessage = "8-20 char(1 number, 1 letter and 1 special char)";
             }
         } else if (name === "confirmPassword") {
             if(value!==values.password){

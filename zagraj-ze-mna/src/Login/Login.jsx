@@ -76,6 +76,7 @@ function Login(){
 
     return(
         <div className={styles.parent}>
+
             <form className={styles.login} onSubmit={handleSubmit} >
             <div className={styles.formContainer}>
                 <div className={styles.forms}>
@@ -116,7 +117,8 @@ function Login(){
                 </div>
                 </div>
             </form>
-        </div> 
+        </div>
+
 
     );
 }
