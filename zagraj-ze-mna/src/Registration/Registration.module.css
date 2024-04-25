@@ -25,6 +25,8 @@
     background-position: center;
     background-repeat: no-repeat;
 
+
+    
 }
 
 .registerTitle{
@@ -110,12 +112,21 @@ input::placeholder{
 }
 
 
-@media screen and (max-width: 796px) {
+@media screen and (max-width: 860px) {
    
     .registrationForm {
         height: 100vh; 
         width: 100%;
         background-image: none;
+
+
+        padding: 60px; 
+        margin: 0 auto;
+        height: auto; 
+        width: 90%;
+        background-color: rgba(0,0,0,0.8);
+        border-radius: 20px;
+        box-shadow: 0 0 20px rgb(255, 255, 255);
     }
 
     .registerTitle  {
@@ -131,7 +142,7 @@ input::placeholder{
     .btn {
         width: 100%; 
         font-size: 2rem;
-        
+        padding: 10px;
     }
     .textToLogin{
         color: white;
@@ -172,11 +183,11 @@ input::placeholder{
     
 }
 
-@media screen and (min-width: 796px) {
+@media screen and (min-width: 860px) {
     .registrationForm {
         background-size: contain;
-        padding: 100px; 
-        height: 1000px; 
+        padding: 50px; 
+        height: 950px; 
         width: 900px; 
     }
 
@@ -191,5 +202,6 @@ input::placeholder{
     .btn {
         width: 300px; 
         font-size: 2.5rem;
+        padding: 10px;
     }
 }

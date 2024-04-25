@@ -1,6 +1,7 @@
 import styles from './Registration.module.css'
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { FaUser, FaLock, FaLockOpen } from "react-icons/fa";
 
 function Registration() {
 
@@ -109,9 +110,11 @@ function Registration() {
         }
         setErrors({ ...errors, [name]: errorMessage });
   }
-
-  console.log(values);
   
+    const togglePasswordVisibility = () => {
+      setShowPassword(!showPassword);
+  }
+
     return (
       <div className={styles.registration}>
         <form onSubmit={handleSubmit}className={styles.registrationForm}>

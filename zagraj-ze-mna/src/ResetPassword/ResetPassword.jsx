@@ -6,20 +6,25 @@ function ResetPassword() {
     
     const [password, setPassword] = useState('');
     const [email, setEmail] = useState('');
+    const [repeatPassword, setRepeatPassword] = useState('');
     const [error, setError] = useState('');
     const [showPassword, setShowPassword] = useState(false);
     const [success, setSuccess] = useState('');
+    const [showRepeatPassword, setShowRepeatPassword] = useState(false);
 
 
     const togglePasswordVisibility = () => {
         setShowPassword(!showPassword);
     }
 
+    const toggleRepeatPasswordVisibility = () => {
+        setShowRepeatPassword(!showRepeatPassword);
+    }
 
     const handleSubmit = async (e) => {
         e.preventDefault();
 
-        if (!email.trim() || !password.trim()) {
+        if (!email.trim() || !password.trim() || !repeatPassword.trim()) {
             setError('Please fill all fields.');
             return;
         }
@@ -48,6 +53,8 @@ function ResetPassword() {
             setError( error.message);
         }
     };
+
+
     return (
     
         <div className={styles.parent}>
@@ -75,6 +82,19 @@ function ResetPassword() {
 
                             <p onClick={togglePasswordVisibility} className={styles.icon_lock}>
                             {showPassword ? <FaLockOpen/> : <FaLock/>}
+                            
+                            </p>
+                        </div>
+                        <div className={styles.inputbox}>
+                            <input 
+                            className={styles.inpBox}
+                            type={showRepeatPassword ? "text" : "password"} 
+                            placeholder="repeat new password" 
+                            value={repeatPassword} 
+                            onChange={(e) => setRepeatPassword(e.target.value)} ></input>
+
+                            <p onClick={toggleRepeatPasswordVisibility} className={styles.icon_lock}>
+                            {showRepeatPassword ? <FaLockOpen/> : <FaLock/>}
                             
                             </p>
                         </div>
