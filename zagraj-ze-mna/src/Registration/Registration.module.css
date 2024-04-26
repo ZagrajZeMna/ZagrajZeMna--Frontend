@@ -83,7 +83,7 @@ input::placeholder{
 .errorsy{
     font-size: 15px;
     padding: 3px;
-    color: rgb(104, 34, 34);
+    color: black;
     text-align: center;
 }
 
@@ -91,7 +91,7 @@ input::placeholder{
     margin-top: 20px;
     font-size: 15px;
     padding: 3px;
-    color: rgb(104, 34, 34);
+    color: black;
     text-align: center;
 }
 
@@ -131,7 +131,7 @@ input::placeholder{
 
     .registerTitle  {
         font-size: 10vw;
-        color: gray;
+        color: white;
     }
 
     .inputy {

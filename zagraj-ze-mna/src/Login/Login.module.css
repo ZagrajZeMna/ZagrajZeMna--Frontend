@@ -38,6 +38,7 @@
     font-weight: bold;
     margin-top: 60px;
     font-family: "IBM Plex Mono", monospace;
+    
 }
 .inputbox {
     position: relative;
@@ -141,7 +142,7 @@
     }
 
     .title {
-        color: gray;
+        color: white;
         font-size: 10vw;
     }
 

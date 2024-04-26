@@ -19,6 +19,8 @@ function Registration() {
     confirmPassword: ""
 });
 
+const [showPassword, setShowPassword] = useState(false);
+
   const inputs = [
     {
         id:1,
@@ -37,7 +39,7 @@ function Registration() {
     {
         id:3,
         name:"password",
-        type:"password",
+        type:'showPassword ? "text" : "password" ',
         placeholder:"password",
         errorMessage:"Password should be 8-20 characters and include at least 1 letter, 1 number and 1 special character"
       },
@@ -49,6 +51,11 @@ function Registration() {
         errorMessage:"Passwords don't match"
     }
   ];
+
+  const togglePasswordVisibylity = () => {
+    setShowPassword(!showPassword);
+  };
+
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -91,24 +98,27 @@ function Registration() {
     const specialCharRegex = /[!@#$%^&*(),.?":{}|<>]/;
 
     let errorMessage = "";
-        if (name === "username") {
+        if (name === "username" && value.length > 0) {
             if (value.length < 5 || value.length > 16) {
                 errorMessage = "Username should be 5-16 characters";
             }
-        } else if (name === "email") {
+        } else if (name === "email" && value.length > 0) {
             if(!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value)){
               errorMessage = "incorrect email address";
             }
-        } else if (name === "password") {
+        } else if (name === "password" && value.length > 0) {
             if(value.length < 8 || value.length > 20 || !letterRegex.test(value) || !digitRegex.test(value) || !specialCharRegex.test(value)){
               errorMessage = "8-20 char(1 number, 1 letter and 1 special char)";
             }
-        } else if (name === "confirmPassword") {
+        } else if (name === "confirmPassword" && value.length > 0) {
             if(value!==values.password){
               errorMessage = "passwords don't match";
             }
         }
         setErrors({ ...errors, [name]: errorMessage });
+
+
+        (e) => setValues.password(e.target.value);
   }
   
     const togglePasswordVisibility = () => {
@@ -134,8 +144,12 @@ function Registration() {
                           onChange={onChange}/>
                       {errors[input.name] && <span className={styles.errorsy}>{errors[input.name]}</span>}
                     </React.Fragment>
+                    
                   ))
                 }
+                <p onClick={togglePasswordVisibility} className={styles.icon_lock}>
+                        {showPassword ? <FaLockOpen/> : <FaLock/>}
+                </p>
             </div>
             {errors.general && <div className={styles.error}>{errors.general}</div>}
             <div>
