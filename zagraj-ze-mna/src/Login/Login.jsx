@@ -50,24 +50,16 @@ function Login(){
 
         
     };
+
     
     useEffect(() => {
-        const registrationSuccess = localStorage.getItem('registrationSuccess');
-    
-        if (registrationSuccess === 'true') {
-          localStorage.removeItem('registrationSuccess');
-          window.alert('Please confirm your email address. Check your inbox for a confirmation email.');
-        }
-      }, []);
-    
-      useEffect(() => {
         const params = new URLSearchParams(location.search);
         const confirmed = params.get('confirmed');
-        
+
         if (confirmed === 'true') {
-          window.alert('Your email address has been confirmed. You can now log in.');
+            setError('Your email address has been confirmed. You can now log in.');
         }
-      }, [location.search]);
+    }, [location.search]);
 
 
     const togglePasswordVisibility = () => {

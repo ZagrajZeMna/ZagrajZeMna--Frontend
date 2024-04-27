@@ -39,26 +39,48 @@
     justify-content: center;
     align-items: center;
     flex-direction: column;
-
     
 }
+
+.inputWrapper {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 10px;
+  }
+
+.inputContainer {
+    position: relative;
+    display: flex;
+    align-items: center;
+   }
 .inputy{
+    flex: 1;
     margin-top: 10px;
     font-size: 18px;
-
     font-weight: bold;
     border-radius: 100px;
     border: 3px solid black;
     font-family: "IBM Plex Mono", monospace;
     padding: 20px 40px 20px 10px;
+
 }
 input::placeholder{
     color: black;
     font-weight: light;
 }
 
+
+
+.icona{
+
+    position: absolute;
+    right: 20px;
+    top: 50%; 
+    transform: translateY(-50%);
+    cursor: pointer; 
+}
+
 .btn{
-    margin-top: 30px;
     font-size: 2.5rem;
     border-radius: 50px;
     cursor:pointer;
@@ -110,6 +132,7 @@ input::placeholder{
 .textToLogin a:hover{
     text-decoration: underline;
 }
+
 
 
 @media screen and (max-width: 860px) {
@@ -187,8 +210,8 @@ input::placeholder{
     .registrationForm {
         background-size: contain;
         padding: 50px; 
-        height: 950px; 
-        width: 900px; 
+        height: 1100px; 
+        width: 1000px; 
     }
 
     .registerTitle {

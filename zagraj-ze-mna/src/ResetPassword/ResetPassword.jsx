@@ -21,8 +21,55 @@ function ResetPassword() {
         setShowRepeatPassword(!showRepeatPassword);
     }
 
+    const handlePasswordChange = (e) => {
+        setPassword(e.target.value);
+        if (e.target.value !== repeatPassword) {
+            setError('Passwords do not match.');
+        } else {
+            setError('');
+        }
+    }
+
+    const handleRepeatPasswordChange = (e) => {
+        setRepeatPassword(e.target.value);
+        if (e.target.value !== password) {
+            setError('Passwords do not match.');
+        } else {
+            setError('');
+        }
+    }
+
+    const handleEmail = (e) => {
+        setEmail(e.target.value)
+        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        if (!emailRegex.test(email)) {
+            setError('Please enter a valid email address.');
+            return;
+        }else{
+            setError('');
+        }
+
+    }
+
     const handleSubmit = async (e) => {
         e.preventDefault();
+
+        const passwordRegex = /^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#.?&])[A-Za-z\d@$!%*#.?&]{8,20}$/;
+        if (!passwordRegex.test(password)) {
+            setError('Password should be 8-20 characters and include at least 1 letter, 1 number, and 1 special character.');
+            return;
+        }
+
+        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        if (!emailRegex.test(email)) {
+            setError('Please enter a valid email address.');
+            return;
+        }
+
+        if (password !== repeatPassword) {
+            setError('Passwords do not match.');
+            return;
+        }
 
         if (!email.trim() || !password.trim() || !repeatPassword.trim()) {
             setError('Please fill all fields.');
@@ -68,7 +115,7 @@ function ResetPassword() {
                         type="text" 
                         placeholder="email" 
                         value={email} 
-                        onChange={(e) => setEmail(e.target.value)} ></input>
+                        onChange={handleEmail} ></input>
                         <FaUser className={styles.icon}/>
                         </div>
 
@@ -78,7 +125,7 @@ function ResetPassword() {
                             type={showPassword ? "text" : "password"} 
                             placeholder="new password" 
                             value={password} 
-                            onChange={(e) => setPassword(e.target.value)} ></input>
+                            onChange={handlePasswordChange} ></input>
 
                             <p onClick={togglePasswordVisibility} className={styles.icon_lock}>
                             {showPassword ? <FaLockOpen/> : <FaLock/>}
@@ -91,7 +138,7 @@ function ResetPassword() {
                             type={showRepeatPassword ? "text" : "password"} 
                             placeholder="repeat new password" 
                             value={repeatPassword} 
-                            onChange={(e) => setRepeatPassword(e.target.value)} ></input>
+                            onChange={handleRepeatPasswordChange} ></input>
 
                             <p onClick={toggleRepeatPasswordVisibility} className={styles.icon_lock}>
                             {showRepeatPassword ? <FaLockOpen/> : <FaLock/>}

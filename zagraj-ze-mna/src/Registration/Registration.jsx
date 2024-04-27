@@ -16,10 +16,12 @@ function Registration() {
     username: "",
     email: "",
     password: "",
-    confirmPassword: ""
+    confirmPassword: "",
+    registrationSuccess: ""
 });
 
-const [showPassword, setShowPassword] = useState(false);
+  const [showPassword, setShowPassword] = useState(false);
+  const [showConfirmPassword, setShowConfirmPassword] = useState(false);
 
   const inputs = [
     {
@@ -39,21 +41,25 @@ const [showPassword, setShowPassword] = useState(false);
     {
         id:3,
         name:"password",
-        type:'showPassword ? "text" : "password" ',
+        type: showPassword ? "text" : "password",        
         placeholder:"password",
         errorMessage:"Password should be 8-20 characters and include at least 1 letter, 1 number and 1 special character"
       },
     {
         id:4,
         name:"confirmPassword",
-        type:"password",
+        type: showConfirmPassword ? "text" : "password",
         placeholder:"confirm password",
         errorMessage:"Passwords don't match"
     }
   ];
 
-  const togglePasswordVisibylity = () => {
-    setShowPassword(!showPassword);
+  const togglePasswordVisibility = (fieldName) => {
+    if (fieldName === "password") {
+      setShowPassword(!showPassword);
+    } else if (fieldName === "confirmPassword") {
+      setShowConfirmPassword(!showConfirmPassword);
+    }
   };
 
 
@@ -66,6 +72,49 @@ const [showPassword, setShowPassword] = useState(false);
       setErrors({ general: 'Please fill in all fields.' });
       return;
     }
+
+    setErrors({
+      username: "",
+      email: "",
+      password: "",
+      confirmPassword: "",
+      general: "",
+      registrationSuccess: ""
+    });
+    
+    let updatedErrors = {};
+
+
+    const validUsername = /^[a-zA-Z0-9]{5,16}$/.test(values.username);
+    if (!validUsername) {
+      setErrors({ ...errors, username: 'Username should be 5-16 characters' });
+      return;
+    }
+
+    const validEmail = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(values.email);
+    if (!validEmail) {
+      setErrors({ ...errors, email: 'Incorrect email address' });
+      return;
+    }
+
+    const validPassword = /^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#.?&])[A-Za-z\d@$!%*#.?&]{8,20}$/.test(values.password);
+    if (!validPassword) {
+      setErrors({ ...errors, password: '8-20 char(1 number, 1 letter and 1 special char)' });
+      return;
+    }
+
+    if (values.password !== values.confirmPassword) {
+      setErrors({ ...errors, confirmPassword: "Passwords don't match" });
+      return;
+    }
+
+
+    if (Object.keys(updatedErrors).length > 0) {
+      setErrors({ ...errors, ...updatedErrors });
+      return;
+    }
+
+    setErrors({});
 
     try{
       const response = await fetch('http://localhost:4001/api/auth/signup', {
@@ -83,8 +132,23 @@ const [showPassword, setShowPassword] = useState(false);
         throw new Error('REGISTRATION ERROR');
       }
 
+      setErrors({
+        username: "",
+        email: "",
+        password: "",
+        confirmPassword: "",
+        general: "",
+        registrationSuccess: "Registration successful! Please check your email to confirm your registration."
+      });
+      setValues({
+        username: "",
+        email: "",
+        password: "",
+        confirmPassword: ""
+      });
+
     }catch(error){
-      setErrors({general: error.message} );
+      setErrors({ ...errors, general: error.message });
     }
   };
 
@@ -92,7 +156,8 @@ const [showPassword, setShowPassword] = useState(false);
   const onChange = (e) =>{
     const { name, value } = e.target;
     setValues({ ...values, [name]: value });
-
+   
+    
     const letterRegex = /[a-zA-Z]/;
     const digitRegex = /\d/;
     const specialCharRegex = /[!@#$%^&*(),.?":{}|<>]/;
@@ -117,12 +182,8 @@ const [showPassword, setShowPassword] = useState(false);
         }
         setErrors({ ...errors, [name]: errorMessage });
 
+        
 
-        (e) => setValues.password(e.target.value);
-  }
-  
-    const togglePasswordVisibility = () => {
-      setShowPassword(!showPassword);
   }
 
     return (
@@ -133,32 +194,34 @@ const [showPassword, setShowPassword] = useState(false);
             <div className={styles.indata}>
                 {
                   inputs.map((input) => (
-                    <React.Fragment key={input.id}>
+                    <div key={input.id} className={styles.inputWrapper}>
+                      <div className={styles.inputContainer} >
                       <input 
                           className={styles.inputy} 
                           key={input.id}
-                          type={input.type}
+                          type={input.type} 
                           name={input.name}
                           placeholder={input.placeholder}
                           value={values[input.name]} 
                           onChange={onChange}/>
-                      {errors[input.name] && <span className={styles.errorsy}>{errors[input.name]}</span>}
-                    </React.Fragment>
                     
-                  ))
-                }
-                <p onClick={togglePasswordVisibility} className={styles.icon_lock}>
-                        {showPassword ? <FaLockOpen/> : <FaLock/>}
-                </p>
+                    {(input.id === 3 || input.id === 4) && (
+                    <span className={styles.icona} onClick={() => togglePasswordVisibility(input.name)}>
+                        {input.name === "password" ? (showPassword ? <FaLockOpen/> : <FaLock/>) : (showConfirmPassword ? <FaLockOpen/> : <FaLock/>)}
+                    </span>)}
+                    </div>
+                    {errors[input.name] && <span className={styles.errorsy}>{errors[input.name]}</span>}
+
+                  </div>
+                ))}
             </div>
-            {errors.general && <div className={styles.error}>{errors.general}</div>}
+              {errors.general && <div className={styles.error}>{errors.general}</div>}
             <div>
                 <button type="submit" className={styles.btn}>Sign up</button>
             </div>
             <div>
                 <p className={styles.textToLogin}>Click <a href='/login'>here</a> to log in</p>
             </div>
-
         </form>
       </div>
     )
