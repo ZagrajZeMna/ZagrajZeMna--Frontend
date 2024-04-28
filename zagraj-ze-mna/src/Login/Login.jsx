@@ -38,37 +38,17 @@ function Login(){
                 const errorData = await response.json();
                 throw new Error(errorData.message || 'Błąd logowania');
             }
-
+        
             const token = await response.text();
             localStorage.setItem('token', token);
-        
             navigate('/');
-
+            
         } catch (error) {
             setError(error.message);
         }
 
         
     };
-    
-    useEffect(() => {
-        const registrationSuccess = localStorage.getItem('registrationSuccess');
-    
-        if (registrationSuccess === 'true') {
-          localStorage.removeItem('registrationSuccess');
-          window.alert('Please confirm your email address. Check your inbox for a confirmation email.');
-        }
-      }, []);
-    
-      useEffect(() => {
-        const params = new URLSearchParams(location.search);
-        const confirmed = params.get('confirmed');
-        
-        if (confirmed === 'true') {
-          window.alert('Your email address has been confirmed. You can now log in.');
-        }
-      }, [location.search]);
-
 
     const togglePasswordVisibility = () => {
         setShowPassword(!showPassword);
@@ -76,6 +56,7 @@ function Login(){
 
     return(
         <div className={styles.parent}>
+
             <form className={styles.login} onSubmit={handleSubmit} >
             <div className={styles.formContainer}>
                 <div className={styles.forms}>
@@ -116,7 +97,8 @@ function Login(){
                 </div>
                 </div>
             </form>
-        </div> 
+        </div>
+
 
     );
 }
