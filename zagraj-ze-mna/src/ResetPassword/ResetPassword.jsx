@@ -21,14 +21,27 @@ function ResetPassword() {
         setShowRepeatPassword(!showRepeatPassword);
     }
 
+    
     const handlePasswordChange = (e) => {
-        setPassword(e.target.value);
-        if (e.target.value !== repeatPassword) {
+        const password = e.target.value;
+        setPassword(password);
+        
+        if(password.length === 0){
+            setError('');
+            return;
+        }
+
+        const passwordRegex = /^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#.?&])[A-Za-z\d@$!%*#.?&]{8,20}$/;
+    
+        if(password.length < 8 || password.length > 20 || !passwordRegex.test(password)){
+            setError("8-20 char(1 number, 1 letter and 1 special char)");
+        } else if (repeatPassword.length > 0 && password !== repeatPassword){
             setError('Passwords do not match.');
         } else {
             setError('');
         }
     }
+    
 
     const handleRepeatPasswordChange = (e) => {
         setRepeatPassword(e.target.value);
@@ -40,7 +53,13 @@ function ResetPassword() {
     }
 
     const handleEmail = (e) => {
-        setEmail(e.target.value)
+        const email = e.target.value;
+        setEmail(email);
+
+        if (email.length === 0) {
+            setError('');
+            return;
+        }
         const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
         if (!emailRegex.test(email)) {
             setError('Please enter a valid email address.');
@@ -56,7 +75,7 @@ function ResetPassword() {
 
         const passwordRegex = /^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#.?&])[A-Za-z\d@$!%*#.?&]{8,20}$/;
         if (!passwordRegex.test(password)) {
-            setError('Password should be 8-20 characters and include at least 1 letter, 1 number, and 1 special character.');
+            setError('8-20 char(1 number, 1 letter and 1 special char)');
             return;
         }
 

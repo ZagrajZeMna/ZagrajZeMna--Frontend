@@ -38,29 +38,17 @@ function Login(){
                 const errorData = await response.json();
                 throw new Error(errorData.message || 'Błąd logowania');
             }
-
+        
             const token = await response.text();
             localStorage.setItem('token', token);
-        
             navigate('/');
-
+            
         } catch (error) {
             setError(error.message);
         }
 
         
     };
-
-    
-    useEffect(() => {
-        const params = new URLSearchParams(location.search);
-        const confirmed = params.get('confirmed');
-
-        if (confirmed === 'true') {
-            setError('Your email address has been confirmed. You can now log in.');
-        }
-    }, [location.search]);
-
 
     const togglePasswordVisibility = () => {
         setShowPassword(!showPassword);

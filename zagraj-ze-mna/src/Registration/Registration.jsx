@@ -129,7 +129,8 @@ function Registration() {
         })
       });
       if(!response.ok){
-        throw new Error('REGISTRATION ERROR');
+        const errorData = await response.json();
+        throw new Error(errorData.message || 'Błąd Rejestracji');
       }
 
       setErrors({
@@ -216,7 +217,9 @@ function Registration() {
                 ))}
             </div>
               {errors.general && <div className={styles.error}>{errors.general}</div>}
+              {errors.registrationSuccess && <div className={styles.registrationSuccess}>{errors.registrationSuccess}</div>}
             <div>
+            
                 <button type="submit" className={styles.btn}>Sign up</button>
             </div>
             <div>

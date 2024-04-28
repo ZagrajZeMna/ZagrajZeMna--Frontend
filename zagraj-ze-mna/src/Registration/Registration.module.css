@@ -110,7 +110,7 @@ input::placeholder{
 }
 
 .error{
-    margin-top: 20px;
+   
     font-size: 15px;
     padding: 3px;
     color: black;
@@ -120,9 +120,6 @@ input::placeholder{
 .textToLogin{
     margin-top: 10px;
     text-align: center;
-}
-.textToLogin {
-    margin-top: 10px;
 }
 .textToLogin a{
     color: black;
