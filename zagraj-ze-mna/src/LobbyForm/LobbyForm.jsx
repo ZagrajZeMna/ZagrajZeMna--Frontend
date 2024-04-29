@@ -14,6 +14,11 @@ function LobbyForm() {
   });
 
   const [error, setError] = useState(null);
+  const [formVisible, setFormVisible] = useState(false);
+
+  const toggleFormVisibility = () => {
+    setFormVisible(!formVisible);
+  };
 
   const inputs = [
     {
@@ -106,48 +111,53 @@ function LobbyForm() {
 
 
     return (
-        <form onSubmit={handleSubmit}className={styles.registrationForm}>
-          <div className={styles.forms}></div>
-            <div className={styles.registerTitle}>Formularz</div>
-            <div className={styles.indata}>
-                {
-                  inputs.map((input) => (
-                    <div key={input.id} className={styles.inputWrapper}>
-                      <div className={styles.inputContainer} >
-                      {input.type === 'text' ? ( 
-                        <input
-                          className={styles.inputy} 
-                          type={input.type} 
-                          name={input.name}
-                          placeholder={input.placeholder}
-                          value={values[input.name]} 
-                          onChange={handleChange}/>
-                          ) : (
-                            <select
-                              className={styles.inputy}
-                              name={input.name}
-                              value={values[input.name]}
-                              onChange={handleChange}
-                            >
-                              <option value="">Select {input.displayValue}</option>
-                                {input.options.map(option => (
-                                  <option key={option} value={option}>
-                                    {option}
-                                  </option>
-                                ))}
-                            </select>
-                          )}
+      <div className={styles.mainFormContainer}>
+        <IoAddCircleOutline onClick={toggleFormVisibility} className={`${styles.iconPlus} ${formVisible ? styles.rotate : ''}`}/>
+        
+          <form onSubmit={handleSubmit}
+        className={`${styles.registrationForm} ${formVisible ? styles.visible : ''}`}>
+            <div className={styles.forms}></div>
+              <div className={styles.registerTitle}>Formularz</div>
+              <div className={styles.indata}>
+                  {
+                    inputs.map((input) => (
+                      <div key={input.id} className={styles.inputWrapper}>
+                        <div className={styles.inputContainer} >
+                        {input.type === 'text' ? ( 
+                          <input
+                            className={styles.inputy} 
+                            type={input.type} 
+                            name={input.name}
+                            placeholder={input.placeholder}
+                            value={values[input.name]} 
+                            onChange={handleChange}/>
+                            ) : (
+                              <select
+                                className={styles.inputy}
+                                name={input.name}
+                                value={values[input.name]}
+                                onChange={handleChange}
+                              >
+                                <option value="">Select {input.displayValue}</option>
+                                  {input.options.map(option => (
+                                    <option key={option} value={option}>
+                                      {option}
+                                    </option>
+                                  ))}
+                              </select>
+                            )}
+                      </div>
                     </div>
-                  </div>
-                ))}
+                  ))}
+                </div>
+              <div>
+                {error && <div className={styles.error}>{error}</div>}    
               </div>
-            <div>
-              {error && <div className={styles.error}>{error}</div>}    
-            </div>
-            <div>
-                <button type="submit" className={styles.btn}>Make Lobby</button>
-            </div>
-        </form>
+              <div>
+                  <button type="submit" className={styles.btn}>Make Lobby</button>
+              </div>
+          </form>
+        </div>
     )
 }
   
