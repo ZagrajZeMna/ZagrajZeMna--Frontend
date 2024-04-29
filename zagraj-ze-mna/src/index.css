@@ -3,3 +3,9 @@ html, body {
     padding: 0;
     height:100%;
 }
+
+body 
+{
+    overflow-x: hidden;
+
+}

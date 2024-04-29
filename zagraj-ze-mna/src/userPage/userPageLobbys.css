@@ -1,0 +1,291 @@
+.myLobbys
+{
+    width: 100%;
+    margin-bottom: 5%;
+}
+
+.lobbysSpace
+{
+    margin-top: 20px;
+    width: 80%;
+    margin-left: 10%;
+    border-bottom: 3px dotted #eee;
+    margin-bottom: 20px;
+
+}
+
+.pageArrowLobby
+{
+    width: 50%;
+    float: left;
+}
+
+.tableWithLobbyArrows
+{
+    width: 90%;
+    margin-left: 10%;
+    margin-top: 5%;
+}
+
+.smallPageNumber
+{
+    font-size: 20px;
+    vertical-align: middle !important;
+    padding-top: 5%;
+}
+
+.tableWithLobbyArrows tbody tr td
+{
+    vertical-align: middle;
+    width: 20%;
+    text-align: center;
+    
+}
+
+.tableWithLobbyArrows tbody tr
+{
+    vertical-align: middle;
+}
+
+.arrowLobby
+{
+    padding-bottom: 5%;
+    border-bottom: 2px solid rgba(0,0,0,0);
+    font-size: 30px;
+    color: #eee;
+}
+
+.arrowLobby:hover
+{
+    border-bottom: 2px solid #eee;
+}
+
+.flotLeftClassOrSth
+{
+    float: left;
+}
+
+.mojeDruzyny
+{
+    padding-top: 1%;
+    border-top-left-radius: 25px;
+    border-top-right-radius: 25px;
+    width: 80%;
+    margin-left: 10%;
+    word-spacing: 15px;
+    font-weight: bold;
+    background-color: #111;
+    text-align: left;
+    color: #eee;
+    margin-bottom: 1%;
+    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+}
+
+.mojeDruzynyTitle
+{
+    font-weight: bold;
+    width: 50%;
+    padding-top: 2%;
+    padding-bottom: 0.5%;
+    margin-bottom: 1%;
+    padding-left: 2%;
+    border-top: 2px solid #eee;
+    border-top-left-radius: 25px;
+    
+}
+
+@media screen and (max-width: 767px) 
+{
+    .lobbyOne
+    {
+        height: auto !important;
+    }
+    
+}
+
+@media screen and (max-width: 1199px) 
+{
+    .mojeDruzynyTitle
+    {
+        border-top-left-radius: 15px;
+        border-top-right-radius: 15px;
+        border-top: 2px solid #eee;
+        font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+        padding-top: 2%;
+        padding-left: 2%;
+        width: 70%;
+        margin-left: 15%;
+        text-align: center;
+        word-spacing: 15px;
+        color: #eee;
+        padding-bottom: 1%;
+        margin-bottom: 0;
+    }
+
+
+
+    .mojeDruzyny
+    {
+        margin-left: 0%;
+        width: 100%;
+        margin-bottom: 0.5%;
+        padding-bottom: 0.5%;
+        margin-top: 7%;
+    }
+
+    .pageArrowLobby
+    {
+        width: 100%;
+        padding-top: 0%;
+    }
+
+    .tableWithLobbyArrows
+    {
+        margin-left: 5%;
+        margin-top: 2%;
+    }
+    
+    
+}
+
+.walkingAnimationConteiner
+{
+    margin-top: 30px;
+    width: 100%;
+    height: auto;
+    height: 100px;
+}
+
+.moving_div_gang
+{
+    width: 22%;
+    height: auto;
+    position: absolute;
+    left: 77%;
+   
+
+    animation-name: gang_walkAnim;
+    animation-duration: 20s;
+    animation-iteration-count: infinite;
+    animation-timing-function: linear;
+    
+}
+
+.hider
+{
+    position: absolute;
+    
+    width: 36%;
+    
+    height: 100px;
+}
+
+.hiderRight
+{
+    left: 64%;
+    background-image: linear-gradient(to left, rgba(17,17,17,1), rgba(17,17,17,0));
+}
+
+.hiderNotTransparentLeft
+{
+    width: 60%;
+    float: left;
+    height: 100px;
+    background-color: #111;
+}
+
+.hiderTransparentLeft
+{
+    height: 100px;
+    width: 40%;
+    float: left;
+    background-image: linear-gradient(to right, rgba(17,17,17,1), rgba(17,17,17,0));
+}
+
+.hiderTransparentRight
+{
+    height: 100px;
+    width: 40%;
+    float: left;
+    background-image: linear-gradient(to left, rgba(17,17,17,1), rgba(17,17,17,0));
+}
+
+.hiderLeft
+{
+    left: 0%
+}
+
+.wallking_gang
+{
+    width: 100%;
+    height: auto;
+    
+    
+}
+
+.lobbyOne
+{
+    background-color: #eee;
+    width: 80%;
+    margin-left: 10%;
+    border-radius: 10px;
+    margin-bottom: 0.5%;
+    color: #111;
+    padding: 1%;
+    overflow: hidden;
+    height: 20vh;
+}
+
+.lobbyOne:hover
+{
+    background-color: #ccc;
+}
+
+
+.lobbyList
+{
+    width: 100;
+    margin-bottom: 5%;
+}
+
+.lobbyPictureImg
+{
+    width: 50%;
+    margin-left: 25%;
+    margin-right: 25%;
+    border-radius: 50%;
+    border: 3px solid #111;
+}
+
+.lobbyTitle
+{
+    font-weight: bold;
+    font-size: 20px;
+    padding-bottom: 2%;
+}
+
+.addedPlayers
+{
+    text-align: right;
+    padding-right: 3%;
+    padding-top: 1%;
+    font-weight: bold;
+    font-size: 20px;
+}
+
+
+@keyframes gang_walkAnim 
+{
+    0%
+    {
+        left: 77%;
+    }
+    95%
+    {
+        left: 0%;
+    }
+    100%
+    {
+        left: 0;
+    }
+}

@@ -6,6 +6,7 @@ import ConfirmEmail from "./ConfirmEmail/ConfirmEmail";
 import ResetPassword from "./ResetPassword/ResetPassword";
 import Space from "./navbar/space";
 import MyNavbar from "./navbar/navbar";
+import UserPage from "./userPage/userPage";
 
 function App() {
   
@@ -20,6 +21,7 @@ function App() {
         <Route path="/login" element={<Login />} />
         <Route path="/confirm/:confirmationCode" element={<ConfirmEmail />} />
         <Route path="/resetPassword" element={<ResetPassword/>}/>
+        <Route path="/userPage" element={<UserPage/>}/>
       </Routes>
     </div>
       

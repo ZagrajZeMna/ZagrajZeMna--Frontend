@@ -22,6 +22,7 @@ import dices from '../assets/dices.png';
 import notifications from '../assets/notifications.png'; 
 import account from '../assets/account.png'; 
 
+//icons
 import { FaUser } from "react-icons/fa";
 import { IoIosNotifications } from "react-icons/io";
 
@@ -35,7 +36,7 @@ const MyNavbar = () => {
     const [expanded, setExpanded] = useState(false);
     const [notExpanded, setNotExpanded] = useState(false);
     const [firstTime, setFirstTime] = useState(true); 
-    const[buttonAdditionalClass, setAddClass] = useState("none")   
+    const [buttonAdditionalClass, setAddClass] = useState("none")  
     
     
     const path = useLocation();
@@ -77,7 +78,7 @@ const MyNavbar = () => {
 
 
 
-    if(path.pathname != '/login' &&  path.pathname != '/registration' && path.pathname != '/resetPassword')
+    if(path.pathname != '/login' &&  path.pathname != '/registration' && path.pathname != '/ResetPassword')
     {
         //when screen is large navbar is not from bootstrap
         if(width>=1100)
