@@ -1,0 +1,207 @@
+
+.registrationForm{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    flex-direction: column;
+    border: 3px solid black;
+    
+}
+
+.registerTitle{
+    font-family: "IBM Plex Mono", monospace;
+    font-weight: bold;
+    font-size: 3.5rem;
+}
+.indata{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    
+}
+
+.inputWrapper {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 10px;
+  }
+
+.inputContainer {
+    position: relative;
+    display: flex;
+    align-items: center;
+   }
+.inputy{
+    flex: 1;
+    margin-top: 10px;
+    font-size: 18px;
+    font-weight: bold;
+    border-radius: 100px;
+    border: 3px solid black;
+    font-family: "IBM Plex Mono", monospace;
+    padding: 20px 40px 20px 10px;
+
+}
+input::placeholder{
+    color: black;
+    font-weight: light;
+}
+
+
+
+.icona{
+
+    position: absolute;
+    right: 20px;
+    top: 50%; 
+    transform: translateY(-50%);
+    cursor: pointer; 
+}
+
+.btn{
+    font-size: 2.5rem;
+    border-radius: 50px;
+    cursor:pointer;
+    padding: 20px;
+
+
+    font-size: 2.5rem;
+    border-radius: 50px;
+    background-color: black;
+    color:white;
+    font-weight: bold;
+    width: 300px;
+    cursor: pointer;
+}
+
+.btn:hover{
+    background-color: #646669;
+}
+.btn:active{
+    background-color: #323437;
+}
+.errorsy{
+    font-size: 15px;
+    padding: 3px;
+    color: black;
+    text-align: center;
+}
+
+.error{
+   
+    font-size: 15px;
+    padding: 3px;
+    color: black;
+    text-align: center;
+}
+
+.textToLogin{
+    margin-top: 10px;
+    text-align: center;
+}
+.textToLogin a{
+    color: black;
+    text-decoration: none;
+    font-weight: 600;
+}
+.textToLogin a:hover{
+    text-decoration: underline;
+}
+
+
+
+@media screen and (max-width: 860px) {
+   
+    .registrationForm {
+        height: 100vh; 
+        width: 100%;
+        background-image: none;
+
+
+        padding: 60px; 
+        margin: 0 auto;
+        height: auto; 
+        width: 90%;
+        background-color: rgba(0,0,0,0.8);
+        border-radius: 20px;
+        box-shadow: 0 0 20px rgb(255, 255, 255);
+    }
+
+    .registerTitle  {
+        font-size: 10vw;
+        color: white;
+    }
+
+    .inputy {
+        width: 70vw;
+        font-size: 1rem;
+    }
+
+    .btn {
+        width: 100%; 
+        font-size: 2rem;
+        padding: 10px;
+    }
+    .textToLogin{
+        color: white;
+    }
+    .textToLogin a{
+        color: white;
+    }
+    .errorsy{
+        color: white;
+    }
+    .error{
+        color: white   ;
+    }
+}
+@media screen and (max-width: 180px){
+    .registrationForm {
+   
+
+        background-image: none;
+        width: 100%;
+    }
+    .registerTitle{
+        color: gray;
+    }
+    .errorsy{
+        color: white;
+    }
+    .error{
+        color: white   ;
+    }
+    .textToLogin{
+        color: white;
+    }
+    .textToLogin a{
+        color: white;
+    }
+
+    
+}
+
+@media screen and (min-width: 860px) {
+    .registrationForm {
+        background-size: contain;
+        padding: 50px; 
+        height: 1100px; 
+        width: 1000px; 
+    }
+
+    .registerTitle {
+        font-size: 3.5rem;
+    }
+
+    .inputy {
+        width: 400px; 
+    }
+
+    .btn {
+        width: 300px; 
+        font-size: 2.5rem;
+        padding: 10px;
+    }
+}
