@@ -14,11 +14,14 @@ import gang2 from '../assets/gangB.png';
 import Ludek from '../assets/testowy_ludek.png';
 
 //icons
-import { FaUser } from "react-icons/fa";
+
 import { LuArrowBigLeftDash } from "react-icons/lu";
 import { LuArrowBigRightDash } from "react-icons/lu";
 import { RxThickArrowLeft } from "react-icons/rx";
 import { RxThickArrowRight } from "react-icons/rx";
+
+//fucntions
+import singleLobby from "../singleLobby/singleLobby"
 
 const UserPageLobbys = () =>{
 
@@ -38,25 +41,11 @@ const UserPageLobbys = () =>{
     {
         let content = [];
         let additionalClass = '';
-
+        let description = 'W sumie to nie chce w nic grać o tak o se siedzę. Używam tego lobby jako listy zakupów tak naprawdę. A po co miejsce dla drugiej osoby? A w sumie to nie wiem'
         for(let i=0; i<3; i++)
         {  
             
-            content.push(
-                <div key={i} className={'lobbyOne'}>
-                    <div className='lobbyPicture flotLeftClassOrSth col-4 col-md-2'>
-                        <img src={Ludek} alt='obraz przedstawiający lobby' className='img-fluid lobbyPictureImg'/>
-                    </div>
-                    <div className='lobbyInfoContainer flotLeftClassOrSth col-6 col-md-9'>
-                        <div className='lobbyTitle'> Moje lobby </div>
-                        <div className='lobbyDescription'> Nie chce grać, tak o se siedzę i używam tego jako listy zakupów. A dwa miejsca tutaj sobie wstawiłem w sumie nie wiem czemu o tak o
-                        </div>
-                    </div>
-                    
-                    <div className='addedPlayers flotLeftClassOrSth col-2 col-md-1'> 1/2<FaUser/> </div>
-                    <div className='clearer'></div>
-                </div>
-            );
+            content.push(singleLobby(i, Ludek, 'Moje lobby', description, 1,2,false));
         }
 
         return content;
