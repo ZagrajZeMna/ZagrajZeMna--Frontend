@@ -32,10 +32,6 @@ import Footer from '../footer/footer';
 
 const UserPage = () =>
  {
-    
-
-    
-
 
     //for side bar maneu
     const [additaionlMenu, setAdditionalMenu] = useState(false);
@@ -48,7 +44,8 @@ const UserPage = () =>
     //to check screen dimensions
     const { height, width } = useScreenSize();
 
-    
+    //use for setting interval
+    const [firstTime, setFT] = useState(true);
 
     //
     const [pacmanGone, setPacman] = useState(false); 
@@ -63,6 +60,29 @@ const UserPage = () =>
     function setPDHeight(h)
     {
         profileDivHeight = h;
+    }
+
+
+    function firstTimeSettingInterval()
+    {
+        if(firstTime)
+        {
+            setInterval(changeHeightInterval, 200);
+            setFT(false)
+        }
+            
+    }
+
+    function changeHeightInterval()
+    {
+        if( document.getElementById('personalDataId') !== "undefined" && document.getElementById('personalDataId') !== null 
+            && document.getElementById('heightTarget') !== "undefined" && document.getElementById('heightTarget') !== null )
+        {
+            if(document.getElementById('personalDataId').offsetHeight != document.getElementById('heightTarget').offsetHeight)
+            {
+                checkHeight();
+            }
+        }
     }
 
     //setting proper colours for profile evaluation
@@ -242,7 +262,7 @@ const UserPage = () =>
     //RETURN
     //---------------------------------------------------------------------------------------------------------------
     return(
-        <div className="userPageContainer">
+        <div className="userPageContainer" onLoad={firstTimeSettingInterval}>
             
             <div className={'Mysettings ' + settingClass}  onClick={setToggle}>
                 <CiSettings />
