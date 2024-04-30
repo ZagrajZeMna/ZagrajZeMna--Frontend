@@ -25,6 +25,7 @@ import account from '../assets/account.png';
 //icons
 import { FaUser } from "react-icons/fa";
 import { IoIosNotifications } from "react-icons/io";
+import { jwtDecode } from 'jwt-decode';
 
 
 
@@ -36,8 +37,54 @@ const MyNavbar = () => {
     const [expanded, setExpanded] = useState(false);
     const [notExpanded, setNotExpanded] = useState(false);
     const [firstTime, setFirstTime] = useState(true); 
-    const [buttonAdditionalClass, setAddClass] = useState("none")  
-    
+    const [buttonAdditionalClass, setAddClass] = useState("none") 
+
+    //this checks if user is log in
+    const token = localStorage.getItem('token');
+    let decoded = jwtDecode(token);
+    let currentDate = new Date();
+    let login = false;
+
+    let myPage = '/login';
+    let myNot  = '/login';
+    let firstButton = '/login';
+    let secondButton = 'registration';
+
+    let firstButtonText = 'LOGOWANIE';
+    let secondButtonText = 'DOŁĄCZ';
+
+    let firstButtonTextSmall = 'Logowanie';
+    let secondButtonTextSmall = 'Dołącz';
+
+
+    if(decoded.exp * 1000 < currentDate.getTime() || token == null)
+    {
+        console.log("you are log out");
+        login = false;
+
+        myPage = '/login';
+        myNot  = '/login';
+        firstButton = '/login';
+        secondButton = 'registration';
+        firstButtonText = 'LOGOWANIE';
+        secondButtonText = 'DOŁĄCZ';
+        firstButtonTextSmall = 'Logowanie';
+        secondButtonTextSmall = 'Dołącz';
+    }
+    else
+    {
+        console.log("you are log in");
+        login = true;
+
+        myPage = '/userPage';
+        myNot  = '/editNotificationsPage';
+        firstButton = '/userLobbys';
+        secondButton = '/';
+        firstButtonText = 'MOJE LOBBY';
+        secondButtonText = 'HOME';
+        firstButtonTextSmall = 'Moje lobby';
+        secondButtonTextSmall = 'Home';
+    }
     
     const path = useLocation();
 
@@ -108,27 +155,27 @@ const MyNavbar = () => {
         
                     <div className='mynavbarRight col-md-6 col-0'>
                         
-                        <Link to="/login">
+                        <Link to={myNot}>
                             <div className='RightConteiner not_img'> 
                                 <IoIosNotifications />
                             </div>
                         </Link>
 
-                        <Link to="/login">
+                        <Link to={myPage}>
                             <div className='RightConteiner accountImage'>
                                 <FaUser />
                             </div>
                         </Link>
 
-                        <Link to="/login">
+                        <Link to={firstButton}>
                             <div className='RightConteiner login_div'>
-                                LOGOWANIE
+                                {firstButtonText}
                             </div>
                         </Link>
 
-                        <Link to="/registration">
+                        <Link to={secondButton}>
                             <div className='RightConteiner register_div'>
-                                DOŁĄCZ
+                                {secondButtonText}
                             </div>
                         </Link>
 
@@ -158,10 +205,10 @@ const MyNavbar = () => {
                         
                         <Navbar.Collapse id="basic-navbar-nav" className ="smallBannerLinks">
                             <Nav className="me-auto">
-                            <Nav.Link href="/login">Zaloguj</Nav.Link>
-                            <Nav.Link href="/login">Moje konto</Nav.Link>
-                            <Nav.Link href="/login">Powiadomienia</Nav.Link>
-                            <Nav.Link href="/registration">Rejestracja</Nav.Link>
+                            <Nav.Link href={myPage}>Moje konto</Nav.Link>
+                            <Nav.Link href={myNot}>Powiadomienia</Nav.Link>
+                            <Nav.Link href={firstButton}>{firstButtonTextSmall}</Nav.Link>
+                            <Nav.Link href={secondButton}>{secondButtonTextSmall}</Nav.Link>
                             </Nav>
                         </Navbar.Collapse>
                         
