@@ -9,7 +9,6 @@ import MyNavbar from "./navbar/navbar";
 import UserPage from "./userPage/userPage";
 
 function App() {
-  
 
   return (
     <div>

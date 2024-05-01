@@ -1,3 +1,5 @@
+//variables
+const connectionLink = 'http://localhost:4001';
 
 //react
 import { useState, useEffect } from 'react';
@@ -17,9 +19,8 @@ import BackImage from '../assets/back-image-smaller.png';
 import Points from '../assets/pac_manPoint.png';
 
 
-
 //icons
-import { CiSettings } from "react-icons/ci";
+
 import { FaRegEdit, FaVenusMars } from "react-icons/fa";
 
 //page parts
@@ -33,13 +34,6 @@ import Footer from '../footer/footer';
 const UserPage = () =>
  {
 
-    //for side bar maneu
-    const [additaionlMenu, setAdditionalMenu] = useState(false);
-    const [addMenuClass, setMenuClass] = useState('My_none');
-    const [settingClass, setSetClass] = useState('set_none');
-    
-    //setting how much screen side menu occupies
-    const [widerMenuAdditional, setWMA] = useState(' cos');
     
     //to check screen dimensions
     const { height, width } = useScreenSize();
@@ -47,10 +41,6 @@ const UserPage = () =>
     //use for setting interval
     const [firstTime, setFT] = useState(true);
 
-    //
-    const [pacmanGone, setPacman] = useState(false); 
-    
-    
 
     //Variables
     var mediocre = 4.5;
@@ -140,38 +130,7 @@ const UserPage = () =>
     }, []); 
     
 
-    //this makes the side menu appear
-    const setToggle = () =>
-    {
-        //additional menu ifs
-        if(additaionlMenu)
-        {
-            //hidding additional menu
-            setAdditionalMenu(false);
-            setMenuClass('side_menu_hidden');
-            setSetClass('set_hiden');
-            setWMA(' cos');
-        } 
-        else
-        {
-            //showing additional menu
-            setAdditionalMenu(true);
-            setMenuClass('side_menu_shown');
-            setSetClass('set_shown');
-
-            //deciding how much space should it take
-            if(width >=900)
-            {
-                setWMA(' Myless');
-            }
-            else
-            {
-                setWMA(' Mymore')
-            }
-            
-        }
-            
-    }
+    
     
 
     //------------------------------------------------
@@ -263,20 +222,6 @@ const UserPage = () =>
     //---------------------------------------------------------------------------------------------------------------
     return(
         <div className="userPageContainer" onLoad={firstTimeSettingInterval}>
-            
-            <div className={'Mysettings ' + settingClass}  onClick={setToggle}>
-                <CiSettings />
-            </div>
-
-            <div className={addMenuClass + widerMenuAdditional}>
-                <p className='settingsHeader'>USTAWIENIA</p>
-                <Link to="/ResetPassword"> <p>Zmień hasło</p></Link>
-                <Link to="/editUserPage"><p>Ustawienia profilu</p></Link>
-                <Link to="/editNotificationsPage"><p>Powiadomienia</p></Link>
-                <Link to="/editNotificationsPage"><p>Dodane gry</p></Link>
-                <Link to="/"> <p>Wyloguj</p></Link>
-            </div>
-
 
             <div className='backImage col-12' id="backImageId">  
                 <img src={BackImage} alt='pad do gry jako tło strony' className='img-fluid tlo'/>
