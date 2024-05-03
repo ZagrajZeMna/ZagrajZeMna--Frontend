@@ -1,106 +1,84 @@
 .mainFormContainer {
-    overflow: hidden;
-    margin-top: 50px;
-  }
-.registrationForm.visible {
-    max-height: 700px; 
-  }
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border: 3px solid blue;
+  padding: 0 20px;
+}
 
-.iconPlus.rotate {
-    transform: rotate(180deg);
-  }
-  .registrationForm {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    flex-direction: column;
-    border: 3px solid black;
-    max-height: 0;
-    overflow: hidden;
-    transition: max-height 0.3s ease;
-    padding: 20px;
-    width: 80%; 
-    max-width: 500px; 
-  }
+.registrationForm {
+  display: none;
+  flex-direction: column;
+  justify-content: center;
+  align-self: flex-end; 
+  border: 3px solid black;
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.3s ease;
+  padding: 20px;
+  width: 70%;
+  max-width: 1000px; 
+}
+.registrationForm.visible{
+  max-height: 700px;
+  display: flex;
 
-  .registerTitle {
-    font-family: "IBM Plex Mono", monospace;
-    font-weight: bold;
-    font-size: 2rem;
-  }
-  
-  .indata {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    flex-direction: column;
-  }
+}
+.inputContainer {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
 
-  .inputWrapper {
-    display: flex;
-    flex-direction: column;
-    margin-bottom: 10px;
-    width: 100%; 
-  }
+.inputWrapper {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 10px;
+}
 
-  .inputContainer {
-    position: relative;
-    display: flex;
-    align-items: center;
-  }
-  .inputy {
-    flex: 1;
-    margin-top: 10px;
-    font-size: 16px;
-    font-weight: bold;
-    border-radius: 100px;
-    border: 3px solid black;
-    font-family: "IBM Plex Mono", monospace;
-    padding: 15px 30px 15px 10px;
-  }
-  .iconPlus {
-    font-size: 30px; 
-    cursor: pointer;
-  }
+.inputy {
+  margin-top: 10px;
+  font-size: 16px;
+  font-weight: bold;
+  border-radius: 100px;
+  border: 3px solid black;
+  font-family: "IBM Plex Mono", monospace;
+  padding: 15px 30px 15px 10px;
+}
+
+.btnContainer {
+  margin-top: 20px; 
+}
 
 .btn {
-    font-size: 1.5rem; 
-    border-radius: 50px;
-    cursor: pointer;
-    padding: 15px 30px; 
-    margin-top: 20px; 
-  }
-
-.btn:hover{
-    background-color: #646669;
-}
-.btn:active{
-    background-color: #323437;
-}
-.errorsy{
-    font-size: 15px;
-    padding: 3px;
-    color: black;
-    text-align: center;
+  font-size: 1.5rem; 
+  border-radius: 50px;
+  cursor: pointer;
+  padding: 15px 30px; 
 }
 
-.error{
-   
-    font-size: 15px;
-    padding: 3px;
-    color: black;
-    text-align: center;
+.btn:hover {
+  background-color: #646669;
 }
 
-.textToLogin{
-    margin-top: 10px;
-    text-align: center;
+.btn:active {
+  background-color: #323437;
 }
-.textToLogin a{
-    color: black;
-    text-decoration: none;
-    font-weight: 600;
+
+.error {
+  font-size: 14px; 
+  margin-top: 10px; 
 }
-.textToLogin a:hover{
-    text-decoration: underline;
+
+.iconPlus {
+  font-size: 30px; 
+  cursor: pointer;
+  transition: transform 0.3s ease;
+}
+.iconPlus.rotate{
+  transform: rotate(180deg);
+}
+
+.iconPlus.rotate {
+  transform: rotate(180deg);
 }

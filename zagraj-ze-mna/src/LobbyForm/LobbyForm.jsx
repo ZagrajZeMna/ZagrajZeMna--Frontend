@@ -153,7 +153,7 @@ function LobbyForm() {
               <div>
                 {error && <div className={styles.error}>{error}</div>}    
               </div>
-              <div>
+              <div className={styles.btnContainer}>
                   <button type="submit" className={styles.btn}>Make Lobby</button>
               </div>
           </form>
