@@ -25,7 +25,7 @@ function LobbyForm() {
         id:1,
         name:"gameName",
         options: ["CS2", "LOL", "Valorant"],
-        displayValue: "Nazwa gry"
+        displayValue: "nazwę gry"
     },
     {
         id:2,
@@ -43,13 +43,13 @@ function LobbyForm() {
         id:4,
         name:"language",
         options: ["Polski", "Angielski", "Niemiecki"],
-        displayValue: "Language"
+        displayValue: "Język"
     },
     {
       id:5,
       name:"NeedUsers",
       options: ["1", "2", "3", "4", "5"],
-      displayValue: "Numer of Needed Players "
+      displayValue: "liczbę graczy potrzebnych w lobby "
     }
   ];
 
@@ -113,16 +113,16 @@ function LobbyForm() {
     return (
       <div className={styles.mainFormContainer}>
         <IoAddCircleOutline onClick={toggleFormVisibility} className={`${styles.iconPlus} ${formVisible ? styles.rotate : ''}`}/>
-        
+        <div className={styles.registerTitle}>STWÓRZ LOBBY</div>
           <form onSubmit={handleSubmit}
-        className={`${styles.registrationForm} ${formVisible ? styles.visible : ''}`}>
-            <div className={styles.forms}></div>
-              <div className={styles.registerTitle}>Formularz</div>
+            className={`${styles.registrationForm} ${formVisible ? styles.visible : ''}`}>
+              
               <div className={styles.indata}>
+                <div className={styles.inputContainer} >
                   {
                     inputs.map((input) => (
-                      <div key={input.id} className={styles.inputWrapper}>
-                        <div className={styles.inputContainer} >
+                      <div key={input.id}>
+                        
                         {input.type === 'text' ? ( 
                           <input
                             className={styles.inputy} 
@@ -138,7 +138,7 @@ function LobbyForm() {
                                 value={values[input.name]}
                                 onChange={handleChange}
                               >
-                                <option value="">Select {input.displayValue}</option>
+                                <option value="">Wybierz {input.displayValue}</option>
                                   {input.options.map(option => (
                                     <option key={option} value={option}>
                                       {option}
@@ -146,9 +146,10 @@ function LobbyForm() {
                                   ))}
                               </select>
                             )}
-                      </div>
+                      
                     </div>
                   ))}
+                  </div>
                 </div>
               <div>
                 {error && <div className={styles.error}>{error}</div>}    
