@@ -3,7 +3,7 @@ import Login from "./Login/Login"
 import Home from "./Home/Home"
 import { Routes, Route } from 'react-router-dom';
 import ResetPassword from "./ResetPassword/ResetPassword";
-import LobbyList from "./LobbyList/LobbyList"
+import LobbyForm from "./LobbyForm/LobbyForm"
 
 function App() {
   
@@ -14,7 +14,7 @@ function App() {
         <Route path="/" element={<Home />} />
         <Route path="/login" element={<Login />} />
         <Route path="/resetPassword" element={<ResetPassword/>}/>
-        <Route path="/lobbyList" element={<LobbyList/>}/>
+        <Route path="/lobbyForm" element={<LobbyForm/>}/>
       </Routes>
   )
 }
