@@ -1,7 +1,7 @@
 .scrollContainer{
-  width: 100%; /* Ustaw szerokość większą niż szerokość ekranu */
-  height: 100vh; /* Użyj vh, aby kontener miał wysokość równą wysokości ekranu */
-  overflow-x: auto; /* Pozwala na przewijanie w poziomie */
+  width: 100%; 
+  height: 100vh; 
+  overflow-x: auto; 
   overflow-y: hidden;
   min-width: 2560px;
 }
@@ -22,14 +22,14 @@
   align-items: center;
   max-height: 0;
   overflow: hidden;
-  transition: height 0.3s ease-in-out;
+  transition: min-height 0.5s ease-in-out;
   padding: 20px;
   width: 100%;
 
 
  }
  .registrationForm.visible{
-  max-height: 700px;
+  max-height: 300px;
   display: flex;
   min-height: 100px;
  }
@@ -47,8 +47,7 @@
   font-weight: bold;
   font-size: 2rem;
   margin-left: 30px;
-  padding-right: 100px;
-
+  padding-right: 160px;
  }
  
  .inputy {
@@ -103,5 +102,5 @@
 
  }
  .iconPlus.rotate{
-  transform: rotate(180deg);
+  transform: rotate(90deg);
  }
