@@ -1,27 +1,39 @@
+.scrollContainer{
+  width: 100%; /* Ustaw szerokość większą niż szerokość ekranu */
+  height: 100vh; /* Użyj vh, aby kontener miał wysokość równą wysokości ekranu */
+  overflow-x: auto; /* Pozwala na przewijanie w poziomie */
+  overflow-y: hidden;
+  min-width: 2560px;
+}
+
 .mainFormContainer {
+
   display: flex;
   align-items: center;
   flex-direction: row;
   border: 3px solid black;
   padding: 0 20px;
+  
  }
  
  .registrationForm {
   display: none;
   flex-direction: row;
   align-items: center;
-
   max-height: 0;
   overflow: hidden;
-  transition: max-height 0.3s ease;
+  transition: height 0.3s ease-in-out;
   padding: 20px;
-  width: 70%;
-  width: 100%; 
+  width: 100%;
+
+
  }
  .registrationForm.visible{
   max-height: 700px;
   display: flex;
+  min-height: 100px;
  }
+
  .inputContainer {
   display: flex;
   flex-direction: row;
@@ -34,9 +46,7 @@
   font-family: "IBM Plex Mono", monospace;
   font-weight: bold;
   font-size: 2rem;
-  margin-left: 0;
-
-
+  margin-left: 30px;
   padding-right: 100px;
 
  }
@@ -50,10 +60,15 @@
   font-family: "IBM Plex Mono", monospace;
   padding: 15px 30px 15px 10px;
  }
+ .inputy::placeholder{
+  color: #646669;
+ }
  .btnContainer{
-
+  font-family: "IBM Plex Mono", monospace;
   display: flex;
   justify-content: flex-end;
+  flex-direction: column;
+  text-align: center;
   margin-left: auto;
  }
  .btn {
@@ -88,9 +103,5 @@
 
  }
  .iconPlus.rotate{
-  transform: rotate(180deg);
- }
- 
- .iconPlus.rotate {
   transform: rotate(180deg);
  }

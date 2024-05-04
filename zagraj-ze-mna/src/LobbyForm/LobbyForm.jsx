@@ -1,5 +1,5 @@
 import styles from './LobbyForm.module.css'
-import React, { useState } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import { IoAddCircleOutline } from "react-icons/io5";
 import { useNavigate } from 'react-router-dom';
 
@@ -15,16 +15,50 @@ function LobbyForm() {
 
   const [error, setError] = useState(null);
   const [formVisible, setFormVisible] = useState(false);
+  const [dataFromGet, setDataFromGet] = useState(null);
+
+  useEffect(() => {
+    const setMinWidth = () => {
+      const scrollContainer = document.querySelector(`.${styles.scrollContainer}`);
+      if (scrollContainer) {
+        scrollContainer.style.minWidth = `${window.screen.width}px`;
+      }
+    };
+
+    setMinWidth();
+
+    return () => {
+    };
+ }, []);
+
+  useEffect(()=>{
+    const getData = async () => {
+      try{
+        const response = await fetch(`http://localhost:4001/api/lobby/data`);
+        if(!response.ok){
+          throw new Error('Nie udało się poprać danych');
+        }
+        const dataFromGet = await response.json();
+        setDataFromGet(dataFromGet);
+        console.log(dataFromGet);
+      }catch (error){
+        setError(error.message);
+      }
+    };
+
+    getData();
+  }, []);
 
   const toggleFormVisibility = () => {
     setFormVisible(!formVisible);
+    setError(null);
   };
 
   const inputs = [
     {
         id:1,
         name:"gameName",
-        options: ["CS2", "LOL", "Valorant"],
+        options: dataFromGet ? dataFromGet.Games.map(game => game.name) : [],
         displayValue: "nazwę gry"
     },
     {
@@ -42,18 +76,16 @@ function LobbyForm() {
     {
         id:4,
         name:"language",
-        options: ["Polski", "Angielski", "Niemiecki"],
+        options: dataFromGet ? dataFromGet.Languages.map(language => language.LANGUAGE) : [],
         displayValue: "Język"
     },
     {
       id:5,
       name:"NeedUsers",
-      options: ["1", "2", "3", "4", "5"],
+      options: ["1", "2", "3", "4", "5", "6", "7", "8", "9", "10"],
       displayValue: "liczbę graczy potrzebnych w lobby "
     }
   ];
-
-
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -61,17 +93,23 @@ function LobbyForm() {
     const allFieldsFilled = Object.values(values).every(value => value.trim() !== '');
 
     if (!allFieldsFilled) {
-      setError({ general: 'Please fill in all fields.' });
+      setError('Please fill in all fields.' );
       return;
     }
 
+
     try{
-      const token = localStorage.getItem('token').replace(/"/g, '');
+      const token = localStorage.getItem('token');
+      if (!token) {
+        setError('Please log in!');
+        return;
+      }
+      const tokenWithoutQuotes = token.replace(/"/g, '');
       const response = await fetch('http://localhost:4001/api/lobby/add', {
         method: 'POST',
         headers: {
           'Content-Type' : 'application/json',
-          'Authorization': `Bearer ${token}`
+          'Authorization': `Bearer ${tokenWithoutQuotes}`
         },
         body: JSON.stringify({
           gameName: values.gameName,
@@ -93,7 +131,11 @@ function LobbyForm() {
         language:"",
         NeedUsers:"" 
       });
+
       setError("Lobby zostało utworzone pomyślnie");
+      setTimeout(() => {
+        setError(null);
+      }, 5000);
 
     }catch(error){
       setError(error.message );
@@ -111,13 +153,14 @@ function LobbyForm() {
 
 
     return (
+      <div className={styles.scrollContainer}>
       <div className={styles.mainFormContainer}>
         <IoAddCircleOutline onClick={toggleFormVisibility} className={`${styles.iconPlus} ${formVisible ? styles.rotate : ''}`}/>
         <div className={styles.registerTitle}>STWÓRZ LOBBY</div>
           <form onSubmit={handleSubmit}
             className={`${styles.registrationForm} ${formVisible ? styles.visible : ''}`}>
               
-              <div className={styles.indata}>
+              
                 <div className={styles.inputContainer} >
                   {
                     inputs.map((input) => (
@@ -149,15 +192,18 @@ function LobbyForm() {
                       
                     </div>
                   ))}
-                  </div>
                 </div>
-              <div>
-                {error && <div className={styles.error}>{error}</div>}    
-              </div>
+               
+              
               <div className={styles.btnContainer}>
                   <button type="submit" className={styles.btn}>Make Lobby</button>
+                  <div>
+                    {error && <div className={styles.error}>{error}</div>}    
+                  </div>
               </div>
+              
           </form>
+        </div>
         </div>
     )
 }
