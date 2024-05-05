@@ -285,6 +285,9 @@ const MyNavbar = () => {
                                            {login && ( <div className={'my_settings my_settings_small ' + settingClass}  onClick={settingsToggle}>
                                                 <IoSettings />
                                             </div> )}
+                                            {!login && ( <div className={'my_settings2'}>
+                                                <IoSettings />
+                                            </div> )}
                                         </td>
                                         <td>
                                             <Navbar.Toggle className={"buttonSmall " + buttonAdditionalClass } aria-controls="basic-navbar-nav" id="toggleButton"/>
