@@ -4,7 +4,7 @@ import Home from "./Home/Home"
 import { Routes, Route } from 'react-router-dom';
 import ConfirmEmail from "./ConfirmEmail/ConfirmEmail";
 import ResetPassword from "./ResetPassword/ResetPassword";
-import GameCategory from './GameCategory';
+import GameCategory from './GameCategory/GameCategory';
 
 function App() {
   

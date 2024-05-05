@@ -50,16 +50,21 @@ function Home(){
 
     return(
         <div className='background'>
-            <h1>Witaojcie</h1>
-            <button onClick={handleClick}></button>
-            <div className="game-tiles-container">
-                {images.map((game, index) => (
-                    <Link to={`/category/${game.name}`} key={index} className="game-tile">
-                        <img src={game.image} alt={game.name} />
-                        <span className="game-name">{game.name}</span>
-                    </Link>
-                ))}
+            <span className='tempheader'>TUTAJ WSTAWIC HEADER</span> {/*nie wstawiac tu headera xd powinien byc nad divem background, ten jest tylko zeby nie bylo pusto*/}
+            <button onClick={handleClick} className='logout'>logout</button>
+            
+            <div className='game-tiles-container'>
+            <span className='caption'>Giereczki</span>
+                <div className="game-tiles-grid">
+                    {images.map((game, index) => (
+                        <Link to={`/category/${game.name}`} key={index} className="game-tile">
+                            <img src={game.image} alt={game.name} />
+                            <span className="game-name">{game.name}</span>
+                        </Link>
+                    ))}
+                </div>
             </div>
+            
         </div>
     );
 }

@@ -1,18 +1,67 @@
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap');
+
 /* App.css */
 .background {
-  background-image: url('your-background-image-url.jpg');
+  display: flex;
+  flex-direction: column;
+  background: linear-gradient(135deg, #000000, #333333);
   background-color: grey;
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
   min-height: 100vh;
   padding: 20px;
+  position: relative; 
+}
+.tempheader{
+  display: flex;
+  color: white;
+  border: 5px solid white;
+  background-color: purple;
+  justify-content: center;
+}
+.caption {
+  font-size: 64px;
+  font-weight: bold;
+  margin-left: 20px;
+  color: white;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5); /* Add text shadow for depth */
+}
+.logout {
+  margin-left: auto;
+  margin-top: 20px;
+  margin-bottom: 20px;
+  background-color: #ff8a00;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  font-size: 16px;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.logout:hover {
+  background-color: #e52e71;
 }
 .game-tiles-container {
+  width: 90%;
+  margin: 0 auto;
+  background: linear-gradient(45deg, #ff8a00, #e52e71, #7b1fa2, #3949ab); /* Should match with game-tile:before colors */
+  background-size: 200% 200%;
+  animation: backgroundAnimation 5s infinite alternate;
+  animation-timing-function: ease-in-out; 
+  box-shadow: 0 0 30px rgba(255, 255, 255, 0.5); 
+  animation: shadowAnimation 5s infinite alternate;
+}
+
+.game-tiles-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+  grid-template-columns: repeat(auto-fill, minmax(170px, 1fr));
   /*gap: 20px;*/
 }
+
 
 .game-tile {
   position: relative;
@@ -23,20 +72,26 @@
   text-align: center;
   text-decoration: none;
   color: #333;
-  background-color: #fff;
-  border: 1px solid #ccc;
-  border-radius: 8px;
+  background-color: #000000;
+  border: 1.5px solid #313131;
+  /*border-radius: 8px;*/
   overflow: hidden;
   transition: all 0.3s ease;
   margin: 10px;
+  margin-top: 16px;
+  color: white;
+  font-family: 'Montserrat', sans-serif; /* Use Montserrat font */
+
 }
 
 .game-tile:hover {
+  border: 0px transparent;
   transform: translateY(-5px) scale(1.1);;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 4px 8px rgba(92, 92, 92, 0.75);
 }
 
 .game-tile img {
+  margin-bottom: auto; /* Push the image to the top */
   width: 100%;
   height: auto;
   border-bottom: 1px solid #ccc;
@@ -47,14 +102,13 @@
 .game-name {
   margin: 10px 0;
   font-size: 16px;
-  font-weight: bold;
 }
 
 .category-content {
   margin-top: 20px;
   padding: 20px;
   border: 1px solid #ccc;
-  border-radius: 8px;
+  /* border-radius: 8px; */
   background-color: #f9f9f9;
 }
 
@@ -68,37 +122,43 @@
   height: 100%;
   background-image: linear-gradient(45deg, #ff8a00, #e52e71, #7b1fa2, #3949ab);
   background-size: 200% 200%;
-  border-radius: 8px;
+  /* border-radius: 8px; */
   z-index: -1;
   opacity: 0;
   transition: opacity 0.5s ease;
 }
 
 .game-tile:hover:before {
-  opacity: 0.7;
+  opacity: 0.9;
 }
 
-.game-tile:after {
-  content: '';
-  position: absolute;
-  bottom: -10px;
-  left: 50%;
-  transform: translateX(-50%);
-  width: 50px;
-  height: 2px;
-  background-color: #ff8a00;
-  border-radius: 50%;
-  opacity: 0;
-  transition: all 0.3s ease;
-}
 
-.game-tile:hover:after {
-  bottom: -20px;
-  opacity: 1;
-}
 
 @media screen and (max-width: 768px) {
   .game-tiles-container {
     grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
   }
 }
+
+
+@keyframes backgroundAnimation {
+  0% {
+    background-position: 0% 50%;
+  }
+  100% {
+    background-position: 100% 50%;
+  }
+}
+
+@keyframes shadowAnimation {
+  0% {
+    box-shadow: 0 0 30px #7b1fa2;
+  }
+  50% {
+    box-shadow: 0 0 80px #7b1fa2, 0 0 30px #e52e71; 
+  }
+  100% {
+    box-shadow: 0 0 30px #7b1fa2;
+  }
+}
+
