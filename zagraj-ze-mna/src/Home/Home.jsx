@@ -16,7 +16,7 @@ function Home(){
 
     const [images, setImages] = useState([
    
-    { name: 'Among us', image: 'https://via.placeholder.com/150' },
+    { name: 'VALORANT', image: 'https://via.placeholder.com/150' },
     { name: 'Counter Strike', image: 'https://via.placeholder.com/150' },
     { name: 'League of legends', image: 'https://via.placeholder.com/150' },
     { name: 'Minecraft', image: 'https://via.placeholder.com/150' },
