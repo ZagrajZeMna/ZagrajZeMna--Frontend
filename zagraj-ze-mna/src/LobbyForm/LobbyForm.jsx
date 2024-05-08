@@ -17,19 +17,7 @@ function LobbyForm() {
   const [formVisible, setFormVisible] = useState(false);
   const [dataFromGet, setDataFromGet] = useState(null);
 
-  useEffect(() => {
-    const setMinWidth = () => {
-      const scrollContainer = document.querySelector(`.${styles.scrollContainer}`);
-      if (scrollContainer) {
-        scrollContainer.style.minWidth = `${window.screen.width}px`;
-      }
-    };
-
-    setMinWidth();
-
-    return () => {
-    };
- }, []);
+  
 
   useEffect(()=>{
     const getData = async () => {
@@ -49,6 +37,7 @@ function LobbyForm() {
     getData();
   }, []);
 
+ 
   const toggleFormVisibility = () => {
     setFormVisible(!formVisible);
     setError(null);
