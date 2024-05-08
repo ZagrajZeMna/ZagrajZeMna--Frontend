@@ -73,9 +73,9 @@ function ResetPassword() {
     const handleSubmit = async (e) => {
         e.preventDefault();
 
-        const passwordRegex = /^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#.?&])[A-Za-z\d@$!%*#.?&]{8,20}$/;
-        if (!passwordRegex.test(password)) {
-            setError('8-20 char(1 number, 1 letter and 1 special char)');
+
+        if (!email.trim() || !password.trim() || !repeatPassword.trim()) {
+            setError('Please fill all fields.');
             return;
         }
 
@@ -85,15 +85,19 @@ function ResetPassword() {
             return;
         }
 
+        const passwordRegex = /^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#.?&])[A-Za-z\d@$!%*#.?&]{8,20}$/;
+        if (!passwordRegex.test(password)) {
+            setError('8-20 char(1 number, 1 letter and 1 special char)');
+            return;
+        }
+
+    
         if (password !== repeatPassword) {
             setError('Passwords do not match.');
             return;
         }
 
-        if (!email.trim() || !password.trim() || !repeatPassword.trim()) {
-            setError('Please fill all fields.');
-            return;
-        }
+        
 
         try{
             const response = await fetch('http://localhost:4001/api/auth/remember', {
