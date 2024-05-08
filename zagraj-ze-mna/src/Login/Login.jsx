@@ -41,6 +41,18 @@ function Login(){
         
             const token = await response.text();
             localStorage.setItem('token', token);
+            const headers = {
+                'Content-Type' : 'application/json',
+                'Authorization': `Bearer ${token}`
+            };
+            const responseWithHeaders = await fetch('http://localhost:4001/api/auth/signin', {
+                method: 'POST',
+                headers: headers,
+                body: JSON.stringify({
+                    email: email,
+                    password: password  
+                }),
+            });
             navigate('/');
             
         } catch (error) {

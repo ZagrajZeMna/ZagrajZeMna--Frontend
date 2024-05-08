@@ -182,9 +182,6 @@ function Registration() {
             }
         }
         setErrors({ ...errors, [name]: errorMessage });
-
-        
-
   }
 
     return (
@@ -228,6 +225,6 @@ function Registration() {
         </form>
       </div>
     )
-  }
+}
   
-  export default Registration
+export default Registration
