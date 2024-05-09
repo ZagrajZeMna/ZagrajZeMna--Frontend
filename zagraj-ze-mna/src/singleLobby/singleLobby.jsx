@@ -16,6 +16,9 @@ add plus button for sending requet to enter the lobby. The place for this is pre
 */
 
 import { FaUser } from "react-icons/fa";
+import { FaJoint } from "react-icons/fa";
+
+//CSS
 import './singleLobby.css';
 
 function singleLobby(id, lobbyPicture, lobbyName, lobbyDesc, currentPlayers, requiredPlayers, withPlus)
@@ -38,7 +41,7 @@ function singleLobby(id, lobbyPicture, lobbyName, lobbyDesc, currentPlayers, req
             <div className='addedPlayers flotLeftClassOrSth col-2 col-md-1'>
                 
                  {currentPlayers}/{requiredPlayers}<FaUser/> </div>
-                 {withPlus && (<span >BĘDZIE TU PRZYCISK</span>)/* <==== TUTAJ TRZEBA TEN PRZYCISK DODAĆ*/}
+                 {withPlus && (<span ><FaJoint/> </span>)/* <==== TUTAJ TRZEBA TEN PRZYCISK DODAĆ*/}
             <div className='clearer'></div>
         </div>
     );

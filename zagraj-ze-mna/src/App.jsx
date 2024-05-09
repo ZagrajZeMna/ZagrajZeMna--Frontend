@@ -7,6 +7,7 @@ import ResetPassword from "./ResetPassword/ResetPassword";
 import Space from "./navbar/space";
 import MyNavbar from "./navbar/navbar";
 import UserPage from "./userPage/userPage";
+import EditUserPage from "./edtiPage/editUserPage";
 
 function App() {
 
@@ -21,6 +22,7 @@ function App() {
         <Route path="/confirm/:confirmationCode" element={<ConfirmEmail />} />
         <Route path="/resetPassword" element={<ResetPassword/>}/>
         <Route path="/userPage" element={<UserPage/>}/>
+        <Route path="/editUserPage" element={<EditUserPage/>} />
       </Routes>
     </div>
       

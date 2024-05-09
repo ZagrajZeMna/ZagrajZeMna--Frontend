@@ -117,6 +117,16 @@ const MyNavbar = () => {
     //use to prevent small bug
     const [Big, setBig] = useState(false);
     
+
+    const settingHidder = () =>
+    {
+        //hidding setting menu
+        setAdditionalMenu(false);
+        setMenuClass('side_menu_hidden');
+        setSetClass('set_hiden');
+        setWMA(' cos');
+    }
+
     //when navbar is expande or collapse certain values are set (for shadow animation)
     const setToggle = () =>
     {   
@@ -134,6 +144,10 @@ const MyNavbar = () => {
             setExpanded(true)
             setNotExpanded(false);
             setAddClass("animOn");
+
+            //hidding setting menu
+            settingHidder();
+
         } 
         else
         {
@@ -147,6 +161,11 @@ const MyNavbar = () => {
     //this makes the side menu appear
     const settingsToggle = () =>
     {
+        if(expanded)
+        {
+            document.getElementById("toggleButton").click();
+        }
+
         //additional menu ifs
         if(additaionlMenu)
         {
@@ -252,11 +271,11 @@ const MyNavbar = () => {
 
                 {login && (<div className={addMenuClass + widerMenuAdditional + ' setting_margin_big'}>
                     <p className='settingsHeader'>USTAWIENIA</p>
-                    <Link to="/ResetPassword"> <p>Zmień hasło</p></Link>
-                    <Link to="/editUserPage"><p>Ustawienia profilu</p></Link>
-                    <Link to="/editNotificationsPage"><p>Powiadomienia</p></Link>
-                    <Link to="/editNotificationsPage"><p>Dodane gry</p></Link>
-                    <Link to="/"> <p>Wyloguj</p></Link>
+                    <Link to="/ResetPassword" onClick={settingHidder}> <p>Zmień hasło</p></Link>
+                    <Link to="/editUserPage" onClick={settingHidder}><p>Ustawienia profilu</p></Link>
+                    <Link to="/editNotificationsPage" onClick={settingHidder}><p>Powiadomienia</p></Link>
+                    <Link to="/editNotificationsPage" onClick={settingHidder}><p>Dodane gry</p></Link>
+                    <Link to="/" onClick={settingHidder}> <p>Wyloguj</p></Link>
                 </div>)}
 
                 </div>
@@ -315,11 +334,11 @@ const MyNavbar = () => {
                     
                     {login && (<div className={addMenuClass + widerMenuAdditional + ' setting_margin_small'}>
                         <p className='settingsHeader'>USTAWIENIA</p>
-                        <Link to="/ResetPassword"> <p>Zmień hasło</p></Link>
-                        <Link to="/editUserPage"><p>Ustawienia profilu</p></Link>
-                        <Link to="/editNotificationsPage"><p>Powiadomienia</p></Link>
-                        <Link to="/editNotificationsPage"><p>Dodane gry</p></Link>
-                        <Link to="/"> <p>Wyloguj</p></Link>
+                        <Link to="/ResetPassword" onClick={settingHidder}> <p>Zmień hasło</p></Link>
+                        <Link to="/editUserPage" onClick={settingHidder}><p>Ustawienia profilu</p></Link>
+                        <Link to="/editNotificationsPage" onClick={settingHidder}><p>Powiadomienia</p></Link>
+                        <Link to="/editNotificationsPage" onClick={settingHidder}><p>Dodane gry</p></Link>
+                        <Link to="/" onClick={settingHidder}> <p>Wyloguj</p></Link>
                     </div>)}
 
                     <div className='clear'></div>
