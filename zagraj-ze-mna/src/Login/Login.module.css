@@ -12,21 +12,19 @@
     background-size: cover;
     background-position: center;
     font-family: "IBM Plex Mono", monospace;
+
 }
 
 .login {
     background-image: url('src/assets/login_tlo.png');
-    background-size: contain ;
+    background-size: cover ;
     background-position: center;
     background-repeat: no-repeat;
-
-    padding: 200px;
-
-    height: 600px;
-    width: 800px;
+   
     display: flex;
     justify-content: center;
     align-items: center;
+
 }
 
 
@@ -40,6 +38,7 @@
     font-weight: bold;
     margin-top: 60px;
     font-family: "IBM Plex Mono", monospace;
+    
 }
 .inputbox {
     position: relative;
@@ -128,3 +127,64 @@
     text-decoration: underline;
 }
 
+
+@media screen and (max-width: 796px) {
+    .login {
+        padding: 60px; 
+        margin: 0 auto;
+        height: auto; 
+        width: 90%;
+        max-width: 500px;
+        background-image: none;
+        background-color: rgba(0,0,0,0.8);
+        border-radius: 20px;
+        box-shadow: 0 0 20px rgb(255, 255, 255);
+    }
+
+    .title {
+        color: white;
+        font-size: 10vw;
+    }
+
+    .inpBox {
+        width: 100%;
+    }
+
+    .btnSub {
+        width: 60%; 
+        font-size: 6vw;
+        
+    }
+    .taxtToSignup{
+        color: white;
+    }
+    .taxtToSignup a{
+        color: white;
+    }
+    .error{
+        color: white;
+    }
+}
+
+
+@media screen and (min-width: 796px) {
+    .login {
+        background-size: contain;
+        padding: 200px; 
+        height: 600px; 
+        width: 800px; 
+    }
+
+    .title {
+        font-size: 3.5rem;
+    }
+
+    .inpBox {
+        width: 400px; 
+    }
+
+    .btnSub {
+        width: 300px; 
+        font-size: 2.5rem;
+    }
+}
