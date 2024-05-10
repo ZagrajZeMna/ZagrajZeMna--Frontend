@@ -1,7 +1,10 @@
 import styles from './Registration.module.css'
 import React, { useState } from 'react';
+
+
 import { useNavigate } from 'react-router-dom';
 import { FaUser, FaLock, FaLockOpen } from "react-icons/fa";
+
 
 function Registration() {
 

@@ -3,6 +3,7 @@ import Login from "./Login/Login"
 import Home from "./Home/Home"
 import { Routes, Route } from 'react-router-dom';
 import ResetPassword from "./ResetPassword/ResetPassword";
+import GameCategory from './GameCategory/GameCategory';
 
 import LobbyForm from "./LobbyForm/LobbyForm"
 
@@ -24,9 +25,13 @@ function App() {
         <Route path="/login" element={<Login />} />
         <Route path="/resetPassword" element={<ResetPassword/>}/>
 
+        <Route path="/category/:game" element={<GameCategory />} />
+
+
         <Route path="/lobbyForm" element={<LobbyForm/>}/>
 
         <Route path="/userPage" element={<UserPage/>}/>
+
 
       </Routes>
     </div>
