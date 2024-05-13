@@ -2,13 +2,14 @@ import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Link } from 'react-router-dom';
 import "./Home.css";
+import Footer from '../footer/footer';
 
 function Home(){
     const [error, setError] = useState(null);
 
     const navigate = useNavigate();
     useEffect(()=>{
-        fetchGames(); //UNCOMMENT THIS IF THERE ARE GAMES WITH PICTURES IN THE DATABASE, OTHERWISE LEAVE COMMENTED
+        //fetchGames(); //UNCOMMENT THIS IF THERE ARE GAMES WITH PICTURES IN THE DATABASE, OTHERWISE LEAVE COMMENTED
     },[])
     const fetchGames = () => {
         fetch(`http://localhost:4001/api/mainGame/getGame`)
@@ -101,8 +102,9 @@ function Home(){
                     ))}
                 </div>
             </div>
-            
+            <Footer></Footer>
         </div>
+        
     );
 }
 

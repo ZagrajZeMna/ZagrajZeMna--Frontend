@@ -76,14 +76,15 @@ const GameCategory = () => {
         <div className='lobby-wrapper'>
           <div className='lobby-container'>
             {lobbies.map(lobby => (
-              <div key={lobby.ID_LOBBY} className='lobby-tile' onClick={()=>window.alert("WORK IN PROGRESS - LOBBY INTERIOR")} >
+              <div key={lobby.ID_LOBBY} className='lobby-tile'  >
                 <img src={'https://i.ibb.co/7bs0bb6/chad.png'} alt={lobby.Name} className='lobby-image' />
                 <div className='lobby-details'>
                   <h3>{lobby.Name}</h3>
                   <p>{lobby.Description}</p>
                 </div>
+                <button onClick={()=>window.alert("WORK IN PROGRESS - LOBBY INTERIOR")}>klik</button>
                 <div className='player-count'>
-                  <span>Players: {lobby.playerCount}/{lobby.NeedUsers}</span>
+                  <span>Gracze: {lobby.playerCount}/{lobby.NeedUsers}</span>
                 </div>
               </div>
             ))}
