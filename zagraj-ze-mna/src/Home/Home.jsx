@@ -8,7 +8,7 @@ function Home(){
 
     const navigate = useNavigate();
     useEffect(()=>{
-        fetchGames(); //UNCOMMENT THIS IF THERE ARE GAMES WITH PICTURES IN THE DATABASE, OTHERWISE LEAVE COMMENTED
+        //fetchGames(); //UNCOMMENT THIS IF THERE ARE GAMES WITH PICTURES IN THE DATABASE, OTHERWISE LEAVE COMMENTED
     },[])
     const fetchGames = () => {
         fetch(`http://localhost:4001/api/mainGame/getGame`)
