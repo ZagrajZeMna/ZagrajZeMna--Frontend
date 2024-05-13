@@ -67,7 +67,7 @@ const EditPageUserDataForm = () =>{
             if(nickChange && myNick == dataFromGet.username);
                 setNickChange(false);
 
-        if(aboutChange && !aboutChange.trim())
+        if(aboutChange && !aboutMe.trim())
         {
             setAboutMe(" ");
         }
