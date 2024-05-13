@@ -1,3 +1,174 @@
+/*SETTINGS DIV*/
+/*--------------------------------------------*/
+.my_settings
+{
+    color:white;
+    font-size: 40px !important;
+}
+
+.my_settings2 
+{
+    color: rgba(0,0,0,0);
+    font-size: 40px !important;
+}
+
+.leftFloaterOrSth
+{
+    float: left;
+}
+
+.setting_margin_big
+{
+    margin-top: 80px !important;
+}
+
+.setting_margin_small
+{
+    margin-top: 70px !important;
+}
+
+.my_settings_small
+{
+    font-size: 30px !important;
+    margin: 0% !important;
+    padding: 0% !important;
+}
+
+.set_none
+{
+    color: white;
+    transform: rotate(0deg);
+    z-index: 5;
+
+}
+
+.tableContainerOrSth
+{
+    width: 25%;
+    margin: 0% !important;
+    padding: 0% !important;
+    margin-top: 10px !important;
+}
+
+.tableContainerOrSth table
+{
+    width: 100% !important;
+    margin: 0% !important;
+    padding: 0% !important;
+}
+
+.tableContainerOrSth table tbody
+{
+    width: 100%;
+    margin: 0% !important;
+    padding: 0% !important;
+}
+
+.tableContainerOrSth table tbody tr
+{
+    width: 100%;
+    margin: 0% !important;
+    padding: 0% !important;
+}
+
+.tableContainerOrSth table tbody tr td
+{
+    width: 50%;
+    text-align: center;
+    align-items: right;
+    margin: 0% !important;
+    padding: 0% !important;
+    
+}
+
+.set_hiden
+{
+    animation-name: setAnimOff;
+    animation-duration: 1s;
+    color: white;
+    transform: rotate(0deg);
+    z-index: 5;
+}
+
+.set_shown
+{
+    animation-name: setAnimOn;
+    animation-duration: 1s;
+    transform: rotate(180deg);
+    color: #ccc !important;
+    z-index: 5;
+    
+}
+
+.My_none
+{ 
+    display: none;
+}
+
+.side_menu_shown
+{
+    position: fixed;
+    right: 0;
+    max-width: 50%;
+    min-width: 25%;
+    height: 100vh;
+    z-index: 4;
+    background-color: #111;
+}
+
+.Myless
+{
+    max-width: 25%;
+    min-width: 25%;
+}
+
+.Mymore
+{
+    max-width: 50%;
+    min-width: 50%;
+}
+
+.side_menu_hidden
+{
+    display: none;
+}
+
+.settingsHeader
+{
+    width: 70%;
+    margin-left: 10%;
+    text-align: center;
+    font-size: 25px;
+    color: #aaa;
+    margin-top: 10px;
+    padding-top: 15px;
+    padding-bottom: 20px;
+}
+
+.side_menu_shown a p
+{
+    color: #888;
+    font-size: 20px;
+    width: 70%;
+    margin-left: 10%;
+    text-align: center;
+    border-bottom: 2px dotted #aaa;
+    padding-bottom: 10px;
+}
+
+.side_menu_shown a p:hover
+{
+    color: #aaa;
+    font-weight: bold;
+}
+
+.side_menu_shown a 
+{
+    text-decoration: none;
+}
+
+
+
 /*NAVABAR*/
 
 .mynavbar
@@ -20,13 +191,16 @@
 
 .mynavbarSmall
 {
-    padding-bottom: 20px !important;
+    padding-bottom: 9px !important;
     padding-left: 1%;
     background-color: #4f4f4f;
     background-image: linear-gradient(to right, #4f4f4f, #4f4f4f);
     
    
 }
+
+
+
 
 /*BANNER = logo + pngs*/
 
@@ -127,7 +301,7 @@
     background-color: #2f2f2f;
 }
 
-.register_div, .login_div, .accountImage, .not_img
+.register_div, .login_div, .accountImage, .not_img, .my_settings
 {
     border-radius: 25px;
     margin-top:  15px;
@@ -274,5 +448,25 @@
         scale: 1.1;
         border-left: 3px solid black;
         border-right: 3px solid black;
+    }
+}
+
+
+@media screen and (max-width: 400px)
+{
+    .bannerSmall p
+    {
+        font-size: 17px;
+    }    
+
+    .tableContainerOrSth
+    {
+        width: 33%;
+    }
+
+    .Mymore
+    {
+        max-width: 75%;
+        min-width: 75%;
     }
 }

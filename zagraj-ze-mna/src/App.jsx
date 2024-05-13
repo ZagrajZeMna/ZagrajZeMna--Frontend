@@ -10,10 +10,10 @@ import LobbyForm from "./LobbyForm/LobbyForm"
 import Space from "./navbar/space";
 import MyNavbar from "./navbar/navbar";
 import UserPage from "./userPage/userPage";
+import EditUserPage from "./edtiPage/editUserPage";
 
 
 function App() {
-  
 
   return (
     <div>
@@ -32,6 +32,7 @@ function App() {
 
         <Route path="/userPage" element={<UserPage/>}/>
 
+        <Route path="/editUserPage" element={<EditUserPage/>} />
 
       </Routes>
     </div>

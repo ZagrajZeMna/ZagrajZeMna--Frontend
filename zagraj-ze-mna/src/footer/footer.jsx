@@ -43,8 +43,8 @@ const Footer = () =>
 
             <div className="documentsClass">
                 <div className='toTheLeftDude col-10 offset-1 col-md-3 offset-md-0'><p> &copy; Copyright 2024 Zagraj Ze Mną </p> </div>
-                <div className='toTheLeftDude col-10 offset-1 col-md-3 offset-md-0'><p><Link to='https://www.youtube.com/watch?v=dQw4w9WgXcQ' > Warunki Usługi </Link></p></div>
-                <div className='toTheLeftDude col-10 offset-1 col-md-3 offset-md-0'><p><Link to='https://www.youtube.com/watch?v=dQw4w9WgXcQ' > Polityka prywatności </Link></p></div>
+                <div className='toTheLeftDude col-10 offset-1 col-md-3 offset-md-0'><p><Link to='https://www.youtube.com/watch?v=xvFZjo5PgG0' > Warunki Usługi </Link></p></div>
+                <div className='toTheLeftDude col-10 offset-1 col-md-3 offset-md-0'><p><Link to='https://www.youtube.com/watch?v=xvFZjo5PgG0' > Polityka prywatności </Link></p></div>
                 <div className='toTheLeftDude col-10 offset-1 col-md-3 offset-md-0'><p>Nie znamy Twojej gry? Zgłoś się <Link to='gameRequest'>tutaj</Link>!</p></div>
             </div>
 

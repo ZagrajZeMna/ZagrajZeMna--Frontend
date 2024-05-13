@@ -1,3 +1,5 @@
+//variables
+const connectionLink = 'http://localhost:4001';
 
 //react
 import { useState, useEffect } from 'react';
@@ -17,9 +19,8 @@ import BackImage from '../assets/back-image-smaller.png';
 import Points from '../assets/pac_manPoint.png';
 
 
-
 //icons
-import { CiSettings } from "react-icons/ci";
+
 import { FaRegEdit, FaVenusMars } from "react-icons/fa";
 
 //page parts
@@ -32,37 +33,57 @@ import Footer from '../footer/footer';
 
 const UserPage = () =>
  {
-    
 
-    
-
-
-    //for side bar maneu
-    const [additaionlMenu, setAdditionalMenu] = useState(false);
-    const [addMenuClass, setMenuClass] = useState('My_none');
-    const [settingClass, setSetClass] = useState('set_none');
-    
-    //setting how much screen side menu occupies
-    const [widerMenuAdditional, setWMA] = useState(' cos');
     
     //to check screen dimensions
     const { height, width } = useScreenSize();
 
-    
+    //use for setting interval
+    const [firstTime, setFT] = useState(true);
 
-    //
-    const [pacmanGone, setPacman] = useState(false); 
-    
-    
+    //error with fetching
+    const [error, setError] = useState(null);
+
+    //data
+    const [dataFromGet, setDataFromGet] = useState(null);
+
 
     //Variables
-    var mediocre = 4.5;
-    var ColouringClass = 'greenBox';
-    var profileDivHeight = 100;
+    var mediocre = 4.5; //this is temporary in future will be replaced by data fetch
+    var ColouringClass = 'greenBox'; //this tells what is colour of evaluation of profile, eg. 4.5 is green
+    var profileDivHeight = 100; //this sets initial value of second div about character (about and domicile)
 
+
+    //this change variable value
     function setPDHeight(h)
     {
         profileDivHeight = h;
+    }
+
+
+    //this sets interval
+    function firstTimeSettingInterval()
+    {
+        if(firstTime)
+        {
+            setInterval(changeHeightInterval, 200);
+            setFT(false)
+        }
+            
+    }
+
+
+    //function taht runs in intervals and if two dives dont have the same height it runs function check height
+    function changeHeightInterval()
+    {
+        if( document.getElementById('personalDataId') !== "undefined" && document.getElementById('personalDataId') !== null 
+            && document.getElementById('heightTarget') !== "undefined" && document.getElementById('heightTarget') !== null )
+        {
+            if(document.getElementById('personalDataId').offsetHeight != document.getElementById('heightTarget').offsetHeight)
+            {
+                checkHeight();
+            }
+        }
     }
 
     //setting proper colours for profile evaluation
@@ -95,75 +116,63 @@ const UserPage = () =>
         }
     }
 
-    //this efect checks if screen was resized and then set proper height of one of the elements 
-    //(it look nice when two elements have the same height)
-    useEffect(() => {
-        const handleResize = () => {
-            checkHeight();
-        };
-    
-        window.addEventListener('resize', handleResize);
-    
-
-        // Clean up the event listener when the component unmounts
-        return () => {
-          window.removeEventListener('resize', handleResize);
-        };
-      }, []);
-    
-
-    
-      
-    //functions that runs only once after render
+    //fetching data from backend
     useEffect(()=>{
-        checkHeight();
-    }, []); 
-    
+        const getData = async () => {
+            try{
 
-    //this makes the side menu appear
-    const setToggle = () =>
-    {
-        //additional menu ifs
-        if(additaionlMenu)
-        {
-            //hidding additional menu
-            setAdditionalMenu(false);
-            setMenuClass('side_menu_hidden');
-            setSetClass('set_hiden');
-            setWMA(' cos');
-        } 
-        else
-        {
-            //showing additional menu
-            setAdditionalMenu(true);
-            setMenuClass('side_menu_shown');
-            setSetClass('set_shown');
+                const token = localStorage.getItem('token');
+                
+                //if token not exist = we are log out
+                if(!token){
+                    setError('Please log in');
+                    return;
+                }
+                const tokenWithoutQuotes = token.replace(/"/g, '');
 
-            //deciding how much space should it take
-            if(width >=900)
-            {
-                setWMA(' Myless');
+                //fetching user data
+                const response = await fetch('http://localhost:4001/api/profile/getUserDetails',{
+                    method:'GET',
+                    headers: {
+                        'Authorization' : `Bearer ${tokenWithoutQuotes}`
+                    }
+                    });
+
+                    //if response is bad
+                    if(!response.ok){
+                        throw new Error('can not reach Your data');
+                    }
+
+                    //parsing to json
+                    const dataFromGet = await response.json();
+                    
+                    //setting data
+                    setDataFromGet(dataFromGet);
+                    setError(null);
+                    console.log("Dane: ", dataFromGet);
+                    
+                }catch (error){
+                //setting error if occurs
+                setError(error.message);
             }
-            else
-            {
-                setWMA(' Mymore')
-            }
-            
-        }
-            
-    }
+        };
+        
+        getData();
+    }, []);
     
 
     //------------------------------------------------
     //this below makes packman move 
     //------------------------------------------------
-
+    //this listener fires always when scroll events happens
     window.addEventListener(
         "scroll",
         () => 
-        {
+        { 
             var height_computed = 0;
             var navbar_height = 0;
+
+            //this stops working when width of screen is smaller than 992
             if(width >= 992)
             {
                 if(window.scrollY != 'Infinity' && document.body.offsetHeight != 'undefined')
@@ -185,28 +194,36 @@ const UserPage = () =>
                         navbar_height = 70;
                     }
 
-
+                    //another elements that are above packman (they are used for setting pacman start position)
                     if(document.getElementById('BannerID') != 'null')
                         height_computed+=document.getElementById('BannerID').offsetHeight;
 
-                    if(document.getElementById('profileContainerId') != 'null')
-                        height_computed+=document.getElementById('profileContainerId').offsetHeight;
+                    if(document.getElementById('backTraingleID') != 'null')
+                        height_computed+=document.getElementById('backTraingleID').offsetHeight;
 
                     if(document.getElementById('spaceHeight1') != 'null')
                         height_computed+=document.getElementById('spaceHeight1').offsetHeight;
 
-                    if(document.getElementById('spaceHeight2') != 'null')
-                        height_computed+=document.getElementById('spaceHeight2').offsetHeight;
-
-                    //pacman movent margin
-                    //height_computed+=60;
+                    //substratction of height because starting point is when pacman is on bottom of page 
                     height_computed-=height;
-
+                    
+                    
                     var fullHeight = 0;
+
+                    //this checks how height is whole page (not screen whole page)
                     if(document.body != 'null')
                         fullHeight = document.body.scrollHeight - document.body.clientHeight;
 
+                    //this calculates position of pacman
+                    //default function is (scroll position) / (full page height) = how much page was scrolled
+                    //we need to move this default function to works only on part on page:
+                    //firsly we do substraction -> this sets starting point of pacman animation
+                    //then it is divided by full page height -> this gives percent of pacman movement
+                    //next the percentage is multiply by full height divided by height of screen and two navbars heigths
+                    //the multiplication sets the end of pacman movement based on scroll
                     var calulated = ((window.scrollY-height_computed) / (fullHeight))*(fullHeight/(height + 2*navbar_height))
+                    
+                    //setting CSS variable -> it should be always between 0 and 1
                     if(calulated<=1 && calulated >=0)
                     {
                         document.body.style.setProperty(
@@ -237,33 +254,20 @@ const UserPage = () =>
       //end of packman movement
 
 
-
-
     //RETURN
     //---------------------------------------------------------------------------------------------------------------
     return(
-        <div className="userPageContainer">
-            
-            <div className={'Mysettings ' + settingClass}  onClick={setToggle}>
-                <CiSettings />
-            </div>
-
-            <div className={addMenuClass + widerMenuAdditional}>
-                <p className='settingsHeader'>USTAWIENIA</p>
-                <Link to="/ResetPassword"> <p>Zmień hasło</p></Link>
-                <Link to="/editUserPage"><p>Ustawienia profilu</p></Link>
-                <Link to="/editNotificationsPage"><p>Powiadomienia</p></Link>
-                <Link to="/editNotificationsPage"><p>Dodane gry</p></Link>
-                <Link to="/"> <p>Wyloguj</p></Link>
-            </div>
-
-
+        <div className="userPageContainer" onLoad={firstTimeSettingInterval}>
+            {/* PAGE BACK IMAGE -> game pad*/}
             <div className='backImage col-12' id="backImageId">  
                 <img src={BackImage} alt='pad do gry jako tło strony' className='img-fluid tlo'/>
             </div>
 
-
+            {/* more space add additional space after backimage*/}
             <div className='moreSpace' id='spaceHeight1'></div>
+            
+            
+            {/* Banner = header of character sheet */}
             <div className='Banner' id='BannerID'>
                 <div className='BannerTitle'>
                     <h1>KARTA POSTACI:</h1>
@@ -271,10 +275,12 @@ const UserPage = () =>
                 
             </div>
 
-            <div className='backTriangle'>
+            {/* backTriangle = set triangular gradient in the back */}
+            <div className='backTriangle' id='backTraingleID'>
             
 
-                
+            
+            {/* two dives with personal infromation */}
             <div id ='profileContainerId' className='allInfoProfileContainer'>
                 <div className="generalInfo col-10 offset-1 offset-md-0 col-md-4 offset-xl-1 col-xl-3">
                     <div className="personalData" id="personalDataId">
@@ -288,8 +294,8 @@ const UserPage = () =>
                         </div>
 
                         <div className='myData'>
-                            <p className='nickname'>Nick</p>
-                            <p> <span className='topSecret'>Top secret: </span> dane kontaktowe</p>
+                            <p className='nickname'> {dataFromGet && (!error) && dataFromGet.username}</p>
+                            <p> <span className='topSecret'>Top secret: </span> {dataFromGet && (!error) && dataFromGet.contact}</p>
                             <p className='Mymediocre'><span>Ocena profilu: </span> <span className={ColouringClass + ' Mymark'}>{mediocre}</span></p> 
                         </div>
                             
@@ -310,17 +316,17 @@ const UserPage = () =>
 
                             <h2> Dane: </h2>                      
                             <p className='bioListElement'>
-                                <span className='aboutMeLiTitle'>Pochodzenie: </span> Kraj: Miasto
+                                <span className='aboutMeLiTitle'>Pochodzenie: </span> {dataFromGet && (!error) && dataFromGet.country}- {dataFromGet && (!error) && dataFromGet.city}
                             </p>
                             
                             <p className='bioListElement'>
-                                <span className='aboutMeLiTitle'>Języki: </span> polski, angielski
+                                <span className='aboutMeLiTitle'>Język: </span> {dataFromGet && (!error) && dataFromGet.language}
                             </p>
                             
 
                             <h2> Opis postaci: </h2>
                             <p className='bioAboutMe small-font-size'>
-                                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris sit amet rutrum urna, a laoreet quam. Etiam a finibus eros. Duis volutpat in ante non iaculis. Ut sit amet dolor et neque ultricies semper quis sed tellus. Praesent id feugiat ipsum. Vestibulum ullamcorper nulla non elit tristique vestibulum. Pellentesque mi turpis, luctus vel porttitor id, lacinia vel felis. Ut pretium facilisis est, a varius neque pharetra ornare. Vivamus diam dui, dapibus maximus tempor ac, interdum at odio. Ut fringilla tellus sed enim porta, ut imperdiet metus porta. Nulla facilisi. Curabitur maximus aliquam nunc in egestas.
+                                {dataFromGet && (!error) && dataFromGet.about}   
                             </p>
 
                         </div>
@@ -329,11 +335,13 @@ const UserPage = () =>
             </div>   
            
            
-
+            {/* CLEARER = clear: both */}
             <div className='clearer'></div>
             <div className='mediumSpace' id='spaceHeight2'></div>
             </div>
 
+
+            {/* pacman box */}
             { (width>=992) && (<div className="pacmanMoving">
                 <div className='GhostMoving'>
                     <img className='img-fluid' src ={Ghost} alt = "pacman ghost" width={50}/>
@@ -347,6 +355,8 @@ const UserPage = () =>
             </div>)}
 
             <div className='clearer'></div>
+
+            {/*Another parts of page */}
             <UserPageGames/>
             <UserPageLobbys/>
             <Footer/>

@@ -25,6 +25,10 @@ import account from '../assets/account.png';
 //icons
 import { FaUser } from "react-icons/fa";
 import { IoIosNotifications } from "react-icons/io";
+import { jwtDecode } from 'jwt-decode';
+import { IoSettings } from "react-icons/io5";
+
+
 
 
 
@@ -36,9 +40,75 @@ const MyNavbar = () => {
     const [expanded, setExpanded] = useState(false);
     const [notExpanded, setNotExpanded] = useState(false);
     const [firstTime, setFirstTime] = useState(true); 
-    const [buttonAdditionalClass, setAddClass] = useState("none")  
+    const [buttonAdditionalClass, setAddClass] = useState("none") 
+
+    //jwt token
+    const token = localStorage.getItem('token');
+
+    //for side bar maneu
+    const [additaionlMenu, setAdditionalMenu] = useState(false);
+    const [addMenuClass, setMenuClass] = useState('My_none');
+    const [settingClass, setSetClass] = useState('set_none');
+
+    //setting how much screen side menu occupies
+    const [widerMenuAdditional, setWMA] = useState(' cos');
     
+    //decoded token
+    let decoded = [];
+    if(token != null)
+        decoded = jwtDecode(token);
+
+    //date
+    let currentDate = new Date();
     
+    //links and text in navbar
+    let login = false;
+    let myPage = '/login';
+    let myNot  = '/login';
+    let firstButton = '/login';
+    let secondButton = 'registration';
+    let firstButtonText = 'LOGOWANIE';
+    let secondButtonText = 'DOŁĄCZ';
+    let firstButtonTextSmall = 'Logowanie';
+    let secondButtonTextSmall = 'Dołącz';
+
+    //checking if token is decoded properly
+    console.log(decoded);
+
+
+    //checikng if token is done properly
+    if(decoded.exp * 1000 < currentDate.getTime() || token == null)
+    {
+        console.log("you are log out");
+        console.log(decoded.exp);
+        login = false;
+
+        myPage = '/login';
+        myNot  = '/login';
+        firstButton = '/login';
+        secondButton = 'registration';
+        firstButtonText = 'LOGOWANIE';
+        secondButtonText = 'DOŁĄCZ';
+        firstButtonTextSmall = 'Logowanie';
+        secondButtonTextSmall = 'Dołącz';
+    }
+    else if(token != null && decoded.exp * 1000 >= currentDate.getTime() )
+    {
+        console.log("you are log in");
+        console.log(decoded.exp);
+        login = true;
+
+        myPage = '/userPage';
+        myNot  = '/editNotificationsPage';
+        firstButton = '/userLobbys';
+        secondButton = '/';
+        firstButtonText = 'MOJE LOBBY';
+        secondButtonText = 'HOME';
+        firstButtonTextSmall = 'Moje lobby';
+        secondButtonTextSmall = 'Home';
+    }
+
+    //curent path
     const path = useLocation();
 
     //screen parameters
@@ -47,6 +117,15 @@ const MyNavbar = () => {
     //use to prevent small bug
     const [Big, setBig] = useState(false);
     
+
+    const settingHidder = () =>
+    {
+        //hidding setting menu
+        setAdditionalMenu(false);
+        setMenuClass('side_menu_hidden');
+        setSetClass('set_hiden');
+        setWMA(' cos');
+    }
 
     //when navbar is expande or collapse certain values are set (for shadow animation)
     const setToggle = () =>
@@ -65,12 +144,54 @@ const MyNavbar = () => {
             setExpanded(true)
             setNotExpanded(false);
             setAddClass("animOn");
+
+            //hidding setting menu
+            settingHidder();
+
         } 
         else
         {
             setExpanded(false);
             setNotExpanded(true);
             setAddClass("animOff");
+        }
+            
+    }
+
+    //this makes the side menu appear
+    const settingsToggle = () =>
+    {
+        if(expanded)
+        {
+            document.getElementById("toggleButton").click();
+        }
+
+        //additional menu ifs
+        if(additaionlMenu)
+        {
+            //hidding additional menu
+            setAdditionalMenu(false);
+            setMenuClass('side_menu_hidden');
+            setSetClass('set_hiden');
+            setWMA(' cos');
+        } 
+        else
+        {
+            //showing additional menu
+            setAdditionalMenu(true);
+            setMenuClass('side_menu_shown');
+            setSetClass('set_shown');
+
+            //deciding how much space should it take
+            if(width >=900)
+            {
+                setWMA(' Myless');
+            }
+            else
+            {
+                setWMA(' Mymore')
+            }
+            
         }
             
     }
@@ -96,6 +217,8 @@ const MyNavbar = () => {
             
             //using Link insted of 'a' - we avoid sending request to server
             return (
+                <div>
+
                 <nav className="mynavbarBig mynavbar">
                     <Link to="/">
                     <div className='bannerBig banner col-12 col-md-6'>
@@ -108,27 +231,31 @@ const MyNavbar = () => {
         
                     <div className='mynavbarRight col-md-6 col-0'>
                         
-                        <Link to="/login">
+                        {login && (<div className={'my_settings RightConteiner ' + settingClass}  onClick={settingsToggle}>
+                            <IoSettings />
+                        </div>)}
+
+                        <Link to={myNot}>
                             <div className='RightConteiner not_img'> 
                                 <IoIosNotifications />
                             </div>
                         </Link>
 
-                        <Link to="/login">
+                        <Link to={myPage}>
                             <div className='RightConteiner accountImage'>
                                 <FaUser />
                             </div>
                         </Link>
 
-                        <Link to="/login">
+                        <Link to={firstButton}>
                             <div className='RightConteiner login_div'>
-                                LOGOWANIE
+                                {firstButtonText}
                             </div>
                         </Link>
 
-                        <Link to="/registration">
+                        <Link to={secondButton}>
                             <div className='RightConteiner register_div'>
-                                DOŁĄCZ
+                                {secondButtonText}
                             </div>
                         </Link>
 
@@ -139,6 +266,19 @@ const MyNavbar = () => {
                     <div className='clear'></div>
                     
                 </nav>
+
+               
+
+                {login && (<div className={addMenuClass + widerMenuAdditional + ' setting_margin_big'}>
+                    <p className='settingsHeader'>USTAWIENIA</p>
+                    <Link to="/ResetPassword" onClick={settingHidder}> <p>Zmień hasło</p></Link>
+                    <Link to="/editUserPage" onClick={settingHidder}><p>Ustawienia profilu</p></Link>
+                    <Link to="/editNotificationsPage" onClick={settingHidder}><p>Powiadomienia</p></Link>
+                    <Link to="/editNotificationsPage" onClick={settingHidder}><p>Dodane gry</p></Link>
+                    <Link to="/" onClick={settingHidder}> <p>Wyloguj</p></Link>
+                </div>)}
+
+                </div>
                 
                 
             );
@@ -153,15 +293,38 @@ const MyNavbar = () => {
                 <div>
                     <Navbar expand="xl" className="bg-body-tertiary mynavbarSmall mynavbar" onToggle={setToggle} >
                         <Container>
+
                         <Navbar.Brand className='bannerSmall banner' href="/"> <p>ZAGRAJ ZE MNĄ</p></Navbar.Brand>
-                        <Navbar.Toggle className={"buttonSmall " + buttonAdditionalClass } aria-controls="basic-navbar-nav" id="toggleButton"/>
                         
+                        <div className='tableContainerOrSth'>
+                            <table>
+                                <tbody>
+                                    <tr>
+                                        <td>
+                                           {login && ( <div className={'my_settings my_settings_small ' + settingClass}  onClick={settingsToggle}>
+                                                <IoSettings />
+                                            </div> )}
+                                            {!login && ( <div className={'my_settings2'}>
+                                                <IoSettings />
+                                            </div> )}
+                                        </td>
+                                        <td>
+                                            <Navbar.Toggle className={"buttonSmall " + buttonAdditionalClass } aria-controls="basic-navbar-nav" id="toggleButton"/>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                        
+                        
+                        
+
                         <Navbar.Collapse id="basic-navbar-nav" className ="smallBannerLinks">
                             <Nav className="me-auto">
-                            <Nav.Link href="/login">Zaloguj</Nav.Link>
-                            <Nav.Link href="/login">Moje konto</Nav.Link>
-                            <Nav.Link href="/login">Powiadomienia</Nav.Link>
-                            <Nav.Link href="/registration">Rejestracja</Nav.Link>
+                            <Nav.Link href={myPage}>Moje konto</Nav.Link>
+                            <Nav.Link href={myNot}>Powiadomienia</Nav.Link>
+                            <Nav.Link href={firstButton}>{firstButtonTextSmall}</Nav.Link>
+                            <Nav.Link href={secondButton}>{secondButtonTextSmall}</Nav.Link>
                             </Nav>
                         </Navbar.Collapse>
                         
@@ -169,6 +332,15 @@ const MyNavbar = () => {
 
                     </Navbar>
                     
+                    {login && (<div className={addMenuClass + widerMenuAdditional + ' setting_margin_small'}>
+                        <p className='settingsHeader'>USTAWIENIA</p>
+                        <Link to="/ResetPassword" onClick={settingHidder}> <p>Zmień hasło</p></Link>
+                        <Link to="/editUserPage" onClick={settingHidder}><p>Ustawienia profilu</p></Link>
+                        <Link to="/editNotificationsPage" onClick={settingHidder}><p>Powiadomienia</p></Link>
+                        <Link to="/editNotificationsPage" onClick={settingHidder}><p>Dodane gry</p></Link>
+                        <Link to="/" onClick={settingHidder}> <p>Wyloguj</p></Link>
+                    </div>)}
+
                     <div className='clear'></div>
                 </div>
                 
