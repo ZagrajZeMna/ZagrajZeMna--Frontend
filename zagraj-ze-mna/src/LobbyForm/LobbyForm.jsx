@@ -185,7 +185,7 @@ function LobbyForm() {
                
               
               <div className={styles.btnContainer}>
-                  <button type="submit" className={styles.btn}>Make Lobby</button>
+                  <button type="submit" className={styles.btn}>Add Lobby</button>
                   <div>
                     {error && <div className={styles.error}>{error}</div>}    
                   </div>

@@ -8,7 +8,7 @@ function Home(){
 
     const navigate = useNavigate();
     useEffect(()=>{
-        //fetchGames(); //UNCOMMENT THIS IF THERE ARE GAMES WITH PICTURES IN THE DATABASE, OTHERWISE LEAVE COMMENTED
+        fetchGames(); //UNCOMMENT THIS IF THERE ARE GAMES WITH PICTURES IN THE DATABASE, OTHERWISE LEAVE COMMENTED
     },[])
     const fetchGames = () => {
         fetch(`http://localhost:4001/api/mainGame/getGame`)
@@ -38,7 +38,7 @@ function Home(){
 
     
     const [games, setGames] = useState([
-        //placeholder
+    
     { name: 'VALORANT', image: 'https://static-cdn.jtvnw.net/ttv-boxart/516575-285x380.jpg' },
     { name: 'Counter Strike', image: 'https://static-cdn.jtvnw.net/ttv-boxart/32399-285x380.jpg' },
     { name: 'League of Legends', image: 'https://static-cdn.jtvnw.net/ttv-boxart/21779-285x380.jpg' },
@@ -73,7 +73,7 @@ function Home(){
 
     return(
         <div className='background'>
-            <button onClick={handleClick} className='logout'>logout</button>
+           
             
             <div className='game-tiles-container'>
             <span className='caption'>Giereczki</span>

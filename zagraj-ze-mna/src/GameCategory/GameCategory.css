@@ -2,7 +2,6 @@
   /*background-image: url('src/assets/back-image.png');*/
   /* display: flex; */
   background: linear-gradient(135deg, #000000, #333333);
-
   background-color: grey;
   background-size: cover;
   background-position: center;
@@ -10,6 +9,7 @@
   min-height: 100vh;
   padding: 20px;
 }
+
 .search-bar {
   margin-top: 20px;
   margin-bottom: 20px;
@@ -21,6 +21,8 @@
   border-radius: 5px;
   border: 1px solid #ccc;
   margin-bottom: 20px;
+  font-size: 16px;
+  margin-right: 5px;
 }
 
 .search-bar button {
@@ -30,31 +32,58 @@
   border: none;
   border-radius: 5px;
   cursor: pointer;
+  font-size: 16px;
 }
 
 .search-bar button:hover {
   background-color: #363b419f;
 }
+
 .error-message {
   font-size: 60px;
   color: white;
 }
+
+.lobby-wrapper {
+  display: flex;
+  flex-direction: column;
+}
+
+.lobby-pagination-wrapper {
+  display: flex;
+  justify-content: flex-end;
+  margin-top: 20px;
+}
+
 .lobby-pagination-container {
   display: flex;
-  justify-content: center;
   align-items: center;
 }
+
 .lobby-pagination-container button {
   height: 50px;
-  width: 200px;
-  font-size: 30px;
+  width: 120px;
+  font-size: 20px;
+  margin: 0 10px;
+  background-color: #555;
+  color: #fff;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
 }
+
+.lobby-pagination-container button:hover {
+  background-color: #777;
+}
+
 .lobby-pagination-container span {
   color: white;
 }
+
 .lobby-container {
   display: flex;
   flex-direction: column;
+  width: 100%;
 }
 
 .lobby-tile {
@@ -68,19 +97,25 @@
 
 .lobby-tile .lobby-image {
   width: 100px;
-  height: auto;
+  height: 100px;
   margin-right: 16px;
 }
+
 .lobby-tile:hover {
   background-color: #515151;
   cursor: pointer;
 }
+
 .lobby-tile .lobby-details {
   color: #fff;
 }
+
 .lobby-image {
+  display: flex;
   color: white;
+  border-radius: 50%;
 }
+
 .player-count {
   display: flex;
   align-items: center;
@@ -105,10 +140,12 @@
 .player-count button:hover {
   background-color: #777;
 }
+
 .available-lobby-text {
   font-size: 60px;
   color: white;
 }
+
 .category-text {
   font-size: 40px;
   color: white;
