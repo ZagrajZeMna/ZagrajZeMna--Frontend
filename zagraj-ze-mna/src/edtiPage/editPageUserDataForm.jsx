@@ -7,6 +7,8 @@
 import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 
+import './editPageUserDataForm.css';
+
 const EditPageUserDataForm = () =>{
 
     //data from fetch
@@ -148,6 +150,7 @@ const EditPageUserDataForm = () =>{
 
             
             setChange(false);
+            setDU(false);
             console.log(errorPost);
 
             if(errorPost != null)
@@ -385,60 +388,71 @@ const EditPageUserDataForm = () =>{
 
     //return HTML structure
     return(
-        <div className="userFormContainer">
-            <form className="myFormClass" onSubmit={handleSubmit}>
-                <div className="nickInput">
-                    <p>Mój nick: </p>  
-                    <input 
-                    type = "text" 
-                    value={myNick}
-                    onChange={(e) => (setMyNick(e.target.value), setChange(true), setNickChange(true), setDU(false))} 
-                    >
-                    </input>
+        <div className="userFormContainer col-12">
+
+
+            <form className="myFormClass col-12" onSubmit={handleSubmit}>
+
+                <div className='EditPageBanner'>
+                    <h1> Edytuj Profil </h1>
+                </div>
+
+                <div className='formContainerSmall'>
+                <div className='leftSideOfForm toTheLeft widthBig col-10 offset-1 offset-md-0 col-md-6'>
+                    <div className="nickInput myInputClass">
+                        <p>Mój nick: </p>  
+                        <input 
+                        type = "text" 
+                        value={myNick}
+                        onChange={(e) => (setMyNick(e.target.value), setChange(true), setNickChange(true), setDU(false))} 
+                        >
+                        </input>
+                    </div>
+                    
+                    <div className='countryInput myInputClass'>
+                        <p>Kraj:</p>
+                        <input
+                        type="text"
+                        value={myCountry}
+                        onChange={(e) => (setMyCountry(e.target.value), setChange(true), setCountryChange(true), setDU(false))} 
+                        >
+                        </input>
+                    </div>
+
+                    <div className='cityInput myInputClass'>
+                        <p>Miasto:</p>
+                        <input
+                        type="text"
+                        value={myCity}
+                        onChange={(e) => (setMyCity(e.target.value), setChange(true), setCityChange(true), setDU(false))} 
+                        >
+                        </input>
+                    </div>
+
+                    <div className='contactInput myInputClass'>
+                        <p>Dane kontakowowe:</p>
+                        
+                        <input
+                        type="text"
+                        value={myContact}
+                        onChange={(e) => (setMyContact(e.target.value), setChange(true), setContactChange(true), setDU(false))} 
+                        >
+                        </input>
+                        <p><i>UWAGA! <br/> Twoje dane kontakowe są widoczne tylko dla użytkowników, z którymi dzielisz lobby.
+                            Jeżeli nie chcesz nie musisz dzielić się swoimi danymi kontatkowymi. Przykładowe dane kontakowe
+                            to mail albo konto na discordzie</i></p>
+                    </div>
+
+                    <div className='selectLanguage myInputClass'>
+                        <p>Język: </p>
+                        <select id='lang' onChange={(e) => (setchLang(e.target.value), setLangChange(true), setChange(true), setDU(false))}>
+                            {add_options_to_select()}
+                        </select>
+                    </div>
                 </div>
                 
-                <div className='countryInput'>
-                    <p>Kraj:</p>
-                    <input
-                    type="text"
-                    value={myCountry}
-                    onChange={(e) => (setMyCountry(e.target.value), setChange(true), setCountryChange(true), setDU(false))} 
-                    >
-                    </input>
-                </div>
 
-                <div className='cityInput'>
-                    <p>Miasto:</p>
-                    <input
-                    type="text"
-                    value={myCity}
-                    onChange={(e) => (setMyCity(e.target.value), setChange(true), setCityChange(true), setDU(false))} 
-                    >
-                    </input>
-                </div>
-
-                <div className='contactInput'>
-                    <p>Dane kontakowowe:</p>
-                    
-                    <input
-                    type="text"
-                    value={myContact}
-                    onChange={(e) => (setMyContact(e.target.value), setChange(true), setContactChange(true), setDU(false))} 
-                    >
-                    </input>
-                    <p><i>UWAGA! <br/> Twoje dane kontakowe są widoczne tylko dla użytkowników, z którymi dzielisz lobby.
-                        Jeżeli nie chcesz nie musisz dzielić się swoimi danymi kontatkowymi. Przykładowe dane kontakowe
-                        to mail albo konto na discordzie</i></p>
-                </div>
-
-                <div className='selectLanguage'>
-                    <p>Język: </p>
-                    <select id='lang' onChange={(e) => (setchLang(e.target.value), setLangChange(true), setChange(true), setDU(false))}>
-                        {add_options_to_select()}
-                    </select>
-                </div>
-
-                <div className="aboutInput">
+                <div className="aboutInput rightSideOfForm widthBig toTheLeft col-10 offset-1 col-md-6 offset-md-0">
                     <p>Opis postaci: </p>  
                     <textarea  
                     value={aboutMe}
@@ -447,13 +461,23 @@ const EditPageUserDataForm = () =>{
                     </textarea>
                 </div>
                 
-                {wasChanged && (<div>
+                <div className='clearer'></div>
+                <div className='MessageFromForm'>
+                    {wasChanged && (<div className='RememberToSaveData'>
                     <p> Masz niezapisane zmiany</p>
-                </div>)}
-                {errorPost && (<div>
-                    <p>{displayErrorMessage}</p>
-                </div>)}
-                <button className=" saveButton" type="submit"> Zapisz </button>
+                    </div>)}
+                    {errorPost && (<div className='errorMessage_form'>
+                        <p>{displayErrorMessage}</p>
+                    </div>)}
+                    {dataUpdated && (<div className='EverythinkCorrect'>
+                        <p>Zaktualizowano</p>
+                    </div>)}
+                </div>
+                <div className='SavingButton'>
+                    <button className=" saveButton" type="submit"> Zapisz </button>
+                </div>
+                
+                </div>
             </form>
         </div>
     );    
