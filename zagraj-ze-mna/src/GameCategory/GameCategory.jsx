@@ -8,9 +8,8 @@ import { MdNavigateBefore } from "react-icons/md";
 
 const GameCategory = () => {
   const [error, setError] = useState(null);
-
   const [lobbies, setLobbies] = useState([]);
-
+  const [lopata, setLopata] = useState(false);
   const [currentPage, setCurrentPage] = useState(0);
   const [size, setSize] = useState('');
   const [maxPages, setMaxPages] = useState(0);
@@ -22,7 +21,7 @@ const GameCategory = () => {
   const [language, setLanguage] = useState('');
   useEffect(() => {
     fetchLobbies();
-  }, [game,currentPage]); // Update lobbies when game or name changes
+  }, [game,currentPage,lopata]); // Update lobbies when game or name changes
 
   const fetchLobbies = () => {
     fetch(`http://localhost:4001/api/lobby/show?page=${currentPage}&size=${5}&game=${game}&name=${name}`)
@@ -37,7 +36,7 @@ const GameCategory = () => {
         setLobbies(data.Lobby);
         setMaxPages(data.Pages);
         console.log("obecna strona: "+ currentPage);
-        console.log("max strona: " +data.Pages);
+        console.log("max strona: " + data.Pages);
       })
       .catch(error => {
         setError(error.message);
@@ -66,7 +65,7 @@ const GameCategory = () => {
         <input type='text' value={name} onChange={handleInputChange} onKeyPress={handleKeyPress}/> 
         <button onClick={handleSearch}>Szukaj</button>
       </div>
-      <LobbyForm></LobbyForm>
+      <LobbyForm gameNameProp={game} lopata={lopata} setLopata={setLopata}></LobbyForm>
   
       {error ? (
         <div className='error-message'>{console.log(error)}Brak dostępnych lobby 😥</div>
@@ -82,8 +81,9 @@ const GameCategory = () => {
                   <h3>{lobby.Name}</h3>
                   <p>{lobby.Description}</p>
                 </div>
-                <button onClick={()=>window.alert("WORK IN PROGRESS - LOBBY INTERIOR")}>klik</button>
                 <div className='player-count'>
+                  <button onClick={()=>window.alert("WORK IN PROGRESS - LOBBY INTERIOR")}>dołącz</button>
+
                   <span>Gracze: {lobby.playerCount}/{lobby.NeedUsers}</span>
                 </div>
               </div>
