@@ -21,6 +21,9 @@ import { RxThickArrowRight } from "react-icons/rx";
 import { FaRegEdit, FaVenusMars } from "react-icons/fa";
 import { LuArrowBigLeftDash } from "react-icons/lu";
 import { LuArrowBigRightDash } from "react-icons/lu";
+import singleLobby from '../singleLobby/singleLobby';
+import { TbSquareRoundedLetterI } from 'react-icons/tb';
+
 
 
 const UserPageGames = () =>
@@ -34,40 +37,108 @@ const UserPageGames = () =>
 
     const [maxPageNumber, setMPNumber] = useState(11);
 
+    const [gameList, setGameList] = useState(null);
+
+    const [First, setFirst] = useState(false);
+
     //paging buttos games
     function PageLeft()
     {
         let page = pageGames;
+        let previous = page;
         if(page>0)
         {
             page--;
-            console.log(page);
             setPageGames(page);
+            console.log(page);
+            getDataForGames(page);
         }
             
 
     } 
+    const getDataForGames = async (page) => {
+        try{
+
+            const token = localStorage.getItem('token');
+            //if token not exist = we are log out
+            if(!token){
+                setError('Please log in');
+                return;
+            }
+            const tokenWithoutQuotes = token.replace(/"/g, '');
+            
+            let size = 0
+
+            if(width < 1200)
+                size = 12;
+            else
+                size = 20;
+
+
+            console.log("STRONA: ", page);
+            // let strona = pageGames;
+            let body = {'page': `${page}`,
+                    'size': `${size}`}
+
+            //fetching user data
+            const response = await fetch('http://localhost:4001/api/profile/usersGames',{
+                method:'POST',
+                headers: {
+                    'Authorization' : `Bearer ${tokenWithoutQuotes}`,
+                    'Content-Type': 'application/json'
+
+                },
+                body: JSON.stringify(
+                    body
+                ),
+                });
+
+                //if response is bad
+                if(!response.ok){
+                    const errorData = await response.json();
+                    throw new Error(errorData.message || 'Błąd logowania');
+                }
+
+                //parsing to json
+                const dataFromGet = await response.json();
+                
+                //setting data
+                setGameList(dataFromGet);
+                console.log("Dane: ", dataFromGet);
+                
+            }catch (error){
+            //setting error if occurs
+            console.log(error.message);
+            setGameList(null);
+            //setError(error.message);
+        }
+    };
 
     function FirstLeft()
     {
         setPageGames(0);
+        let page = 0
+        getDataForGames(page);
     }
 
     function LastRight()
     {
+        let page = maxPageNumber - 1;
         setPageGames(maxPageNumber -1);
+        getDataForGames(page);
     }
 
     //to do - add max value
     function PageRight()
     {
         let page = pageGames;
-        
+        let previous = page;
         if(page < maxPageNumber - 1)
         {
+
             page++;
             setPageGames(page);
-            console.log(page);
+            getDataForGames(page);
         }
         
 
@@ -75,9 +146,20 @@ const UserPageGames = () =>
     } 
 
 
+    function only_once_on_load()
+    {
+        if(!First)
+        {
+            setFirst(true);
+            getDataForGames(0)
+        }
+    }
+
     //tetris alike shelf loop (shows only when width >= 1200)
     const TetrisGamesLoop = () =>
     {
+
+
         //to bottom green first
         let colorsTetris = ['c', 'c', 'c', 'c', 'c', 'c', 'c', 'r', 'c', 'c', 'b', 'b', 'r', 'c', 'c', 'b', 'b', 'r', 'r', 'c' ];
 
@@ -113,7 +195,13 @@ const UserPageGames = () =>
         var colorClass = ' ';
         var HeightOfBlock = width * 0.84 * 0.52 * 0.18;
         let modForGame = 10;
-        
+        let number_of_games = 0;
+        if (gameList!= null)
+        {
+            number_of_games = gameList.Games.length;
+            console.log("Games on page: ",number_of_games)
+        }
+
         for(let i = 0; i<20; i++)
         {
 
@@ -148,11 +236,20 @@ const UserPageGames = () =>
             else if(usingColors[i] == 'c')
                 colorClass = ' backGroundTetrisBlock';
 
+            
+            let game_name = '';
+            let value_of_game =-1;
+
+            if(i < number_of_games)
+            {
+                game_name = gameList.Games[i].shortname;
+            }
+                
 
             content.push(
             <div key={i} className={'tetrisBlock tetrisBlock_withGame ' + colorClass} style={{height: + HeightOfBlock + 'px'}}>
-                <img src={Sus} alt="gra" className='img-fluid gameImage'/>
-                <p>Among Us</p>
+                {((number_of_games > i) && (<img src={Sus} alt="gra" className='img-fluid gameImage'/>))}
+                <p>{game_name}</p>
             </div>);
                    
         }
@@ -161,11 +258,10 @@ const UserPageGames = () =>
 
 
     //shelft loop when width < 1200
+    //its smaller and dont look like Tetris
     const ShelfGamesLoop = () =>
     {
-        let colorsTetris = ['r', 'r', 'r', 'r', 'g', 'g', 'g', 'g', 'b', 'b', 'b', 'b', 'g', 'g', 'g', 'g','r', 'r', 'r', 'r'];
         let content = [];
-        var colorClass = ' ';
         for(let i=0; i<12; i++)
         {
 
@@ -188,7 +284,7 @@ const UserPageGames = () =>
 
     //return stuff
     return(
-        <div className="myGames">
+        <div className="myGames" onLoad={only_once_on_load()}>
             
 
             <div className='gradientGamesEntry'></div>

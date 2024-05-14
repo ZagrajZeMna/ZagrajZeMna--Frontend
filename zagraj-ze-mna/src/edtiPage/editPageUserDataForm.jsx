@@ -15,11 +15,17 @@ const EditPageUserDataForm = () =>{
     //languages = all languages that are in database
     const [allLanguages, setALanguages] = useState(null);
 
-    //error with fetching
+    //errors with fetching
     const [error, setError] = useState(null);
     const [errorLang, setErrorLang] = useState(null);
     const [errorPost, setErrorPost] = useState(null);
+
+    //erros message to display
     const [displayErrorMessage, setDEM] = useState('');
+
+    //if there is no errors this is set to true and message
+    //that data was properly updated is shown
+    const [dataUpdated, setDU] = useState(false);
     
     //used for storing user data 
     //and displaying it in form inputs
@@ -28,7 +34,7 @@ const EditPageUserDataForm = () =>{
     const [myCountry, setMyCountry] = useState('')
     const [myCity, setMyCity] = useState('')
     const [choosenLang, setchLang] = useState(1)
-    const [myContant, setMyContact] = useState('')
+    const [myContact, setMyContact] = useState('')
 
     //used for checking if user was changing certain data
     //when submit send only necessery changes not all changes
@@ -37,7 +43,7 @@ const EditPageUserDataForm = () =>{
     const [countryChange, setCountryChange] = useState(false)
     const [cityChange, setCityChange] = useState(false)
     const [langChange, setLangChange] = useState(false)
-    const [contantChange, setContactChange] = useState(false)
+    const [contactChange, setContactChange] = useState(false)
 
     //if some data was changed this is set to true
     //then "you don't save your changes" text is shown
@@ -52,27 +58,31 @@ const EditPageUserDataForm = () =>{
     const handleSubmit = async(e) =>{
         e.preventDefault();
 
-       // if(|| !myCity.trim())
-       // {
-
-       // }
-
+        //username needs to be something
         if(nickChange && !myNick.trim())
         {
             setNickChange(false);
             setDEM('Nie możesz ustawić pustego nicku');
         }
 
+        //if nick was sets to the previous version we sets
+        //that there is no need to update nick
+        //without this error shows that username must be unique
         if(dataFromGet != null)
             if(nickChange && myNick == dataFromGet.username);
                 setNickChange(false);
 
-        if(aboutChange && !aboutChange.trim())
+
+        //BELOW
+        //below are few ifs that checks if we are not sending empty data to back
+        //backend prevents this so if user wants to sets empty bio or something
+        //we change empty to space 
+        if(aboutChange && !aboutMe.trim())
         {
             setAboutMe(" ");
         }
 
-        if(contantChange && !myContant.trim())
+        if(contactChange && !myContact.trim())
         {
             setMyContact(" ");
         }
@@ -90,6 +100,8 @@ const EditPageUserDataForm = () =>{
         }
 
 
+        //ifs below prepare variables for connection with back
+        //and call fetch function
         if(wasChanged){
             if(nickChange)
             {
@@ -119,7 +131,20 @@ const EditPageUserDataForm = () =>{
                 fetchPostBody(e,url,body);
                 setCityChange(false);
             }
-
+            if(countryChange)
+            {
+                let body = { "country": `${myCountry}` };
+                let url = 'http://localhost:4001/api/profile/updateCountry'
+                fetchPostBody(e,url,body);
+                setCountryChange(false);
+            }
+            if(contactChange)
+            {
+                let body = { "contact": `${myContact}` };
+                let url = 'http://localhost:4001/api/profile/updateContact'
+                fetchPostBody(e,url,body);
+                setContactChange(false);
+            }
 
             
             setChange(false);
@@ -133,27 +158,44 @@ const EditPageUserDataForm = () =>{
                     console.log(displayErrorMessage);
                 }
             }
+            else
+                setDU(true);
+
             
         }
         
         
         
     }
-
+    /* FETCH FOR UPDATING USER DATA
+    - as parameters it takes:
+    - e
+    - url - witch is url to back like http://localhost:4001/api/profile/updateContact
+    - body - witch is something like body = {"data_name": "data"}
+    */
     const fetchPostBody = async(e, url, body) =>{
         try {
-
+            
+            //clearing previous errors
             setErrorPost(null);
+
+            //taking token
             const token = localStorage.getItem('token');
                 
             //if token not exist = we are log out
+            //TODO: add checking if token is expired
             if(!token)
-            {
+            {   
+                //setting error that we are log out
                 setErrorPost('Twoja sesja wygasła');
                 return;
             }
+            //deleting Quotes from token
             const tokenWithoutQuotes = token.replace(/"/g, '');
 
+            //connection with backend
+            //headers are importatant, we set there conections-type
+            //and sends token to back (backend needs token to check if we are log in or log out)
             const response = await fetch(url, {
                 method: 'POST',
                 headers: {
@@ -164,14 +206,19 @@ const EditPageUserDataForm = () =>{
                     body
                 ),
             });
-
+            
+            //checking backend respond
             if(!response.ok){
                 const errorData = await response.json();
                 throw new Error(errorData.message || 'Błąd logowania');
             }
+            
 
+            //below is text respond of backend it is something like:
+            //country properly updated, I am not using it
             //const text = await response.text();
 
+            //error catching
         } catch (error2) {
             setErrorPost(error2.message);
         }
@@ -345,7 +392,7 @@ const EditPageUserDataForm = () =>{
                     <input 
                     type = "text" 
                     value={myNick}
-                    onChange={(e) => (setMyNick(e.target.value), setChange(true), setNickChange(true))} 
+                    onChange={(e) => (setMyNick(e.target.value), setChange(true), setNickChange(true), setDU(false))} 
                     >
                     </input>
                 </div>
@@ -355,7 +402,7 @@ const EditPageUserDataForm = () =>{
                     <input
                     type="text"
                     value={myCountry}
-                    onChange={(e) => (setMyCountry(e.target.value), setChange(true), setCountryChange(true))} 
+                    onChange={(e) => (setMyCountry(e.target.value), setChange(true), setCountryChange(true), setDU(false))} 
                     >
                     </input>
                 </div>
@@ -365,7 +412,7 @@ const EditPageUserDataForm = () =>{
                     <input
                     type="text"
                     value={myCity}
-                    onChange={(e) => (setMyCity(e.target.value), setChange(true), setCityChange(true))} 
+                    onChange={(e) => (setMyCity(e.target.value), setChange(true), setCityChange(true), setDU(false))} 
                     >
                     </input>
                 </div>
@@ -375,8 +422,8 @@ const EditPageUserDataForm = () =>{
                     
                     <input
                     type="text"
-                    value={myContant}
-                    onChange={(e) => (setMyContact(e.target.value), setChange(true), setContactChange(true))} 
+                    value={myContact}
+                    onChange={(e) => (setMyContact(e.target.value), setChange(true), setContactChange(true), setDU(false))} 
                     >
                     </input>
                     <p><i>UWAGA! <br/> Twoje dane kontakowe są widoczne tylko dla użytkowników, z którymi dzielisz lobby.
@@ -386,7 +433,7 @@ const EditPageUserDataForm = () =>{
 
                 <div className='selectLanguage'>
                     <p>Język: </p>
-                    <select id='lang' onChange={(e) => (setchLang(e.target.value), setLangChange(true), setChange(true))}>
+                    <select id='lang' onChange={(e) => (setchLang(e.target.value), setLangChange(true), setChange(true), setDU(false))}>
                         {add_options_to_select()}
                     </select>
                 </div>
@@ -395,7 +442,7 @@ const EditPageUserDataForm = () =>{
                     <p>Opis postaci: </p>  
                     <textarea  
                     value={aboutMe}
-                    onChange={(e) => (setAboutMe(e.target.value), setChange(true), setAboutChange(true))} 
+                    onChange={(e) => (setAboutMe(e.target.value), setChange(true), setAboutChange(true), setDU(false))} 
                     >
                     </textarea>
                 </div>
