@@ -1,16 +1,15 @@
-.scrollContainer {
-  height: 100vh;
- }
- 
- .mainFormContainer {
+.mainFormContainer {
   display: flex;
   align-items: center;
   flex-direction: row;
-  border: 3px solid black;
+  border: 3px solid white;
   padding: 0 20px;
- }
- 
- .registrationForm {
+  margin-bottom: 16px;
+  color: white;
+  border-radius: 15px;
+}
+
+.registrationForm {
   display: none;
   flex-direction: row;
   align-items: center;
@@ -19,31 +18,31 @@
   transition: min-height 0.5s ease-in-out;
   padding: 20px;
   width: 100%;
- }
- 
- .registrationForm.visible {
+}
+
+.registrationForm.visible {
   max-height: 500px;
   display: flex;
   min-height: 100px;
- }
- 
- .inputContainer {
+}
+
+.inputContainer {
   display: flex;
   flex-direction: row;
   align-items: center;
   flex-wrap: wrap;
- }
- 
- .registerTitle {
+}
+
+.registerTitle {
   text-align: center;
   font-family: "IBM Plex Mono", monospace;
   font-weight: bold;
   font-size: 2rem;
   margin-left: 30px;
   padding-right: 160px;
- }
- 
- .inputy {
+}
+
+.inputy {
   margin: 10px;
   font-size: 16px;
   font-weight: bold;
@@ -51,23 +50,22 @@
   border: 3px solid black;
   font-family: "IBM Plex Mono", monospace;
   padding: 15px 30px 15px 10px;
- }
- 
- .inputy::placeholder {
+}
+
+.inputy::placeholder {
   color: #646669;
- }
- 
- .btnContainer {
+}
+
+.btnContainer {
   font-family: "IBM Plex Mono", monospace;
   display: flex;
   justify-content: flex-end;
   flex-direction: column;
   text-align: center;
   margin-left: auto;
+}
 
- }
- 
- .btn {
+.btn {
   border-radius: 50px;
   cursor: pointer;
   font-family: "IBM Plex Mono", monospace;
@@ -77,92 +75,89 @@
   background-color: black;
   color: white;
   width: 300px;
- }
- 
- .btn:hover {
+}
+
+.btn:hover {
   background-color: #646669;
- }
- 
- .btn:active {
+}
+
+.btn:active {
   background-color: #323437;
- }
- 
- .error {
+}
+
+.error {
   font-size: 14px;
   margin-top: 10px;
- }
- 
- .iconPlus {
+}
+
+.iconPlus {
   font-size: 60px;
   cursor: pointer;
   transition: transform 0.3s ease;
- }
- 
- .iconPlus.rotate {
-  transform: rotate(90deg);
- }
- 
+}
 
- @media (max-width: 768px) {
+.iconPlus.rotate {
+  transform: rotate(90deg);
+}
+
+@media (max-width: 1100px) {
   .mainFormContainer {
-     flex-direction: column;
-     padding: 20px;
+    flex-direction: column;
+    padding: 20px;
   }
- 
+
   .registerTitle {
-     font-size: 1.5rem;
-     margin-left: 0;
-     padding-right: 0;
+    font-size: 1.5rem;
+    margin-left: 0;
+    padding-right: 0;
   }
- 
+
   .inputContainer {
-     flex-direction: column;
+    flex-direction: column;
   }
- 
+
   .inputy {
-     width: 100%;
-     margin: 10px 0;
-     
+    width: 100%;
+    margin: 10px 0;
   }
-  .btnContainer{
+  .btnContainer {
     padding-left: 20px;
   }
   .btn {
-     width: 100%;
+    width: 100%;
+  }
+}
 
-  }
- }
- 
- @media (max-width: 480px) {
+@media (max-width: 480px) {
   .registerTitle {
-     font-size: 1.2rem;
+    font-size: 1.2rem;
   }
- 
+
   .inputy {
-     padding: 10px 20px 10px 10px;
+    padding: 10px 20px 10px 10px;
   }
- }
- @media (max-width: 1230px) {
+}
+@media (max-width: 1230px) {
   .btnContainer {
-     width: 100%;
-     justify-content: center;
+    width: 100%;
+    justify-content: center;
   }
- 
+
   .btn {
-     width: 100%;
-     max-width: 300px; 
-     margin: 0 auto; 
+    width: 100%;
+    max-width: 300px;
+    margin: 0 auto;
   }
- }
- @media (max-width: 1060px) and (min-width: 768px) {
+}
+@media (max-width: 1060px) and (min-width: 768px) {
   .scrollContainer {
-    min-width: 1061px;
-    overflow-x: auto; 
+    min-width: 100%;
+    overflow-x: auto;
   }
- 
+
   .btn {
-     width: 100%;
-     max-width: 200px; 
-     margin: 0 auto; 
+    width: 100%;
+    max-width: 200px;
+    margin: 0 auto;
   }
- }
+}

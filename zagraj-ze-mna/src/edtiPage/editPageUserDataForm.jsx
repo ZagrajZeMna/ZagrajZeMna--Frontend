@@ -74,7 +74,6 @@ const EditPageUserDataForm = () =>{
             if(nickChange && myNick == dataFromGet.username);
                 setNickChange(false);
 
-
         //BELOW
         //below are few ifs that checks if we are not sending empty data to back
         //backend prevents this so if user wants to sets empty bio or something

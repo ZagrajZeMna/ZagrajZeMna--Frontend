@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Link } from 'react-router-dom';
 import "./Home.css";
+import Footer from '../footer/footer';
 
 function Home(){
     const [error, setError] = useState(null);
@@ -38,7 +39,7 @@ function Home(){
 
     
     const [games, setGames] = useState([
-        //placeholder
+    
     { name: 'VALORANT', image: 'https://static-cdn.jtvnw.net/ttv-boxart/516575-285x380.jpg' },
     { name: 'Counter Strike', image: 'https://static-cdn.jtvnw.net/ttv-boxart/32399-285x380.jpg' },
     { name: 'League of Legends', image: 'https://static-cdn.jtvnw.net/ttv-boxart/21779-285x380.jpg' },
@@ -73,7 +74,7 @@ function Home(){
 
     return(
         <div className='background'>
-            <button onClick={handleClick} className='logout'>logout</button>
+           
             
             <div className='game-tiles-container'>
             <span className='caption'>Giereczki</span>
@@ -101,8 +102,9 @@ function Home(){
                     ))}
                 </div>
             </div>
-            
+            <Footer></Footer>
         </div>
+        
     );
 }
 
