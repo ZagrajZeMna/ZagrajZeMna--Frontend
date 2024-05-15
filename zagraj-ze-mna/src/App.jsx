@@ -1,6 +1,7 @@
 import Registration from "./Registration/Registration"
 import Login from "./Login/Login"
 import Home from "./Home/Home"
+import AdminPage from "./AdminPage/AdminPage"
 import { Routes, Route } from 'react-router-dom';
 import ResetPassword from "./ResetPassword/ResetPassword";
 import GameCategory from './GameCategory/GameCategory';
@@ -22,6 +23,7 @@ function App() {
       <Routes>
         <Route path="/registration" element={<Registration />} />
         <Route path="/" element={<Home />} />
+        <Route path="/adminPage" element={<AdminPage />} />
         <Route path="/login" element={<Login />} />
         <Route path="/resetPassword" element={<ResetPassword/>}/>
 
