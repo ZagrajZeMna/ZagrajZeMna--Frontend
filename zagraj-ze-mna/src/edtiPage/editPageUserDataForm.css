@@ -3,6 +3,12 @@
     clear: both;
 }
 
+.dataGetter
+{
+    width: 0%;
+    height: 0px;
+}
+
 .withBig
 {
     width: 100%;
