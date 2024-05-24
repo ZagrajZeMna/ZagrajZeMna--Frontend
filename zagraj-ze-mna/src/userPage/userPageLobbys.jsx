@@ -35,6 +35,7 @@ const UserPageLobbys = () =>{
 
     //variables
     var number = 0;
+    var profileDivHeight = 100;
 
     //functions
     const addlobbys = () =>
@@ -50,6 +51,11 @@ const UserPageLobbys = () =>{
 
         return content;
     }
+
+    function setPDHeight(h)
+    {
+        profileDivHeight = h;
+    }
     
     function changeImage()
     {
@@ -64,30 +70,69 @@ const UserPageLobbys = () =>{
         if(firstTime)
         {
             setInterval(changeImage, 500);
+            setInterval(changeHeightInterval, 200);
             setFT(false)
         }
             
     }
 
+
+    function checkHeight()
+    {
+        var h;
+        if( document.getElementById('heightSource') !== "undefined" && document.getElementById('heightSource') !== null)
+        {
+            h = document.getElementById('heightSource').offsetHeight;
+            setPDHeight(h)
+            
+
+            var helper = profileDivHeight + 'px';
+            document.getElementById('heightTarget8').style.height = helper ;
+            document.getElementById('heightTarget8').style.height = helper ;
+            document.getElementById('heightTarget8').style.height = helper ;
+            document.getElementById('heightTarget4').style.height = helper ;
+            document.getElementById('heightTarget3').style.height = helper ;
+            document.getElementById('heightTarget5').style.height = helper ;
+            document.getElementById('heightTarget6').style.height = helper ;
+            console.log("height checking");
+            
+        }
+    }
+
+    function changeHeightInterval()
+    {
+        if( document.getElementById('heightTarget3') !== "undefined" && document.getElementById('heightTarget3') !== null 
+            && document.getElementById('heightSource') !== "undefined" && document.getElementById('heightSource') !== null )
+        {
+            if(document.getElementById('heightTarget3').offsetHeight != document.getElementById('heightSource').offsetHeight)
+            {
+                checkHeight();
+            }
+        }
+    }
+
     return(
         <div className="myLobbys">
             
-            {(width >= 992) && (<div className='walkingAnimationConteiner'  onLoad={firstTimeSettingInterval}>               
-                <div className='moving_div_gang'>
+            {(width >= 992) && (<div className='walkingAnimationConteiner' onLoad={firstTimeSettingInterval}>               
+                
+                <div className='moving_div_gang' id="heightSource">
                     <img src = {curentGangImage} alt = 'some walking guys i quess' className='wallking_gang img-fluid' id='pictureToChange'/>
                 </div>
                 <div className='hider hiderLeft'>
-                    <div className='hiderNotTransparentLeft'></div>
-                    <div className='hiderTransparentLeft'></div>
+                    <div className='hiderNotTransparentLeft' id='heightTarget3'></div>
+                    <div className='hiderTransparentLeft' id='heightTarget4'></div>
                 </div>
                 <div className='clearer'></div>
                 <div className='hider hiderRight'>
-                    <div className='hiderTransparentRight'></div>
-                    <div className='hiderNotTransparentLeft'></div>
+                    <div className='hiderTransparentRight' id='heightTarget5'></div>
+                    <div className='hiderNotTransparentLeft' id='heightTarget6'></div>
                 </div>
+                
                 <div className='clearer'></div>
+                
             </div>)}
-
+            <div className='positionerOfWalkingGang' id='heightTarget8'></div>
             <div className='mojeDruzyny'>
                  <div className='flotLeftClassOrSth mojeDruzynyTitle'><h1>MOJE DRUŻYNY: </h1></div>
                  <div className='pageArrowLobby'>

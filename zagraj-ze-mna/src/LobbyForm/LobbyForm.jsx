@@ -1,30 +1,25 @@
 import styles from './LobbyForm.module.css'
-import React, { useState, useRef, useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import { IoAddCircleOutline } from "react-icons/io5";
 import { useNavigate } from 'react-router-dom';
 
-function LobbyForm() {
-
+function LobbyForm({ gameNameProp,lopata,setLopata}) {
   const [values, setValues] = useState({
-    gameName:"",
     Name:"",
     Description:"",
-    language:"",
-    NeedUsers:""  
+    language:"Polski",
+    NeedUsers: 5 // Default value for NeedUsers
   });
-
   const [error, setError] = useState(null);
   const [formVisible, setFormVisible] = useState(false);
   const [dataFromGet, setDataFromGet] = useState(null);
-
-  
 
   useEffect(()=>{
     const getData = async () => {
       try{
         const response = await fetch(`http://localhost:4001/api/lobby/data`);
         if(!response.ok){
-          throw new Error('Nie udało się poprać danych');
+          throw new Error('Nie udało się pobrać danych');
         }
         const dataFromGet = await response.json();
         setDataFromGet(dataFromGet);
@@ -45,12 +40,6 @@ function LobbyForm() {
 
   const inputs = [
     {
-        id:1,
-        name:"gameName",
-        options: dataFromGet ? dataFromGet.Games.map(game => game.name) : [],
-        displayValue: "nazwę gry"
-    },
-    {
         id:2,
         name:"Name",
         type:"text",
@@ -68,21 +57,21 @@ function LobbyForm() {
         options: dataFromGet ? dataFromGet.Languages.map(language => language.LANGUAGE) : [],
         displayValue: "Język"
     },
-    {
-      id:5,
-      name:"NeedUsers",
-      options: ["1", "2", "3", "4", "5", "6", "7", "8", "9", "10"],
-      displayValue: "liczbę graczy potrzebnych w lobby "
-    }
+    
   ];
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    const allFieldsFilled = Object.values(values).every(value => {
+      // Check if the value is not an empty string or undefined
+      return value !== "" && value !== undefined;
+    });
 
-    const allFieldsFilled = Object.values(values).every(value => value.trim() !== '');
+    // Check if NeedUsers is a valid number
+    const isNeedUsersValid = !isNaN(values.NeedUsers);
 
-    if (!allFieldsFilled) {
-      setError('Please fill in all fields.' );
+    if (!allFieldsFilled || !isNeedUsersValid) {
+      setError('Please fill in all fields and provide a valid number for Need Users.');
       return;
     }
 
@@ -101,11 +90,11 @@ function LobbyForm() {
           'Authorization': `Bearer ${tokenWithoutQuotes}`
         },
         body: JSON.stringify({
-          gameName: values.gameName,
+          gameName: gameNameProp, // Use gameName from prop
           Name: values.Name,
           Description: values.Description,
           language: values.language,
-          NeedUsers: values.NeedUsers
+          NeedUsers: values.NeedUsers // Include NeedUsers value in the request body
         })
       });
       if(!response.ok){
@@ -114,11 +103,10 @@ function LobbyForm() {
       }
 
       setValues({
-        gameName:"",
         Name:"",
         Description:"",
-        language:"",
-        NeedUsers:"" 
+        language:"Polski",
+        NeedUsers: 5 // Reset NeedUsers value after submission
       });
 
       setError("Lobby zostało utworzone pomyślnie");
@@ -129,6 +117,8 @@ function LobbyForm() {
     }catch(error){
       setError(error.message );
     }
+    setLopata(!lopata);
+
   };
 
 
@@ -140,61 +130,71 @@ function LobbyForm() {
     });
   };
 
+  const handleSliderChange = (e) => {
+    // Update NeedUsers value when slider changes
+    setValues({
+      ...values,
+      NeedUsers: parseInt(e.target.value)
+    });
+    
+  };
 
-    return (
-      <div className={styles.scrollContainer}>
+  return (
+    <div className={styles.scrollContainer}>
       <div className={styles.mainFormContainer}>
         <IoAddCircleOutline onClick={toggleFormVisibility} className={`${styles.iconPlus} ${formVisible ? styles.rotate : ''}`}/>
         <div className={styles.registerTitle}>STWÓRZ LOBBY</div>
-          <form onSubmit={handleSubmit}
-            className={`${styles.registrationForm} ${formVisible ? styles.visible : ''}`}>
-              
-              
-                <div className={styles.inputContainer} >
-                  {
-                    inputs.map((input) => (
-                      <div key={input.id}>
-                        
-                        {input.type === 'text' ? ( 
-                          <input
-                            className={styles.inputy} 
-                            type={input.type} 
-                            name={input.name}
-                            placeholder={input.placeholder}
-                            value={values[input.name]} 
-                            onChange={handleChange}/>
-                            ) : (
-                              <select
-                                className={styles.inputy}
-                                name={input.name}
-                                value={values[input.name]}
-                                onChange={handleChange}
-                              >
-                                <option value="">Wybierz {input.displayValue}</option>
-                                  {input.options.map(option => (
-                                    <option key={option} value={option}>
-                                      {option}
-                                    </option>
-                                  ))}
-                              </select>
-                            )}
-                      
-                    </div>
-                  ))}
-                </div>
-               
-              
-              <div className={styles.btnContainer}>
-                  <button type="submit" className={styles.btn}>Add Lobby</button>
-                  <div>
-                    {error && <div className={styles.error}>{error}</div>}    
-                  </div>
+        <form onSubmit={handleSubmit} className={`${styles.registrationForm} ${formVisible ? styles.visible : ''}`}>
+          <div className={styles.inputContainer}>
+            {inputs.map((input) => (
+              <div key={input.id}>
+                {input.type === 'text' ? ( 
+                  <input
+                    className={styles.inputy} 
+                    type={input.type} 
+                    name={input.name}
+                    placeholder={input.placeholder}
+                    value={values[input.name]} 
+                    onChange={handleChange}
+                  />
+                ) : (
+                  <select
+                    className={styles.inputy}
+                    name={input.name}
+                    value={values[input.name]}
+                    onChange={handleChange}
+                  >
+                    <option value="">Wybierz {input.displayValue}</option>
+                    {input.options.map(option => (
+                      <option key={option} value={option}>
+                        {option}
+                      </option>
+                    ))}
+                  </select>
+                )}
               </div>
-              
-          </form>
-        </div>
-        </div>
-    )
+            ))}
+            <div className={styles.slider}>
+              <input
+                type="range"
+                value={values.NeedUsers}
+                min="1"
+                max="10"
+                className={styles.slider}
+                onChange={handleSliderChange} // Call handleSliderChange function on slider change
+              />
+              <span>Liczba graczy: {values.NeedUsers}</span>
+            </div>
+          </div>
+          <div className={styles.btnContainer}>
+            <button type="submit" className={styles.btn} >Dodaj Lobby</button>
+            <div>{error && <div className={styles.error}>{error}</div>}</div>
+          </div>
+        </form>
+      </div>
+    </div>
+    
+  );
 }
-  
-export default LobbyForm
+
+export default LobbyForm;

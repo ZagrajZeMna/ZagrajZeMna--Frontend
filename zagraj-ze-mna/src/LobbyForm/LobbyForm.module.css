@@ -2,9 +2,11 @@
   display: flex;
   align-items: center;
   flex-direction: row;
-  border: 3px solid black;
+  border: 3px solid white;
   padding: 0 20px;
   margin-bottom: 16px;
+  color: white;
+  border-radius: 15px;
 }
 
 .registrationForm {
@@ -98,7 +100,7 @@
   transform: rotate(90deg);
 }
 
-@media (max-width: 768px) {
+@media (max-width: 1100px) {
   .mainFormContainer {
     flex-direction: column;
     padding: 20px;
@@ -149,7 +151,7 @@
 }
 @media (max-width: 1060px) and (min-width: 768px) {
   .scrollContainer {
-    min-width: 1061px;
+    min-width: 100%;
     overflow-x: auto;
   }
 
