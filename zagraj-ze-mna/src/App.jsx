@@ -13,7 +13,8 @@ import Space from "./navbar/space";
 import MyNavbar from "./navbar/navbar";
 import UserPage from "./userPage/userPage";
 import EditUserPage from "./edtiPage/editUserPage";
-
+import Notification from "./Notification/notification";
+import NotiPage from "./Notification/NotiPage";
 
 function App() {
 
@@ -21,6 +22,7 @@ function App() {
       <AuthProvider>
         <MyNavbar/>
         <Space/>
+        <Notification/>
         <Routes>
           <Route path="/registration" element={<Registration />} />
           <Route path="/" element={<Home />} />
@@ -35,7 +37,7 @@ function App() {
           <Route path="/userPage" element={<ProtectedRoute><UserPage /></ProtectedRoute>} />
 
           <Route path="/editUserPage" element={<ProtectedRoute><EditUserPage /></ProtectedRoute>} />
-
+          <Route path="/notification" element={<ProtectedRoute><NotiPage /></ProtectedRoute>} />
         </Routes>
       </AuthProvider>
   );
