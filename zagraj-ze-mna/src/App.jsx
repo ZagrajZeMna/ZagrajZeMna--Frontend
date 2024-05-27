@@ -27,7 +27,7 @@ function App() {
       <Routes>
         <Route path="/registration" element={<Registration />} />
         <Route path="/" element={<Home />} />
-        <Route path="/adminPage" element={<AdminPage />} />
+        
         <Route path="/login" element={<Login />} />
         <Route path="/resetPassword" element={<ResetPassword/>}/>
 
@@ -36,6 +36,11 @@ function App() {
 
 
           <Route path="/lobbyForm" element={<LobbyForm/>}/>
+
+          <Route path="/adminPage" element={
+          <ProtectedRoute>
+            <AdminPage />
+          </ProtectedRoute>} />
 
           <Route path="/userPage" element={
           <ProtectedRoute>

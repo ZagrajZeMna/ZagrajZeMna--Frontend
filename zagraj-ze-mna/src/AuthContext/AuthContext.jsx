@@ -9,14 +9,16 @@ export function useAuth() {
 
 export function AuthProvider({ children }) {
   const [currentUser, setCurrentUser] = useState(null);
+  const [loading, setLoading] = useState(true);
   const navigate = useNavigate();
 
   useEffect(() => {
     const token = localStorage.getItem('token');
     if (token) {
-      // Jeśli token istnieje, ustaw currentUser
+      
       setCurrentUser({ token });
     }
+    setLoading(false);
   }, []);
 
   const login = async (email, password) => {
@@ -53,6 +55,7 @@ export function AuthProvider({ children }) {
     currentUser,
     login,
     logout,
+    loading,
   };
 
   return (
