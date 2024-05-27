@@ -1,3 +1,5 @@
+
+import AdminPage from "./AdminPage/AdminPage"
 import { AuthProvider, useAuth } from './AuthContext/AuthContext';
 import ProtectedRoute from './AuthContext/ProtectedRoute';
 import Registration from "./Registration/Registration";
@@ -19,15 +21,16 @@ import NotiPage from "./Notification/NotiPage";
 function App() {
 
   return (
-      <AuthProvider>
-        <MyNavbar/>
-        <Space/>
-        <Notification/>
-        <Routes>
-          <Route path="/registration" element={<Registration />} />
-          <Route path="/" element={<Home />} />
-          <Route path="/login" element={<Login />} />
-          <Route path="/resetPassword" element={<ResetPassword/>}/>
+    <AuthProvider>
+      <MyNavbar/>
+      <Space/>
+      <Routes>
+        <Route path="/registration" element={<Registration />} />
+        <Route path="/" element={<Home />} />
+        <Route path="/adminPage" element={<AdminPage />} />
+        <Route path="/login" element={<Login />} />
+        <Route path="/resetPassword" element={<ResetPassword/>}/>
+
 
           <Route path="/category/:game" element={<GameCategory />} />
 
