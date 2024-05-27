@@ -2,7 +2,6 @@ import styles from './Login.module.css'
 import { FaUser, FaLock, FaLockOpen } from "react-icons/fa";
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { useLocation } from 'react-router-dom';
 import { useAuth } from '../AuthContext/AuthContext';
 
 function Login(){
@@ -11,7 +10,6 @@ function Login(){
     const [error, setError] = useState('');
     const [showPassword, setShowPassword] = useState(false);
     const navigate = useNavigate();
-    const location = useLocation();
     const { login } = useAuth();
 
     const handleSubmit = async (e) => {
@@ -21,51 +19,49 @@ function Login(){
             setError('Please fill all fields.');
             return;
         }
-
         try {
-            const response = await fetch('http://localhost:4001/api/auth/signin', {
-                method: 'POST',
-                headers: {
-                    'Content-Type' : 'application/json',
-                },
-                body: JSON.stringify({
-                    email: email,
-                    password: password  
-                }),
-            });
-
-            if(!response.ok){
-                const errorData = await response.json();
-                throw new Error(errorData.message || 'Błąd logowania');
-            }
-        
-            const token = await response.text();
-            localStorage.setItem('token', token);
-            // const headers = {
-            //     'Content-Type' : 'application/json',
-            //     'Authorization': `Bearer ${token}`
-            // };
-            // const responseWithHeaders = await fetch('http://localhost:4001/api/auth/signin', {
-            //     method: 'POST',
-            //     headers: headers,
-            //     body: JSON.stringify({
-            //         email: email,
-            //         password: password  
-            //     }),
-            // });
-
-            const userData = {
-                email: email,
-                role: token.includes('admin') ? 'admin' : 'user'
-            };
-
-            login(userData);
-
-            navigate('/');
-            
-        } catch (error) {
+            await login(email, password);
+          } catch (error) {
             setError(error.message);
-        }
+          }
+        // try {
+        //     const response = await fetch('http://localhost:4001/api/auth/signin', {
+        //         method: 'POST',
+        //         headers: {
+        //             'Content-Type' : 'application/json',
+        //         },
+        //         body: JSON.stringify({
+        //             email: email,
+        //             password: password  
+        //         }),
+        //     });
+
+        //     if(!response.ok){
+        //         const errorData = await response.json();
+        //         throw new Error(errorData.message || 'Błąd logowania');
+        //     }
+        
+        //     const token = await response.text();
+        //     localStorage.setItem('token', token);
+        //     const headers = {
+        //         'Content-Type' : 'application/json',
+        //         'Authorization': `Bearer ${token}`
+        //     };
+        //     const responseWithHeaders = await fetch('http://localhost:4001/api/auth/signin', {
+        //         method: 'POST',
+        //         headers: headers,
+        //         body: JSON.stringify({
+        //             email: email,
+        //             password: password  
+        //         }),
+        //     });
+
+
+        //     navigate('/');
+            
+        // } catch (error) {
+        //     setError(error.message);
+        // }
 
         
     };

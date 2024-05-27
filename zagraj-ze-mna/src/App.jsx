@@ -19,7 +19,8 @@ import NotiPage from "./Notification/NotiPage";
 function App() {
 
   return (
-      <AuthProvider>
+
+    <AuthProvider>
         <MyNavbar/>
         <Space/>
         <Notification/>
@@ -34,10 +35,21 @@ function App() {
 
           <Route path="/lobbyForm" element={<LobbyForm/>}/>
 
-          <Route path="/userPage" element={<ProtectedRoute><UserPage /></ProtectedRoute>} />
-
-          <Route path="/editUserPage" element={<ProtectedRoute><EditUserPage /></ProtectedRoute>} />
-          <Route path="/notification" element={<ProtectedRoute><NotiPage /></ProtectedRoute>} />
+          <Route path="/userPage" element={
+          <ProtectedRoute>
+            <UserPage />
+          </ProtectedRoute>
+        } />
+        <Route path="/editUserPage" element={
+          <ProtectedRoute>
+            <EditUserPage />
+          </ProtectedRoute>
+        } />
+        <Route path="/notification" element={
+          <ProtectedRoute>
+            <NotiPage />
+          </ProtectedRoute>
+        } />
         </Routes>
       </AuthProvider>
   );
