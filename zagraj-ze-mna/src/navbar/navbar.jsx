@@ -4,7 +4,7 @@
 
 import {Link, useLocation} from 'react-router-dom';
 import { useEffect, useState } from "react";
-
+import { useAuth } from '../AuthContext/AuthContext';
 //function to check screen dimensions
 import useScreenSize from '../hooks/dimensions';
 
@@ -35,7 +35,7 @@ import { IoSettings } from "react-icons/io5";
 
 const MyNavbar = () => {
 
-
+    const { logout } = useAuth();
     //this is use for shadow animations in small screens
     const [expanded, setExpanded] = useState(false);
     const [notExpanded, setNotExpanded] = useState(false);
@@ -108,6 +108,9 @@ const MyNavbar = () => {
         secondButtonTextSmall = 'Home';
     }
 
+    const handleLogout = () => {
+        logout();
+    };
     //curent path
     const path = useLocation();
 
@@ -275,7 +278,7 @@ const MyNavbar = () => {
                     <Link to="/editUserPage" onClick={settingHidder}><p>Ustawienia profilu</p></Link>
                     <Link to="/notification" onClick={settingHidder}><p>Powiadomienia</p></Link>
                     <Link to="/editNotificationsPage" onClick={settingHidder}><p>Dodane gry</p></Link>
-                    <Link to="/" onClick={settingHidder}> <p>Wyloguj</p></Link>
+                    <Link to="/" onClick={handleLogout}> <p>Wyloguj</p></Link>
                 </div>)}
 
                 </div>
@@ -338,7 +341,7 @@ const MyNavbar = () => {
                         <Link to="/editUserPage" onClick={settingHidder}><p>Ustawienia profilu</p></Link>
                         <Link to="/editNotificationsPage" onClick={settingHidder}><p>Powiadomienia</p></Link>
                         <Link to="/editNotificationsPage" onClick={settingHidder}><p>Dodane gry</p></Link>
-                        <Link to="/" onClick={settingHidder}> <p>Wyloguj</p></Link>
+                        <Link to="/" onClick={handleLogout}> <p>Wyloguj</p></Link>
                     </div>)}
 
                     <div className='clear'></div>
