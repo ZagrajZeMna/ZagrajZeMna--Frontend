@@ -120,3 +120,123 @@
   font-size: 16px;
   margin: 0 10px;
 }
+
+.main-title {
+  font-size: 30px;
+  font-weight: bold;
+  color: #deeaec;
+  font-family: 'Arial', sans-serif;
+  text-shadow: 1px 1px 2px #000;
+  margin-top: 20px;
+  margin-bottom: 10px;
+  text-align: center;
+}
+
+.margin-top {
+  margin-top: 30px;
+}
+
+.add-game-form {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  background-color: #333;
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  margin-top: 20px;
+  width: 80%;
+}
+
+.add-game-form div {
+  margin-bottom: 15px;
+  width: 100%;
+}
+
+.add-game-form label {
+  display: block;
+  margin-bottom: 5px;
+  color: #ffffff;
+  font-weight: bold;
+}
+
+.add-game-form input,
+.add-game-form textarea {
+  width: 100%;
+  padding: 10px;
+  border-radius: 5px;
+  border: none;
+  background-color: #444;
+  color: #fff;
+  box-sizing: border-box;
+}
+
+.add-game-form input:focus,
+.add-game-form textarea:focus {
+  outline: none;
+  box-shadow: 0 0 5px #ffffff;
+}
+
+.add-game-form button {
+  background-color: #9370DB;
+  border: none;
+  color: white;
+  padding: 10px 20px;
+  cursor: pointer;
+  font-size: 16px;
+  border-radius: 5px;
+  transition: background-color 0.3s ease;
+}
+
+.add-game-form button:hover {
+  background-color: #6a4db2;
+}
+
+.error-message {
+  color: #ff4d4d;
+  font-weight: bold;
+  text-align: center;
+  margin-top: 10px;
+  font-size: 14px;
+}
+
+.success-modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.success-modal-content {
+  background-color: #333; /* Dopasowanie koloru tła */
+  padding: 20px;
+  border-radius: 10px;
+  text-align: center;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  color: #fff; /* Kolor tekstu */
+}
+
+.success-modal-content p {
+  margin-bottom: 20px;
+  font-size: 18px;
+}
+
+.success-modal-content button {
+  background-color: #9370DB;
+  border: none;
+  color: white;
+  padding: 10px 20px;
+  cursor: pointer;
+  font-size: 16px;
+  border-radius: 5px;
+  transition: background-color 0.3s ease;
+}
+
+.success-modal-content button:hover {
+  background-color: #6a4db2;
+}
