@@ -10,6 +10,9 @@ const AdminPage = () => {
   const [currentPage, setCurrentPage] = useState(1);
   const [totalPages, setTotalPages] = useState(1);
   const [selectedPlayer, setSelectedPlayer] = useState(null);
+  const [newGame, setNewGame] = useState({ name: '', shortname: '', description: '', image: '' });
+  const [successMessage, setSuccessMessage] = useState(null);
+  const [isLoggedIn, setIsLoggedIn] = useState(false); 
   const ITEMS_PER_PAGE = 10;
 
   useEffect(() => {
@@ -18,9 +21,12 @@ const AdminPage = () => {
         const token = localStorage.getItem('token');
         
         if (!token) {
-          setError('Please log in');
+          setError('Proszę się zalogować');
+          setIsLoggedIn(false); 
           return;
         }
+
+        setIsLoggedIn(true);
         
         const tokenWithoutQuotes = token.replace(/"/g, '');
         let endpoint;
@@ -30,6 +36,9 @@ const AdminPage = () => {
           endpoint = 'getNotBannedUser';
         } else if (activeTab === 'banned') {
           endpoint = 'getBannedUser';
+        } else if (activeTab === 'addNewGame') {
+          setPlayers([]);
+          return;
         }
 
         const response = await fetch(`http://localhost:4001/api/admin/${endpoint}`, {
@@ -40,7 +49,7 @@ const AdminPage = () => {
         });
 
         if (!response.ok) {
-          throw new Error('Cannot reach your data');
+          throw new Error('Nie można pobrać danych');
         }
 
         const data = await response.json();
@@ -69,7 +78,7 @@ const AdminPage = () => {
       });
 
       if (!response.ok) {
-        throw new Error('Failed to ban user');
+        throw new Error('Nie udało się zbanować użytkownika');
       }
 
       setPlayers((prevPlayers) =>
@@ -95,7 +104,7 @@ const AdminPage = () => {
       });
 
       if (!response.ok) {
-        throw new Error('Failed to unban user');
+        throw new Error('Nie udało się odbanować użytkownika');
       }
 
       setPlayers((prevPlayers) => prevPlayers.map((player) =>
@@ -146,10 +155,52 @@ const closeModal = () => {
   setSelectedPlayer(null);
 };
 
+const handleInputChange = (e) => {
+  const { name, value } = e.target;
+  setNewGame((prevGame) => ({
+    ...prevGame,
+    [name]: value
+  }));
+};
+
+const handleSubmit = async (e) => {
+  e.preventDefault();
+  if (!newGame.name || !newGame.shortname || !newGame.description || !newGame.image) {
+    setError('Wszystkie pola są wymagane. Proszę wypełnić wszystkie pola.');
+    return;
+  }
+
+  try {
+    const token = localStorage.getItem('token');
+    const response = await fetch('http://localhost:4001/api/admin/addNewGame', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${token.replace(/"/g, '')}`
+      },
+      body: JSON.stringify(newGame)
+    });
+
+    if (!response.ok) {
+      throw new Error('Nie udało się dodać nowej gry');
+    }
+
+    const data = await response.json();
+    setSuccessMessage('Gra została pomyślnie dodana!'); 
+    setNewGame({ name: '', shortname: '', description: '', image: '' });
+    setError(null); 
+  } catch (error) {
+    setError(error.message);
+  }
+};
+
 return (
   <div className="admin-page">
     <div className="sidebar">
       <div className="tabs">
+        <div>
+          <h1 className="main-title"> Użytkownicy </h1>
+        </div>
         <button
           className={`tab ${activeTab === 'all' ? 'active' : ''}`}
           onClick={() => handleTabClick('all')}
@@ -169,24 +220,75 @@ return (
           Zbanowani
         </button>
       </div>
+      <div>
+        <h1 className="main-title margin-top"> Gry </h1>
+        <button
+          className={`tab ${activeTab === 'addNewGame' ? 'active' : ''}`}
+          onClick={() => handleTabClick('addNewGame')}
+        >
+          Dodaj grę
+        </button>
+      </div>
     </div>
     <div className="main-content">
-      {error && <p className="error">{error}</p>}
-      <div className="players-container">
-        {paginatedPlayers.length === 0 && !error ? (
-          <p className="no-users-message">Brak użytkowników do wyświetlenia.</p>
-        ) : (
-          paginatedPlayers.map((player) => (
-            <PlayerCard
-              key={player.ID_USER}
-              player={player}
-              onBan={handleBanUser}
-              onUnban={handleUnbanUser}
-              onClick={handlePlayerClick}
+      {activeTab === 'addNewGame' && isLoggedIn && (
+        <form onSubmit={handleSubmit} className="add-game-form">
+          <div>
+            <label>Nazwa gry:</label>
+            <input
+              type="text"
+              name="name"
+              value={newGame.name}
+              onChange={handleInputChange}
             />
-          ))
-        )}
-      </div>
+          </div>
+          <div>
+            <label>Skrócona nazwa:</label>
+            <input
+              type="text"
+              name="shortname"
+              value={newGame.shortname}
+              onChange={handleInputChange}
+            />
+          </div>
+          <div>
+            <label>Opis:</label>
+            <textarea
+              name="description"
+              value={newGame.description}
+              onChange={handleInputChange}
+            />
+          </div>
+          <div>
+            <label>Obraz URL:</label>
+            <input
+              type="text"
+              name="image"
+              value={newGame.image}
+              onChange={handleInputChange}
+            />
+          </div>
+          <button type="submit">Dodaj grę</button>
+          {error && <p className="error-message">{error}</p>}
+        </form>
+      )}
+      {activeTab !== 'addNewGame' && (
+        <div className="players-container">
+          {paginatedPlayers.length === 0 && !error ? (
+            <p className="no-users-message">Brak użytkowników do wyświetlenia.</p>
+          ) : (
+            paginatedPlayers.map((player) => (
+              <PlayerCard
+                key={player.ID_USER}
+                player={player}
+                onBan={handleBanUser}
+                onUnban={handleUnbanUser}
+                onClick={handlePlayerClick}
+              />
+            ))
+          )}
+        </div>
+      )}
       {paginatedPlayers.length > 0 && (
         <div className="pagination">
           <button onClick={() => handleJumpToPage(1)}>Pierwsza</button>
@@ -200,6 +302,14 @@ return (
       )}
     </div>
     {selectedPlayer && <Modal show={true} onClose={closeModal} user={selectedPlayer} />}
+    {successMessage && (
+      <div className="success-modal">
+        <div className="success-modal-content">
+          <p>{successMessage}</p>
+          <button onClick={() => setSuccessMessage(null)}>OK</button>
+        </div>
+      </div>
+    )}
   </div>
 );
 };
