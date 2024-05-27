@@ -3,7 +3,7 @@ import { FaUser, FaLock, FaLockOpen } from "react-icons/fa";
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useLocation } from 'react-router-dom';
-
+import { useAuth } from '../AuthContext/AuthContext';
 
 function Login(){
     const [email, setEmail] = useState('');
@@ -12,7 +12,7 @@ function Login(){
     const [showPassword, setShowPassword] = useState(false);
     const navigate = useNavigate();
     const location = useLocation();
-    
+    const { login } = useAuth();
 
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -41,18 +41,26 @@ function Login(){
         
             const token = await response.text();
             localStorage.setItem('token', token);
-            const headers = {
-                'Content-Type' : 'application/json',
-                'Authorization': `Bearer ${token}`
+            // const headers = {
+            //     'Content-Type' : 'application/json',
+            //     'Authorization': `Bearer ${token}`
+            // };
+            // const responseWithHeaders = await fetch('http://localhost:4001/api/auth/signin', {
+            //     method: 'POST',
+            //     headers: headers,
+            //     body: JSON.stringify({
+            //         email: email,
+            //         password: password  
+            //     }),
+            // });
+
+            const userData = {
+                email: email,
+                role: token.includes('admin') ? 'admin' : 'user'
             };
-            const responseWithHeaders = await fetch('http://localhost:4001/api/auth/signin', {
-                method: 'POST',
-                headers: headers,
-                body: JSON.stringify({
-                    email: email,
-                    password: password  
-                }),
-            });
+
+            login(userData);
+
             navigate('/');
             
         } catch (error) {

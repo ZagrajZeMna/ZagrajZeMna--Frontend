@@ -4,7 +4,8 @@ import './GameCategory.css'; //
 import LobbyForm from '../LobbyForm/LobbyForm';
 import { MdNavigateNext } from "react-icons/md";
 import { MdNavigateBefore } from "react-icons/md";
-
+import io from "socket.io-client";
+const socket = io.connect("http://localhost:4001");
 
 const GameCategory = () => {
   const [error, setError] = useState(null);
@@ -20,9 +21,26 @@ const GameCategory = () => {
   const [sorting, setSorting] = useState('');
   const [language, setLanguage] = useState('');
   useEffect(() => {
+    fetchUserId();
     fetchLobbies();
   }, [game,currentPage,lopata]); // Update lobbies when game or name changes
 
+
+  const fetchUserId = async () =>{
+    const token = localStorage.getItem('token');
+    const tokenWithoutQuotes = token.replace(/"/g, '');
+    const response2 = await fetch('http://localhost:4001/api/lobby/join', {
+        method: 'POST',
+        headers: {
+        'Content-Type' : 'application/json',
+        'Authorization': `Bearer ${tokenWithoutQuotes}`
+        }
+    });
+    if(!response2.ok){
+        const errorData = await response2.json();
+        throw new Error(errorData.message || 'Błąd tworzenia formularza');
+    };
+  }
   const fetchLobbies = () => {
     fetch(`http://localhost:4001/api/lobby/show?page=${currentPage}&size=${5}&game=${game}&name=${name}`)
       .then(res => {
@@ -42,6 +60,11 @@ const GameCategory = () => {
         setError(error.message);
       });
   };
+
+  async function sendMessage(ID) {
+    await socket.emit("joinRoom",ID); 
+  }
+
   const handleInputChange = event => {
     setName(event.target.value); // Update name state on input change
   };
@@ -82,7 +105,7 @@ const GameCategory = () => {
                   <p>{lobby.Description}</p>
                 </div>
                 <div className='player-count'>
-                  <button onClick={()=>window.alert("WORK IN PROGRESS - LOBBY INTERIOR")}>dołącz</button>
+                  <button onClick={()=>sendMessage(lobby.ID_LOBBY)}>dołącz</button>
 
                   <span>Gracze: {lobby.playerCount}/{lobby.NeedUsers}</span>
                 </div>

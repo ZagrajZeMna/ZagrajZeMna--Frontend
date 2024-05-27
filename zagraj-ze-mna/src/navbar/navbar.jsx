@@ -64,7 +64,7 @@ const MyNavbar = () => {
     //links and text in navbar
     let login = false;
     let myPage = '/login';
-    let myNot  = '/login';
+    let myNot  = '/notification';
     let firstButton = '/login';
     let secondButton = 'registration';
     let firstButtonText = 'LOGOWANIE';
@@ -84,7 +84,7 @@ const MyNavbar = () => {
         login = false;
 
         myPage = '/login';
-        myNot  = '/login';
+        myNot  = '/notification';
         firstButton = '/login';
         secondButton = 'registration';
         firstButtonText = 'LOGOWANIE';
@@ -99,7 +99,7 @@ const MyNavbar = () => {
         login = true;
 
         myPage = '/userPage';
-        myNot  = '/editNotificationsPage';
+        myNot  = '/notification';
         firstButton = '/userLobbys';
         secondButton = '/';
         firstButtonText = 'MOJE LOBBY';
@@ -273,7 +273,7 @@ const MyNavbar = () => {
                     <p className='settingsHeader'>USTAWIENIA</p>
                     <Link to="/ResetPassword" onClick={settingHidder}> <p>Zmień hasło</p></Link>
                     <Link to="/editUserPage" onClick={settingHidder}><p>Ustawienia profilu</p></Link>
-                    <Link to="/editNotificationsPage" onClick={settingHidder}><p>Powiadomienia</p></Link>
+                    <Link to="/notification" onClick={settingHidder}><p>Powiadomienia</p></Link>
                     <Link to="/editNotificationsPage" onClick={settingHidder}><p>Dodane gry</p></Link>
                     <Link to="/" onClick={settingHidder}> <p>Wyloguj</p></Link>
                 </div>)}
