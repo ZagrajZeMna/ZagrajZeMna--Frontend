@@ -15,11 +15,12 @@ import UserPage from "./userPage/userPage";
 import EditUserPage from "./edtiPage/editUserPage";
 import Notification from "./Notification/notification";
 import NotiPage from "./Notification/NotiPage";
+import Lobby from './Lobby/Lobby';
 
 function App() {
 
   return (
-      <AuthProvider>
+      <div>
         <MyNavbar/>
         <Space/>
         <Notification/>
@@ -30,16 +31,16 @@ function App() {
           <Route path="/resetPassword" element={<ResetPassword/>}/>
 
           <Route path="/category/:game" element={<GameCategory />} />
-
+          <Route path="/category/:game/:lobby" element={<Lobby/>}/>
 
           <Route path="/lobbyForm" element={<LobbyForm/>}/>
 
-          <Route path="/userPage" element={<ProtectedRoute><UserPage /></ProtectedRoute>} />
+          <Route path="/userPage" element={<UserPage />} />
 
-          <Route path="/editUserPage" element={<ProtectedRoute><EditUserPage /></ProtectedRoute>} />
-          <Route path="/notification" element={<ProtectedRoute><NotiPage /></ProtectedRoute>} />
+          <Route path="/editUserPage" element={<EditUserPage />} />
+          <Route path="/notification" element={<NotiPage />} />
         </Routes>
-      </AuthProvider>
+      </div>
   );
 };
 export default App

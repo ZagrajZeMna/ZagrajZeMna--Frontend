@@ -1,0 +1,30 @@
+.background {
+  background: linear-gradient(135deg, #000000, #333333);
+  background-color: grey;
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  min-height: 100vh;
+  padding: 20px;
+  display: flex;
+  justify-content: center; /* Center horizontally */
+  align-items: center; /* Center vertically */
+}
+
+.lobbycontainer {
+  width: 80vw; /* 80% of the viewport width */
+  height: 70vh; /* 60% of the viewport height */
+  background-color: black;
+  display: flex;
+  /* justify-content: center; 
+  align-items: center; */
+  color: white; /* Optional: to make the text inside visible */
+  box-sizing: border-box; /* Ensure padding and border are included in the width and height */
+}
+.lobbyheader {
+  justify-content: center;
+  align-items: center;
+}
+.lobbyheader span {
+  color: green;
+}

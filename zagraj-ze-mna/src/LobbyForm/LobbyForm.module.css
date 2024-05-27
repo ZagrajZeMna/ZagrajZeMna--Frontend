@@ -25,7 +25,16 @@
   display: flex;
   min-height: 100px;
 }
-
+.slider input {
+  outline: none;
+  margin-right: 5px;
+  margin-left: 10px;
+}
+.slider span {
+  font-size: 16px;
+  font-family: "IBM Plex Mono", monospace;
+  font-weight: bold;
+}
 .inputContainer {
   display: flex;
   flex-direction: row;

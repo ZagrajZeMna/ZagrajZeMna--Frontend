@@ -4,6 +4,8 @@ import './GameCategory.css'; //
 import LobbyForm from '../LobbyForm/LobbyForm';
 import { MdNavigateNext } from "react-icons/md";
 import { MdNavigateBefore } from "react-icons/md";
+import { Link } from 'react-router-dom';
+
 import io from "socket.io-client";
 const socket = io.connect("http://localhost:4001");
 
@@ -33,7 +35,7 @@ const GameCategory = () => {
         method: 'POST',
         headers: {
         'Content-Type' : 'application/json',
-        'Authorization': `Bearer ${tokenWithoutQuotes}`
+        'Authorization': `Bearer ${token}`
         }
     });
     if(!response2.ok){
@@ -42,6 +44,7 @@ const GameCategory = () => {
     };
   }
   const fetchLobbies = () => {
+    console.log("---------------------------------------------- FETCH ODPALONY ----------------------------------------------")
     fetch(`http://localhost:4001/api/lobby/show?page=${currentPage}&size=${5}&game=${game}&name=${name}`)
       .then(res => {
         if (!res.ok) {
@@ -53,11 +56,15 @@ const GameCategory = () => {
       .then(data => {
         setLobbies(data.Lobby);
         setMaxPages(data.Pages);
-        console.log("obecna strona: "+ currentPage);
-        console.log("max strona: " + data.Pages);
+        // console.log("obecna strona: "+ currentPage);
+        // console.log("max strona: " + data.Pages);
+        console.log("---------------------------------------------- DANE ZAPISANE  ----------------------------------------------")
+
       })
+
       .catch(error => {
         setError(error.message);
+        console.log(error.message);
       });
   };
 
@@ -105,7 +112,9 @@ const GameCategory = () => {
                   <p>{lobby.Description}</p>
                 </div>
                 <div className='player-count'>
+                <Link to={`/category/${game}/${lobby.Name}`}>
                   <button onClick={()=>sendMessage(lobby.ID_LOBBY)}>dołącz</button>
+                </Link>
 
                   <span>Gracze: {lobby.playerCount}/{lobby.NeedUsers}</span>
                 </div>

@@ -79,8 +79,8 @@ const MyNavbar = () => {
     //checikng if token is done properly
     if(decoded.exp * 1000 < currentDate.getTime() || token == null)
     {
-        console.log("you are log out");
-        console.log(decoded.exp);
+        //console.log("you are log out");
+        //console.log(decoded.exp);
         login = false;
 
         myPage = '/login';
@@ -127,7 +127,7 @@ const MyNavbar = () => {
         setWMA(' cos');
     }
 
-    //when navbar is expande or collapse certain values are set (for shadow animation)
+    //when navbar is expanded or collapsed certain values are set (for shadow animation)
     const setToggle = () =>
     {   
         var element = document.getElementById("toggleButton");
