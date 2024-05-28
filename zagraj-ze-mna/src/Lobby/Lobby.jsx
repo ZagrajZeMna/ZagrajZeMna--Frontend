@@ -8,6 +8,7 @@ export default function Lobby() {
     const [players, setPlayers] = useState([]);
     const [owner, setOwner] = useState({});
     const { lobbyId } = useParams();
+    const {lobbyname} = useParams();
 
     useEffect(() => {
         fetchLobbyData();
@@ -90,7 +91,7 @@ export default function Lobby() {
                     ))}
                 </div>
                 <div className={styles.maincontent}>
-                    <div className={styles.lobbyheader}>Lobby: {lobbyId}</div>
+                    <div className={styles.lobbyheader}>Lobby: {lobbyname}</div>
                     <div className={styles.ownerheader}>Owner: {owner.username}</div>
                     <div className={styles.chatheader}>Chat</div>
                     <div className={styles.chatoutput}>
