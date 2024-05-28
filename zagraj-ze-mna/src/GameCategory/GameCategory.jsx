@@ -4,6 +4,8 @@ import './GameCategory.css'; //
 import LobbyForm from '../LobbyForm/LobbyForm';
 import { MdNavigateNext } from "react-icons/md";
 import { MdNavigateBefore } from "react-icons/md";
+import { FaCirclePlus } from "react-icons/fa6";
+
 import { Link } from 'react-router-dom';
 
 import io from "socket.io-client";
@@ -18,7 +20,6 @@ const GameCategory = () => {
   const [maxPages, setMaxPages] = useState(0);
   //using params (from url)
   const { game } = useParams();
-
   const [name, setName] = useState('');
   const [sorting, setSorting] = useState('');
   const [language, setLanguage] = useState('');
@@ -90,7 +91,7 @@ const GameCategory = () => {
   return (
     <div className='background2'>
       <h2 className='category-text'>Kategoria: {game}</h2>
-      <span className='available-lobby-text'>DOSTĘPNE LOBBY: </span> <br />
+      <span className='available-lobby-text'>DOSTĘPNE LOBBY: </span>
       <div className='search-bar'>
         <input type='text' value={name} onChange={handleInputChange} onKeyPress={handleKeyPress}/> 
         <button onClick={handleSearch}>Szukaj</button>
@@ -112,8 +113,8 @@ const GameCategory = () => {
                   <p>{lobby.Description}</p>
                 </div>
                 <div className='player-count'>
-                <Link to={`/category/${game}/${lobby.Name}`}>
-                  <button onClick={()=>sendMessage(lobby.ID_LOBBY)}>dołącz</button>
+                <Link to={`/category/${game}/${lobby.Name}/${lobby.ID_LOBBY}`}>
+                  <button onClick={()=>sendMessage(lobby.ID_LOBBY)}><FaCirclePlus /></button>
                 </Link>
 
                   <span>Gracze: {lobby.playerCount}/{lobby.NeedUsers}</span>

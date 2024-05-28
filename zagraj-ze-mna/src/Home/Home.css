@@ -31,6 +31,7 @@
   transition: background-color 0.2s ease;
   margin-right: 15px;
   width: 30%;
+  margin-top: 10px;
 }
 .category-button-text {
   font-size: 20px;
@@ -179,5 +180,13 @@
   }
   100% {
     box-shadow: 0 0 30px #bf94ff;
+  }
+}
+@media (max-width: 768px) {
+  .category-button-container {
+    flex-direction: column;
+  }
+  .category-button {
+    width: 100%;
   }
 }
