@@ -24,7 +24,7 @@ import { IoMdClose } from "react-icons/io";
 import { FaTrashCan } from "react-icons/fa6";
 //?
 import io from "socket.io-client";
-const socket = io.connect("http://localhost:4001");
+const socket = io.connect("https://zagrajzemna-backend.onrender.com");
 
 const NotiPage = () => {
     const { height, width } = useScreenSize();
@@ -37,7 +37,7 @@ const NotiPage = () => {
         try {
             const token = localStorage.getItem('token');
             const tokenWithoutQuotes = token.replace(/"/g, '');
-            const response = await fetch(`http://localhost:4001/api/noti/show`, {
+            const response = await fetch(`https://zagrajzemna-backend.onrender.com/api/noti/show`, {
                 method: 'GET',
                 headers: {
                     'Content-Type': 'application/json',
@@ -58,7 +58,7 @@ const NotiPage = () => {
         try {
             const token = localStorage.getItem('token');
             const tokenWithoutQuotes = token.replace(/"/g, '');
-            const response = await fetch(`http://localhost:4001/api/noti/showinfo`, {
+            const response = await fetch(`https://zagrajzemna-backend.onrender.com/api/noti/showinfo`, {
                 method: 'GET',
                 headers: {
                     'Content-Type': 'application/json',
@@ -110,7 +110,7 @@ const NotiPage = () => {
     const deleteNoti = async (IDNotifi) => {
         try {
             console.log(IDNotifi)
-            const response = await fetch(`http://localhost:4001/api/noti/delete`, {
+            const response = await fetch(`https://zagrajzemna-backend.onrender.com/api/noti/delete`, {
                 method: 'POST',
                 headers: {
                     'Content-Type' : 'application/json',

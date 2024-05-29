@@ -120,7 +120,7 @@ function Registration() {
     setErrors({});
 
     try{
-      const response = await fetch('http://localhost:4001/api/auth/signup', {
+      const response = await fetch('https://zagrajzemna-backend.onrender.com/api/auth/signup', {
         method: 'POST',
         headers: {
           'Content-Type' : 'application/json',

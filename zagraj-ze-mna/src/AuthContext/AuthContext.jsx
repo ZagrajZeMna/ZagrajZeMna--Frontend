@@ -23,7 +23,7 @@ export function AuthProvider({ children }) {
 
   const login = async (email, password) => {
     try {
-      const response = await fetch('http://localhost:4001/api/auth/signin', {
+      const response = await fetch('https://zagrajzemna-backend.onrender.com/api/auth/signin', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

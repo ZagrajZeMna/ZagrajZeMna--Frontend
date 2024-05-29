@@ -9,7 +9,7 @@ import { FaCirclePlus } from "react-icons/fa6";
 import { Link } from 'react-router-dom';
 
 import io from "socket.io-client";
-const socket = io.connect("http://localhost:4001");
+const socket = io.connect("https://zagrajzemna-backend.onrender.com");
 
 const GameCategory = () => {
   const [error, setError] = useState(null);
@@ -32,7 +32,7 @@ const GameCategory = () => {
   const fetchUserId = async () =>{
     const token = localStorage.getItem('token');
     const tokenWithoutQuotes = token.replace(/"/g, '');
-    const response2 = await fetch('http://localhost:4001/api/lobby/join', {
+    const response2 = await fetch('https://zagrajzemna-backend.onrender.com/api/lobby/join', {
         method: 'POST',
         headers: {
         'Content-Type' : 'application/json',
@@ -46,7 +46,7 @@ const GameCategory = () => {
   }
   const fetchLobbies = () => {
     console.log("---------------------------------------------- FETCH ODPALONY ----------------------------------------------")
-    fetch(`http://localhost:4001/api/lobby/show?page=${currentPage}&size=${5}&game=${game}&name=${name}`)
+    fetch(`https://zagrajzemna-backend.onrender.com/api/lobby/show?page=${currentPage}&size=${5}&game=${game}&name=${name}`)
       .then(res => {
         if (!res.ok) {
           throw new Error('Internal Server Error');

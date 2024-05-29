@@ -15,7 +15,7 @@ function Home(){
         fetchGames(); //UNCOMMENT THIS IF THERE ARE GAMES WITH PICTURES IN THE DATABASE, OTHERWISE LEAVE COMMENTED
     },[currentPage])
     const fetchGames = () => {
-        fetch(`http://localhost:4001/api/mainGame/getGamePagination?page=${currentPage}`)
+        fetch(`https://zagrajzemna-backend.onrender.com/api/mainGame/getGamePagination?page=${currentPage}`)
           .then(res => {
             if (!res.ok) {
               throw new Error('Internal Server Error');

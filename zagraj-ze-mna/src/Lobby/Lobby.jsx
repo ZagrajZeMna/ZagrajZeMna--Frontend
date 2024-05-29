@@ -16,7 +16,7 @@ export default function Lobby() {
 
     const fetchLobbyData = async () => {
         try {
-            const playersResponse = await fetch("/api/lobbyInside/getUserList", {
+            const playersResponse = await fetch("https://zagrajzemna-backend.onrender.com/api/lobbyInside/getUserList", {
                 method: 'GET',
                 headers: {
                     'Content-Type': 'application/json',
@@ -30,7 +30,7 @@ export default function Lobby() {
             const playersData = await playersResponse.json();
             setPlayers(playersData);
 
-            const ownerResponse = await fetch("/api/lobbyInside/getOwnerLobbyData", {
+            const ownerResponse = await fetch("https://zagrajzemna-backend.onrender.com/api/lobbyInside/getOwnerLobbyData", {
                 method: 'GET',
                 headers: {
                     'Content-Type': 'application/json',

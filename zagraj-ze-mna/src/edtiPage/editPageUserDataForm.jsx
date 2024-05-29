@@ -107,42 +107,42 @@ const EditPageUserDataForm = () =>{
             if(nickChange)
             {
                 let body = { "username": `${myNick}` };
-                let url = 'http://localhost:4001/api/profile/postUsername'
+                let url = 'https://zagrajzemna-backend.onrender.com/api/profile/postUsername'
                 fetchPostBody(e,url,body);
                 setNickChange(false);
             }
             if(aboutChange)
             {
                 let body = { "about": `${aboutMe}` };
-                let url = 'http://localhost:4001/api/profile/updateAbout'
+                let url = 'https://zagrajzemna-backend.onrender.com/api/profile/updateAbout'
                 fetchPostBody(e,url,body);
                 setAboutChange(false);
             }
             if(langChange)
             {
                 let body = { "languageId": `${choosenLang}` };
-                let url = 'http://localhost:4001/api/profile/setUserLanguage'
+                let url = 'https://zagrajzemna-backend.onrender.com/api/profile/setUserLanguage'
                 fetchPostBody(e,url,body);
                 setLangChange(false);
             }
             if(cityChange)
             {
                 let body = { "city": `${myCity}` };
-                let url = 'http://localhost:4001/api/profile/updateCity'
+                let url = 'https://zagrajzemna-backend.onrender.com/api/profile/updateCity'
                 fetchPostBody(e,url,body);
                 setCityChange(false);
             }
             if(countryChange)
             {
                 let body = { "country": `${myCountry}` };
-                let url = 'http://localhost:4001/api/profile/updateCountry'
+                let url = 'https://zagrajzemna-backend.onrender.com/api/profile/updateCountry'
                 fetchPostBody(e,url,body);
                 setCountryChange(false);
             }
             if(contactChange)
             {
                 let body = { "contact": `${myContact}` };
-                let url = 'http://localhost:4001/api/profile/updateContact'
+                let url = 'https://zagrajzemna-backend.onrender.com/api/profile/updateContact'
                 fetchPostBody(e,url,body);
                 setContactChange(false);
             }
@@ -290,7 +290,7 @@ const EditPageUserDataForm = () =>{
                 const tokenWithoutQuotes = token.replace(/"/g, '');
 
                 //fetching user data
-                const response = await fetch('http://localhost:4001/api/profile/getUserDetails',{
+                const response = await fetch('https://zagrajzemna-backend.onrender.com/api/profile/getUserDetails',{
                     method:'GET',
                     headers: {
                         'Authorization' : `Bearer ${tokenWithoutQuotes}`
@@ -355,7 +355,7 @@ const EditPageUserDataForm = () =>{
                 const tokenWithoutQuotes = token.replace(/"/g, '');
 
                 //fetching user data
-                const response = await fetch('http://localhost:4001/api/profile/getAllLanguages',{
+                const response = await fetch('https://zagrajzemna-backend.onrender.com/api/profile/getAllLanguages',{
                     method:'GET',
                     headers: {
                         'Authorization' : `Bearer ${tokenWithoutQuotes}`
