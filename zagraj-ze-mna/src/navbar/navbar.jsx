@@ -352,10 +352,7 @@ const MyNavbar = () => {
     }
     else
     {
-        return
-        (
-            <div></div>
-        );
+        return(<div></div>);
     }
     
     
