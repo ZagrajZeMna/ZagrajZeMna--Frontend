@@ -1,18 +1,21 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Link } from 'react-router-dom';
+import { MdNavigateNext } from "react-icons/md";
+import { MdNavigateBefore } from "react-icons/md";
 import "./Home.css";
 import Footer from '../footer/footer';
 
 function Home(){
     const [error, setError] = useState(null);
-
+    const [currentPage, setCurrentPage] = useState(0);
+    const [maxPages, setMaxPages] = useState(0);
     const navigate = useNavigate();
     useEffect(()=>{
-        //fetchGames(); //UNCOMMENT THIS IF THERE ARE GAMES WITH PICTURES IN THE DATABASE, OTHERWISE LEAVE COMMENTED
-    },[])
+        fetchGames(); //UNCOMMENT THIS IF THERE ARE GAMES WITH PICTURES IN THE DATABASE, OTHERWISE LEAVE COMMENTED
+    },[currentPage])
     const fetchGames = () => {
-        fetch(`http://localhost:4001/api/mainGame/getGame`)
+        fetch(`http://localhost:4001/api/mainGame/getGamePagination?page=${currentPage}`)
           .then(res => {
             if (!res.ok) {
               throw new Error('Internal Server Error');
@@ -21,7 +24,9 @@ function Home(){
             return res.json();
           })
           .then(data => {
-            setGames(data);
+            setGames(data.Game);
+            setMaxPages(data.Pages);
+
             console.log(data);
             
           })
@@ -102,6 +107,14 @@ function Home(){
                     ))}
                 </div>
             </div>
+            <div className='lobby-pagination-wrapper'>
+            <div className='lobby-pagination-container'>
+              <button onClick={() => { if (currentPage > 0){setCurrentPage(currentPage - 1)}; }}><MdNavigateBefore /></button>
+              <button onClick={() => { if (currentPage + 1 < maxPages){setCurrentPage(currentPage + 1)}; }}><MdNavigateNext /></button>
+              <span>Strona {currentPage + 1} z {maxPages}</span>
+            </div>
+          </div>
+            
             <Footer></Footer>
         </div>
         

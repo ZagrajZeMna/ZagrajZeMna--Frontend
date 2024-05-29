@@ -44,12 +44,14 @@ function LobbyForm({ gameNameProp,lopata,setLopata}) {
         name:"Name",
         type:"text",
         placeholder:"Tytuł lobby",
+        maxLength: 20
     },
     {
         id:3,
         name:"Description",
         type: "text",        
-        placeholder:"Opis"
+        placeholder:"Opis",
+        maxLength: 75
       },
     {
         id:4,
@@ -155,6 +157,7 @@ function LobbyForm({ gameNameProp,lopata,setLopata}) {
                     name={input.name}
                     placeholder={input.placeholder}
                     value={values[input.name]} 
+                    maxLength={input.maxLength}
                     onChange={handleChange}
                   />
                 ) : (

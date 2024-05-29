@@ -4,7 +4,12 @@ import './GameCategory.css'; //
 import LobbyForm from '../LobbyForm/LobbyForm';
 import { MdNavigateNext } from "react-icons/md";
 import { MdNavigateBefore } from "react-icons/md";
+import { FaCirclePlus } from "react-icons/fa6";
 
+import { Link } from 'react-router-dom';
+
+import io from "socket.io-client";
+const socket = io.connect("http://localhost:4001");
 
 const GameCategory = () => {
   const [error, setError] = useState(null);
@@ -15,15 +20,32 @@ const GameCategory = () => {
   const [maxPages, setMaxPages] = useState(0);
   //using params (from url)
   const { game } = useParams();
-
   const [name, setName] = useState('');
   const [sorting, setSorting] = useState('');
   const [language, setLanguage] = useState('');
   useEffect(() => {
+    fetchUserId();
     fetchLobbies();
   }, [game,currentPage,lopata]); // Update lobbies when game or name changes
 
+
+  const fetchUserId = async () =>{
+    const token = localStorage.getItem('token');
+    const tokenWithoutQuotes = token.replace(/"/g, '');
+    const response2 = await fetch('http://localhost:4001/api/lobby/join', {
+        method: 'POST',
+        headers: {
+        'Content-Type' : 'application/json',
+        'Authorization': `Bearer ${token}`
+        }
+    });
+    if(!response2.ok){
+        const errorData = await response2.json();
+        throw new Error(errorData.message || 'Błąd tworzenia formularza');
+    };
+  }
   const fetchLobbies = () => {
+    console.log("---------------------------------------------- FETCH ODPALONY ----------------------------------------------")
     fetch(`http://localhost:4001/api/lobby/show?page=${currentPage}&size=${5}&game=${game}&name=${name}`)
       .then(res => {
         if (!res.ok) {
@@ -35,13 +57,22 @@ const GameCategory = () => {
       .then(data => {
         setLobbies(data.Lobby);
         setMaxPages(data.Pages);
-        console.log("obecna strona: "+ currentPage);
-        console.log("max strona: " + data.Pages);
+        // console.log("obecna strona: "+ currentPage);
+        // console.log("max strona: " + data.Pages);
+        console.log("---------------------------------------------- DANE ZAPISANE  ----------------------------------------------")
+
       })
+
       .catch(error => {
         setError(error.message);
+        console.log(error.message);
       });
   };
+
+  async function sendMessage(ID) {
+    await socket.emit("joinRoom",ID); 
+  }
+
   const handleInputChange = event => {
     setName(event.target.value); // Update name state on input change
   };
@@ -60,7 +91,7 @@ const GameCategory = () => {
   return (
     <div className='background2'>
       <h2 className='category-text'>Kategoria: {game}</h2>
-      <span className='available-lobby-text'>DOSTĘPNE LOBBY: </span> <br />
+      <span className='available-lobby-text'>DOSTĘPNE LOBBY: </span>
       <div className='search-bar'>
         <input type='text' value={name} onChange={handleInputChange} onKeyPress={handleKeyPress}/> 
         <button onClick={handleSearch}>Szukaj</button>
@@ -82,7 +113,9 @@ const GameCategory = () => {
                   <p>{lobby.Description}</p>
                 </div>
                 <div className='player-count'>
-                  <button onClick={()=>window.alert("WORK IN PROGRESS - LOBBY INTERIOR")}>dołącz</button>
+                <Link to={`/category/${game}/${lobby.Name}/${lobby.ID_LOBBY}`}>
+                  <button onClick={()=>sendMessage(lobby.ID_LOBBY)}><FaCirclePlus /></button>
+                </Link>
 
                   <span>Gracze: {lobby.playerCount}/{lobby.NeedUsers}</span>
                 </div>

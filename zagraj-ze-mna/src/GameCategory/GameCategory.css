@@ -124,21 +124,31 @@
 }
 
 .player-count button {
+  font-size: 45px;
   display: flex;
-  background-color: #555;
-  color: #fff;
+  background: none;
   border: none;
-  border-radius: 50%;
+  color: #fff;
   width: 60px;
   height: 60px;
   cursor: pointer;
   margin-left: 8px;
   justify-content: center;
   align-items: center;
+  transition: transform 0.5s ease;
 }
 
 .player-count button:hover {
-  background-color: #777;
+  animation: spin 1s linear forwards;
+}
+
+@keyframes spin {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
 }
 
 .available-lobby-text {
@@ -149,4 +159,13 @@
 .category-text {
   font-size: 40px;
   color: white;
+}
+
+@media (max-width: 768px) {
+  .player-count {
+    flex-direction: column;
+  }
+  .available-lobby-text {
+    font-size: 30px;
+  }
 }

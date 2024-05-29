@@ -4,7 +4,7 @@
 
 import {Link, useLocation} from 'react-router-dom';
 import { useEffect, useState } from "react";
-
+import { useAuth } from '../AuthContext/AuthContext';
 //function to check screen dimensions
 import useScreenSize from '../hooks/dimensions';
 
@@ -35,7 +35,7 @@ import { IoSettings } from "react-icons/io5";
 
 const MyNavbar = () => {
 
-
+    const { logout } = useAuth();
     //this is use for shadow animations in small screens
     const [expanded, setExpanded] = useState(false);
     const [notExpanded, setNotExpanded] = useState(false);
@@ -64,7 +64,7 @@ const MyNavbar = () => {
     //links and text in navbar
     let login = false;
     let myPage = '/login';
-    let myNot  = '/login';
+    let myNot  = '/notification';
     let firstButton = '/login';
     let secondButton = 'registration';
     let firstButtonText = 'LOGOWANIE';
@@ -79,12 +79,14 @@ const MyNavbar = () => {
     //checikng if token is done properly
     if(decoded.exp * 1000 < currentDate.getTime() || token == null)
     {
+
         console.log("you are logged out");
         console.log(decoded.exp);
+
         login = false;
 
         myPage = '/login';
-        myNot  = '/login';
+        myNot  = '/notification';
         firstButton = '/login';
         secondButton = 'registration';
         firstButtonText = 'LOGOWANIE';
@@ -99,7 +101,7 @@ const MyNavbar = () => {
         login = true;
 
         myPage = '/userPage';
-        myNot  = '/editNotificationsPage';
+        myNot  = '/notification';
         firstButton = '/userLobbys';
         secondButton = '/';
         firstButtonText = 'MOJE LOBBY';
@@ -108,6 +110,9 @@ const MyNavbar = () => {
         secondButtonTextSmall = 'Home';
     }
 
+    const handleLogout = () => {
+        logout();
+    };
     //curent path
     const path = useLocation();
 
@@ -127,7 +132,7 @@ const MyNavbar = () => {
         setWMA(' cos');
     }
 
-    //when navbar is expande or collapse certain values are set (for shadow animation)
+    //when navbar is expanded or collapsed certain values are set (for shadow animation)
     const setToggle = () =>
     {   
         var element = document.getElementById("toggleButton");
@@ -273,9 +278,9 @@ const MyNavbar = () => {
                     <p className='settingsHeader'>USTAWIENIA</p>
                     <Link to="/ResetPassword" onClick={settingHidder}> <p>Zmień hasło</p></Link>
                     <Link to="/editUserPage" onClick={settingHidder}><p>Ustawienia profilu</p></Link>
-                    <Link to="/editNotificationsPage" onClick={settingHidder}><p>Powiadomienia</p></Link>
+                    <Link to="/notification" onClick={settingHidder}><p>Powiadomienia</p></Link>
                     <Link to="/editNotificationsPage" onClick={settingHidder}><p>Dodane gry</p></Link>
-                    <Link to="/" onClick={settingHidder}> <p>Wyloguj</p></Link>
+                    <Link to="/" onClick={handleLogout}> <p>Wyloguj</p></Link>
                 </div>)}
 
                 </div>
@@ -338,7 +343,7 @@ const MyNavbar = () => {
                         <Link to="/editUserPage" onClick={settingHidder}><p>Ustawienia profilu</p></Link>
                         <Link to="/editNotificationsPage" onClick={settingHidder}><p>Powiadomienia</p></Link>
                         <Link to="/editNotificationsPage" onClick={settingHidder}><p>Dodane gry</p></Link>
-                        <Link to="/" onClick={settingHidder}> <p>Wyloguj</p></Link>
+                        <Link to="/" onClick={handleLogout}> <p>Wyloguj</p></Link>
                     </div>)}
 
                     <div className='clear'></div>
