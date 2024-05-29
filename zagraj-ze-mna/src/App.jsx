@@ -8,7 +8,7 @@ import Home from "./Home/Home";
 import { Routes, Route } from 'react-router-dom';
 import ResetPassword from "./ResetPassword/ResetPassword";
 import GameCategory from './GameCategory/GameCategory';
-
+import AdminRoute from './AuthContext/AdminRoute';
 import LobbyForm from "./LobbyForm/LobbyForm"
 
 import Space from "./navbar/space";
@@ -39,9 +39,9 @@ function App() {
           <Route path="/lobbyForm" element={<LobbyForm/>}/>
 
           <Route path="/adminPage" element={
-          <ProtectedRoute>
+          <AdminRoute>
             <AdminPage />
-          </ProtectedRoute>} />
+          </AdminRoute>} />
 
           <Route path="/userPage" element={
           <ProtectedRoute>

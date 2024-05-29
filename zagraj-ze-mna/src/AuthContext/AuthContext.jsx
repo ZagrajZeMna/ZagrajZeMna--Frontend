@@ -1,6 +1,8 @@
 import React, { createContext, useContext, useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 
+import { jwtDecode } from 'jwt-decode';
+
 const AuthContext = createContext();
 
 export function useAuth() {
@@ -16,7 +18,9 @@ export function AuthProvider({ children }) {
     const token = localStorage.getItem('token');
     if (token) {
       
-      setCurrentUser({ token });
+      const decoded = jwtDecode(token);
+      const isAdmin = decoded.ADMIN !== undefined;
+      setCurrentUser({ token, isAdmin });
     }
     setLoading(false);
   }, []);
@@ -37,8 +41,10 @@ export function AuthProvider({ children }) {
       }
 
       const token = await response.text();
+      const decoded = jwtDecode(token);
+      const isAdmin = decoded.ADMIN !== undefined;
       localStorage.setItem('token', token);
-      setCurrentUser({ token });
+      setCurrentUser({ token, isAdmin });
       navigate('/');
     } catch (error) {
       throw error;
