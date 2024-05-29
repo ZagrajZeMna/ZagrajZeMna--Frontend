@@ -3,6 +3,10 @@ import './AdminPage.css';
 import PlayerCard from './PlayerCard';
 import Modal from './Modal';
 
+// Importowanie ikon
+import { LuArrowBigLeftDash, LuArrowBigRightDash } from "react-icons/lu";
+import { RxThickArrowLeft, RxThickArrowRight, RxDoubleArrowLeft, RxDoubleArrowRight } from "react-icons/rx";
+
 const AdminPage = () => {
   const [players, setPlayers] = useState([]);
   const [error, setError] = useState(null);
@@ -199,7 +203,7 @@ return (
     <div className="sidebar">
       <div className="tabs">
         <div>
-          <h1 className="main-title"> Użytkownicy </h1>
+          <h1 className="main-title">Użytkownicy</h1>
         </div>
         <button
           className={`tab ${activeTab === 'all' ? 'active' : ''}`}
@@ -221,7 +225,7 @@ return (
         </button>
       </div>
       <div>
-        <h1 className="main-title margin-top"> Gry </h1>
+        <h1 className="main-title margin-top">Gry</h1>
         <button
           className={`tab ${activeTab === 'addNewGame' ? 'active' : ''}`}
           onClick={() => handleTabClick('addNewGame')}
@@ -269,7 +273,7 @@ return (
             />
           </div>
           <button type="submit">Dodaj grę</button>
-          {error && <p className="error-message">{error}</p>}
+          {error && <p className="error-messageee">{error}</p>}
         </form>
       )}
       {activeTab !== 'addNewGame' && (
@@ -291,13 +295,13 @@ return (
       )}
       {paginatedPlayers.length > 0 && (
         <div className="pagination">
-          <button onClick={() => handleJumpToPage(1)}>Pierwsza</button>
-          <button onClick={() => handlePageChange(-10)}>-10</button>
-          <button onClick={() => handlePageChange(-1)}>Poprzednia</button>
+          <div onClick={() => handleJumpToPage(1)} className='arrowButtonTetris'><RxDoubleArrowLeft /></div>
+          <div onClick={() => handlePageChange(-5)} className='arrowButtonTetris'><LuArrowBigLeftDash /></div> 
+          <div onClick={() => handlePageChange(-1)} className='arrowButtonTetris'><RxThickArrowLeft /></div>
           <span className="page-counter">{currentPage} / {totalPages}</span>
-          <button onClick={() => handlePageChange(1)}>Następna</button>
-          <button onClick={() => handlePageChange(10)}>+10</button>
-          <button onClick={() => handleJumpToPage(totalPages)}>Ostatnia</button>
+          <div onClick={() => handlePageChange(1)} className='arrowButtonTetris'><RxThickArrowRight /></div>
+          <div onClick={() => handlePageChange(5)} className='arrowButtonTetris'><LuArrowBigRightDash /></div>
+          <div onClick={() => handleJumpToPage(totalPages)} className='arrowButtonTetris'><RxDoubleArrowRight/></div> 
         </div>
       )}
     </div>

@@ -11,12 +11,12 @@
 }
 
 .modal-content {
-  background-color: #333; /* Dopasowanie koloru tła */
+  background-color: #333;
   padding: 20px;
   border-radius: 10px;
   max-width: 500px;
   width: 80%;
-  color: white; /* Kolor tekstu */
+  color: white;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
   position: relative;
 }
