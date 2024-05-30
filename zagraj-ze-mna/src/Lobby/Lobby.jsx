@@ -1,6 +1,7 @@
 import styles from './Lobby.module.css';
 import { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
+import { expandLink } from '../fetches/expandLink';
 
 export default function Lobby() {
     const [output, setOutput] = useState([]);
@@ -16,28 +17,16 @@ export default function Lobby() {
 
     const fetchLobbyData = async () => {
         try {
-            const playersResponse = await fetch("/api/lobbyInside/getUserList", {
-                method: 'GET',
-                headers: {
-                    'Content-Type': 'application/json',
-                    'x-access-token': localStorage.getItem('token'),
-                    'lobbyId': lobbyId
-                }
-            });
+            const playersResponse = await fetch(expandLink(`/api/lobbyInside/getUserList?lobbyId=${lobbyId}`));
             if (!playersResponse.ok) {
                 throw new Error('Failed to fetch players');
             }
             const playersData = await playersResponse.json();
+            console.log(playersData)
             setPlayers(playersData);
 
-            const ownerResponse = await fetch("/api/lobbyInside/getOwnerLobbyData", {
-                method: 'GET',
-                headers: {
-                    'Content-Type': 'application/json',
-                    'x-access-token': localStorage.getItem('token'),
-                    'lobbyId': lobbyId
-                }
-            });
+            const ownerResponse = await fetch(expandLink(`/api/lobbyInside/getOwnerLobbyData?lobbyId=${lobbyId}`));
+
             if (!ownerResponse.ok) {
                 throw new Error('Failed to fetch owner');
             }
@@ -84,9 +73,9 @@ export default function Lobby() {
                 <div className={styles.sidebar}>
                     <div className={styles.lobbyheader}>Players</div>
                     {players.map(player => (
-                        <div key={player.ID_USER}>
-                            <img src={player.avatar} alt="Avatar" className={styles.avatar} />
-                            {player.username}
+                        <div key={player.id}>
+                            <img src={player.avatar} className={styles.avatar} />
+                            {player.nickname}
                         </div>
                     ))}
                 </div>

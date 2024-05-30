@@ -5,8 +5,9 @@ import LobbyForm from '../LobbyForm/LobbyForm';
 import { MdNavigateNext } from "react-icons/md";
 import { MdNavigateBefore } from "react-icons/md";
 import { FaCirclePlus } from "react-icons/fa6";
-
+import LoadingChad from '../LoadingChad/LoadingChad';
 import { Link } from 'react-router-dom';
+import { expandLink } from '../fetches/expandLink';
 
 import io from "socket.io-client";
 const socket = io.connect("http://localhost:4001");
@@ -18,6 +19,8 @@ const GameCategory = () => {
   const [currentPage, setCurrentPage] = useState(0);
   const [size, setSize] = useState('');
   const [maxPages, setMaxPages] = useState(0);
+  const [isLoading, setIsLoading] = useState(false);
+
   //using params (from url)
   const { game } = useParams();
   const [name, setName] = useState('');
@@ -28,11 +31,11 @@ const GameCategory = () => {
     fetchLobbies();
   }, [game,currentPage,lopata]); // Update lobbies when game or name changes
 
-
+  
   const fetchUserId = async () =>{
     const token = localStorage.getItem('token');
     const tokenWithoutQuotes = token.replace(/"/g, '');
-    const response2 = await fetch('http://localhost:4001/api/lobby/join', {
+    const response2 = await fetch(expandLink(`/api/lobby/join`), {
         method: 'POST',
         headers: {
         'Content-Type' : 'application/json',
@@ -45,8 +48,9 @@ const GameCategory = () => {
     };
   }
   const fetchLobbies = () => {
+    setIsLoading(true);
     console.log("---------------------------------------------- FETCH ODPALONY ----------------------------------------------")
-    fetch(`http://localhost:4001/api/lobby/show?page=${currentPage}&size=${5}&game=${game}&name=${name}`)
+    fetch(expandLink(`/api/lobby/show?page=${currentPage}&size=${5}&game=${game}&name=${name}`))
       .then(res => {
         if (!res.ok) {
           throw new Error('Internal Server Error');
@@ -67,6 +71,7 @@ const GameCategory = () => {
         setError(error.message);
         console.log(error.message);
       });
+      setIsLoading(false);
   };
 
   async function sendMessage(ID) {
@@ -100,9 +105,8 @@ const GameCategory = () => {
   
       {error ? (
         <div className='error-message'>{console.log(error)}Brak dostępnych lobby 😥</div>
-      ) : lobbies.length === 0 ? (
-        <div className='error-message'>Brak dostępnych lobby 😥</div>
       ) : ( 
+        isLoading? <LoadingChad></LoadingChad>:(
         <div className='lobby-wrapper'>
           <div className='lobby-container'>
             {lobbies.map(lobby => (
@@ -130,7 +134,7 @@ const GameCategory = () => {
               <span>Strona {currentPage + 1} z {maxPages}</span>
             </div>
           </div>
-        </div>
+        </div>)
       )}
     </div>
   );
