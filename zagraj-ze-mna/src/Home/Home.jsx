@@ -73,24 +73,29 @@ function Home(){
             <div className='sorting-buttons'>
                 <button className='sorting-button'>Kategorie</button>
             </div>
-            {isLoading ? <LoadingChad></LoadingChad>:<div className="game-tiles-grid">
+            {isLoading ? <LoadingChad></LoadingChad>: error? 
+            <div className='server-down-container'>
+              <div className='caption'>Serwer padł, pora dotknąć trawy</div> 
+            <img src="https://i.ibb.co/0FnRKhw/grass.jpg" /></div> 
+            :<><div className="game-tiles-grid">
                     {games.map((game, index) => (
                         <Link to={`/category/${game.name}`} key={index} className="game-tile">
                             <img src={game.image} alt={game.name} />
                             <span className="game-name">{game.name}</span>
                         </Link>
                     ))}
-                </div>}      
-          
-                
-            </div>
-            <div className='lobby-pagination-wrapper'>
+                    
+                </div><div className='lobby-pagination-wrapper'>
             <div className='lobby-pagination-container'>
               <button onClick={() => { if (currentPage > 0){setCurrentPage(currentPage - 1)}; }}><MdNavigateBefore /></button>
               <button onClick={() => { if (currentPage + 1 < maxPages){setCurrentPage(currentPage + 1)}; }}><MdNavigateNext /></button>
               <span>Strona {currentPage + 1} z {maxPages}</span>
             </div>
-          </div>
+          </div></>}      
+          
+                
+            </div>
+            
             
             <Footer></Footer>
         </div>

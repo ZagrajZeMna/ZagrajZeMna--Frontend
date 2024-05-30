@@ -95,12 +95,16 @@ const GameCategory = () => {
 
   return (
     <div className='background2'>
+      <div>
       <h2 className='category-text'>Kategoria: {game}</h2>
+      
       <span className='available-lobby-text'>DOSTĘPNE LOBBY: </span>
       <div className='search-bar'>
         <input type='text' value={name} onChange={handleInputChange} onKeyPress={handleKeyPress}/> 
         <button onClick={handleSearch}>Szukaj</button>
       </div>
+      </div>
+      
       <LobbyForm gameNameProp={game} lopata={lopata} setLopata={setLopata}></LobbyForm>
   
       {error ? (
@@ -125,7 +129,7 @@ const GameCategory = () => {
                 </div>
               </div>
             ))}
-          </div>
+          
   
           <div className='lobby-pagination-wrapper'>
             <div className='lobby-pagination-container'>
@@ -133,6 +137,7 @@ const GameCategory = () => {
               <button onClick={() => { if (currentPage + 1 < maxPages){setCurrentPage(currentPage + 1)}; }}><MdNavigateNext /></button>
               <span>Strona {currentPage + 1} z {maxPages}</span>
             </div>
+          </div>
           </div>
         </div>)
       )}
