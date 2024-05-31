@@ -1,6 +1,11 @@
+:root {
+  /* EDIT THE BORDER AND TEXT COLOR HERE */
+  --lobbycolor: #caccc2;
+  --lobbytextcolor: #29f800;
+}
 .background {
   background-color: black;
-  color: green;
+  color: var(--lobbycolor);
   display: flex;
   justify-content: center;
   align-items: center;
@@ -10,18 +15,18 @@
 
 .lobbycontainer {
   background-color: #1c1c1c;
-  border: 2px solid #00ff00;
+  border: 2px solid var(--lobbycolor);
   width: 80%;
   height: 70%;
   display: flex;
   flex-direction: row;
-  box-shadow: 0 0 10px #00ff00;
+  box-shadow: 0 0 10px var(--lobbycolor);
   overflow: hidden;
 }
 
 .sidebar {
   width: 20%;
-  border-right: 2px solid #00ff00;
+  border-right: 2px solid var(--lobbycolor);
   padding: 10px;
   display: flex;
   flex-direction: column;
@@ -40,29 +45,32 @@
   font-weight: bold;
   text-align: center;
   margin-bottom: 10px;
+  font-size: 20px;
 }
 
 .chatheader {
   margin-top: 10px;
-  font-weight: bold;
+  font-size: 20px;
 }
 
 .chatoutput {
   flex-grow: 1;
-  border: 1px solid #00ff00;
+  border: 1px solid var(--lobbycolor);
   margin-bottom: 10px;
   overflow-y: auto;
   background-color: black;
+  color: var(--lobbytextcolor);
 }
 
 .inputcontainer {
   display: flex;
   align-items: center;
+  color: var(--lobbytextcolor);
 }
 
 .inputcontainer input[type="text"] {
   background-color: black;
-  color: green;
+  color: var(--lobbytextcolor);
   border: none;
   outline: none;
   width: 100%;
@@ -80,7 +88,7 @@
   .sidebar {
     width: 100%;
     border-right: none;
-    border-bottom: 2px solid #00ff00;
+    border-bottom: 2px solid var(--lobbycolor);
     text-align: center;
   }
 

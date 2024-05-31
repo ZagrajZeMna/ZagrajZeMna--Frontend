@@ -272,7 +272,8 @@
 
   .player-count button {
     width: 100%;
-    font-size: 24px;
+    font-size: 48px;
+    margin: 0px;
   }
 
   .lobby-tile {

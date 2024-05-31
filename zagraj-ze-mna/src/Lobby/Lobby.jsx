@@ -84,7 +84,9 @@ export default function Lobby() {
           ))}
         </div>
         <div className={styles.maincontent}>
-          <div className={styles.lobbyheader}>Lobby: {lobbyname}</div>
+          <div className={styles.lobbyheader}>
+            Lobby: <span>{lobbyname}</span>
+          </div>
           <div className={styles.ownerheader}>Owner: {owner.username}</div>
           <div className={styles.chatheader}>Chat</div>
           <div className={styles.chatoutput}>
