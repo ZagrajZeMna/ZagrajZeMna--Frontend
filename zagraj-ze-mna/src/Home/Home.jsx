@@ -17,7 +17,7 @@ function Home() {
 
   const navigate = useNavigate();
   useEffect(() => {
-    fetchGames(); //UNCOMMENT THIS IF THERE ARE GAMES WITH PICTURES IN THE DATABASE, OTHERWISE LEAVE COMMENTED
+    fetchGames();
   }, [currentPage]);
   const fetchGames = () => {
     setIsLoading(true);
