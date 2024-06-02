@@ -5,7 +5,6 @@ import io from "socket.io-client";
 
 function Notification(){
     const socket = io.connect("http://localhost:4001");
-    const [notificationSent, setNotificationSent] = useState(false);
     const token = localStorage.getItem('token');
 
     useEffect(() => {
@@ -20,7 +19,6 @@ function Notification(){
             else{
                 if (!notificationSent) {
                     handleActivityNotification(data,lobbyName);
-                    setNotificationSent(true);
                 }
             }
         });
@@ -28,7 +26,7 @@ function Notification(){
         return () => {
             socket.off(token);
         };
-    }, [notificationSent]);
+    });
     
     function accepted(lobbyName) {
         toast.success(

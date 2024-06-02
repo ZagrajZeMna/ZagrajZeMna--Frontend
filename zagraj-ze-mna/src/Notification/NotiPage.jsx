@@ -30,9 +30,15 @@ const NotiPage = () => {
     const { height, width } = useScreenSize();
     const [dataFromGet, setDataFromGet] = useState(null);
     const [notificationInfo, setnotificationInfo] = useState(null);
-    const [showLobbys, setShowLobbys] = useState(false); // Stan określający czy wyświetlić lobbys
-    const [showInfo, setshowInfo] = useState(false);
+    const [showLobbys, setShowLobbys] = useState(true); // Stan określający czy wyświetlić lobbys
+    const [showInfo, setshowInfo] = useState(true);
+    const [style, setStyle] = useState("unclicked");
+    const [styleinfo, setStyleInfo] = useState("unclicked");
     let content = [];
+    useEffect(()=>{
+        getInfo(),
+        getData();
+    },[]);
     const getData = async () => {
         try {
             const token = localStorage.getItem('token');
@@ -75,17 +81,22 @@ const NotiPage = () => {
             console.error(error);
         }
     };
-
     function setResponse(){
+        setStyleInfo("unclicked");
         getData();
         setShowLobbys(true);
         setshowInfo(false);
+        if (style !== "unclicked") setStyle("unclicked");
+        else setStyle("clicked");
+    };
+    function setInfo(){
+        setStyle("unclicked");
+        getInfo();
+        setShowLobbys(false);
+        setshowInfo(true);
+        if (styleinfo !== "unclicked") setStyleInfo("unclicked");
+        else setStyleInfo("clicked");
     }
-    const setInfo = () =>[
-        getInfo(),
-        setShowLobbys(false),
-        setshowInfo(true)
-    ]
     const sendAccept = async (ID, Desc, IDLobby) => {
         try {
             console.log("Akceptacja", ID, Desc);
@@ -201,15 +212,15 @@ const NotiPage = () => {
                         <table className='tableWithCategory flotLeftClassOrSth'>
                             <tbody>
                                 <tr>
-                                    <td> <div className='cat' onClick={() => setResponse() } >PROŚBY</div></td>
-                                    <td> <div className='cat' onClick={() => setInfo()}>ODPOWIEDZI</div></td>
+                                    <td> <div className={style} onClick={() => setResponse()} >PROŚBY</div></td>
+                                    <td> <div className={styleinfo} onClick={() => setInfo()}>ODPOWIEDZI</div></td>
                                 </tr>
                             </tbody>
                         </table>
                     </div>
                     <div className='clearer'></div>
                 </div>
-                <div className='lobbylist'>                     
+                <div className='lobbylist'>                  
                     {showLobbys && addLobbys()}
                     {showInfo && addNotiInfo()}                
                 </div>
