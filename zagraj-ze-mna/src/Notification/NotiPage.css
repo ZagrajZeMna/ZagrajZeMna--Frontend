@@ -42,7 +42,10 @@
     float: right;
     font-size: 30px;
 }
- 
+.deleteButton:hover
+{
+    font-size: 32px;
+}
 .deleteButton:active 
 {
     transform: translateY(4px);
@@ -132,7 +135,7 @@
     font-size: 30px;
     color: #eee;
 }
-.cat
+.unclicked
 {
     border-bottom: 2px solid #eee;
     padding-bottom: 5%;
@@ -144,14 +147,28 @@
 {
     border-bottom: 2px solid #eee;
 }
-.cat:hover
+.unclicked:hover
 {
+    font-size: 32px;
     border-bottom: 2px solid #eee;
 }
-.cat:active {
+.unclicked:active {
     box-shadow: 0 5px #666;
     transform: translateY(4px);
   }
+.clicked
+{
+      padding-bottom: 5%;
+      border-bottom: 2px solid rgba(0,0,0,0);
+      font-size: 30px;
+      color: #eee;
+      border-bottom: 2px solid #eee;
+}
+.clicked:hover
+{
+    font-size: 32px;
+    border-bottom: 2px solid #eee;
+}
 .category
 {
     width: 100%;
