@@ -93,7 +93,7 @@ function ResetPassword() {
 
     
         if (password !== repeatPassword) {
-            setError('Passwords do not match.');
+            setError('Hasła nie są takie same');
             return;
         }
 
@@ -130,7 +130,7 @@ function ResetPassword() {
         <div className={styles.parent}>
                 <form className={styles.login} onSubmit={handleSubmit} >
                     <div className={styles.formContainer}>
-                        <div className={styles.title}>Restart Password</div>
+                        <div className={styles.title}>Zmień Hasło</div>
 
                         <div className={styles.inputbox}>
                         <input 
@@ -146,7 +146,7 @@ function ResetPassword() {
                             <input 
                             className={styles.inpBox}
                             type={showPassword ? "text" : "password"} 
-                            placeholder="new password" 
+                            placeholder="nowe hasło" 
                             value={password} 
                             onChange={handlePasswordChange} ></input>
 
@@ -159,7 +159,7 @@ function ResetPassword() {
                             <input 
                             className={styles.inpBox}
                             type={showRepeatPassword ? "text" : "password"} 
-                            placeholder="repeat new password" 
+                            placeholder="powtórz nowe hasło" 
                             value={repeatPassword} 
                             onChange={handleRepeatPasswordChange} ></input>
 
@@ -170,9 +170,9 @@ function ResetPassword() {
                         </div>
                         <div className={styles.error}>{error}</div>
                         <div className={styles.error}>{success}</div>
-                        <button className={styles.resetBtn} type="submit">Confirm</button>
+                        <button className={styles.resetBtn} type="submit">Zatwierdź</button>
                         
-                        <p className={styles.textToLogIn}>Log in <a href="/login">here</a></p>
+                        <p className={styles.textToLogIn}>Zaloguj się <a href="/login">tutaj</a></p>
                     </div>
                 </form>
             </div>
