@@ -34,9 +34,9 @@ function ResetPassword() {
         const passwordRegex = /^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#.?&])[A-Za-z\d@$!%*#.?&]{8,20}$/;
     
         if(password.length < 8 || password.length > 20 || !passwordRegex.test(password)){
-            setError("8-20 char(1 number, 1 letter and 1 special char)");
+            setError("Hasło od 8-20 (1 litera, 1 cyfra, 1 znak specjalny");
         } else if (repeatPassword.length > 0 && password !== repeatPassword){
-            setError('Passwords do not match.');
+            setError('Hasła nie są podobne');
         } else {
             setError('');
         }
@@ -46,7 +46,7 @@ function ResetPassword() {
     const handleRepeatPasswordChange = (e) => {
         setRepeatPassword(e.target.value);
         if (e.target.value !== password) {
-            setError('Passwords do not match.');
+            setError('Hasła nie są takie same');
         } else {
             setError('');
         }
@@ -62,7 +62,7 @@ function ResetPassword() {
         }
         const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
         if (!emailRegex.test(email)) {
-            setError('Please enter a valid email address.');
+            setError('Proszę wprować poprawny adres email');
             return;
         }else{
             setError('');
@@ -75,19 +75,19 @@ function ResetPassword() {
 
 
         if (!email.trim() || !password.trim() || !repeatPassword.trim()) {
-            setError('Please fill all fields.');
+            setError('Proszę wypełnij wszystkie pola');
             return;
         }
 
         const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
         if (!emailRegex.test(email)) {
-            setError('Please enter a valid email address.');
+            setError('Proszę wprować poprawny adres email');
             return;
         }
 
         const passwordRegex = /^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#.?&])[A-Za-z\d@$!%*#.?&]{8,20}$/;
         if (!passwordRegex.test(password)) {
-            setError('8-20 char(1 number, 1 letter and 1 special char)');
+            setError('Hasło od 8-20 (1 litera, 1 cyfra, 1 znak specjalny"');
             return;
         }
 
