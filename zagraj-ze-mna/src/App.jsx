@@ -1,5 +1,6 @@
 
 import AdminPage from "./AdminPage/AdminPage"
+import Contact from "./Contact/Contact";
 import { AuthProvider, useAuth } from './AuthContext/AuthContext';
 import ProtectedRoute from './AuthContext/ProtectedRoute';
 import Registration from "./Registration/Registration";
@@ -56,6 +57,11 @@ function App() {
         <Route path="/notification" element={
           <ProtectedRoute>
             <NotiPage />
+          </ProtectedRoute>
+        } />
+        <Route path="/contact" element={
+          <ProtectedRoute>
+            <Contact/>
           </ProtectedRoute>
         } />
         </Routes>
