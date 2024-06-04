@@ -58,6 +58,7 @@ export function AuthProvider({ children }) {
 
   const logout = () => {
     localStorage.removeItem('token');
+    localStorage.removeItem('username');
     setCurrentUser(null);
     navigate('/login');
   };

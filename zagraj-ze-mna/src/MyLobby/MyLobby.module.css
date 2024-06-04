@@ -49,3 +49,6 @@
     font-size: 50px;
     font-weight: bold;
   }
+.wrapper{
+    flex-grow: 1;
+}

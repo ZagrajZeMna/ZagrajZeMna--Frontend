@@ -79,13 +79,12 @@ function MyLobby() {
 
   return (
     <div className={styles.container}>
-        {isLoading ? <LoadingChad/> : (
+        <div className={styles.wrapper}>
+        {isLoading ? <LoadingChad/> : (error ? (
         <div className={styles.serverDownContainer}>
           <span>Pora dotknąć trawy</span>
           <img src="https://i.ibb.co/0FnRKhw/grass.jpg" />
-        </div>
-      ) }
-
+        </div>) : (
         <div className={styles.lobbies}>
             <h1 className={styles.title}>Moje Lobby</h1>
                 
@@ -102,6 +101,8 @@ function MyLobby() {
                     
             </div>
         </div>
+        )) }
+       </div>
         <Footer/>
     </div>
   );

@@ -113,6 +113,12 @@ const MyNavbar = () => {
     const handleLogout = () => {
         logout();
     };
+
+    const handleFunction = () => {
+        handleLogout();
+        settingHidder();
+        
+    }
     //curent path
     const path = useLocation();
 
@@ -280,7 +286,7 @@ const MyNavbar = () => {
                     <Link to="/editUserPage" onClick={settingHidder}><p>Ustawienia profilu</p></Link>
                     <Link to="/notification" onClick={settingHidder}><p>Powiadomienia</p></Link>
                     <Link to="/editNotificationsPage" onClick={settingHidder}><p>Dodane gry</p></Link>
-                    <Link to="/" onClick={handleLogout}> <p>Wyloguj</p></Link>
+                    <Link to="/" onClick={handleFunction}> <p>Wyloguj</p></Link>
                 </div>)}
 
                 </div>
@@ -343,7 +349,7 @@ const MyNavbar = () => {
                         <Link to="/editUserPage" onClick={settingHidder}><p>Ustawienia profilu</p></Link>
                         <Link to="/editNotificationsPage" onClick={settingHidder}><p>Powiadomienia</p></Link>
                         <Link to="/editNotificationsPage" onClick={settingHidder}><p>Dodane gry</p></Link>
-                        <Link to="/" onClick={handleLogout}> <p>Wyloguj</p></Link>
+                        <Link to="/" onClick={handleFunction}> <p>Wyloguj</p></Link>
                     </div>)}
 
                     <div className='clear'></div>
