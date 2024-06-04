@@ -17,7 +17,7 @@ function Home() {
 
   const navigate = useNavigate();
   useEffect(() => {
-    fetchGames(); //UNCOMMENT THIS IF THERE ARE GAMES WITH PICTURES IN THE DATABASE, OTHERWISE LEAVE COMMENTED
+    fetchGames();
   }, [currentPage]);
   const fetchGames = () => {
     setIsLoading(true);
@@ -36,7 +36,7 @@ function Home() {
       .then((data) => {
         setGames(data.Game);
         setMaxPages(data.Pages);
-
+        console.log("---------------FETCH DO STRONY GŁÓWNEJ---------------");
         console.log(data);
       })
       .catch((error) => {
@@ -61,6 +61,7 @@ function Home() {
   };
   const handleSearch = () => {
     fetchGames();
+    setCurrentPage(0);
   };
   const [games, setGames] = useState([]);
 
