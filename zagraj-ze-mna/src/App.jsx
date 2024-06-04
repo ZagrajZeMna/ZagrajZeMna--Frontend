@@ -26,6 +26,7 @@ function App() {
     <AuthProvider>
       <MyNavbar/>
       <Space/>
+      <Notification/>
       <Routes>
         <Route path="/registration" element={<Registration />} />
         <Route path="/" element={<Home />} />
