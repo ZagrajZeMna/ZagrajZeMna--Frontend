@@ -60,12 +60,34 @@
   padding: 10px 20px;
   font-weight: bold;
   border-radius: 5px;
-  cursor: pointer;
   outline: none;
   transition: background-color 0.2s ease;
   margin-right: 15px;
   width: 30%;
+  height: 4rem;
   margin-top: 10px;
+  
+  background: linear-gradient(130deg, #1f25eb, #6904a8, #be04df);
+  background-size: 200% 200%;
+
+  -webkit-animation: Animation 5s ease infinite;
+  -moz-animation: Animation 5s ease infinite;
+  animation: Animation 5s ease infinite;
+}
+@-webkit-keyframes Animation {
+  0%{background-position:10% 0%}
+  50%{background-position:91% 100%}
+  100%{background-position:10% 0%}
+}
+@-moz-keyframes Animation {
+  0%{background-position:10% 0%}
+  50%{background-position:91% 100%}
+  100%{background-position:10% 0%}
+}
+@keyframes Animation { 
+  0%{background-position:10% 0%}
+  50%{background-position:91% 100%}
+  100%{background-position:10% 0%}
 }
 .category-button-text {
   font-size: 20px;

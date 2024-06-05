@@ -70,15 +70,15 @@ function Home() {
       <div className="game-tiles-container">
         <span className="caption">Giereczki</span>
         <div className="category-button-container">
-          <button className="category-button">
-            <span className="category-button-text">Gry komputerowe</span>
-          </button>
-          <button className="category-button">
-            <span className="category-button-text">Gry planszowe</span>
-          </button>
-          <button className="category-button">
-            <span className="category-button-text">Inne</span>
-          </button>
+          <div className="category-button">
+            <span className="category-button-text"> </span>
+          </div>
+          <div className="category-button">
+            <span className="category-button-text"> </span>
+          </div>
+          <div className="category-button">
+            <span className="category-button-text"> </span>
+          </div>
         </div>
         <div className="search-bar">
           <input
