@@ -81,7 +81,7 @@ const UserPageGames = () =>
                     'size': `${size}`}
 
             //fetching user data
-            const response = await fetch('http://localhost:4001/api/profile/usersGames',{
+            const response = await fetch('https://zagrajzemna-backend.onrender.com/api/profile/usersGames',{
                 method:'POST',
                 headers: {
                     'Authorization' : `Bearer ${tokenWithoutQuotes}`,
