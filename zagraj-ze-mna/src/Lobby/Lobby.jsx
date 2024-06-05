@@ -15,9 +15,12 @@ export default function Lobby() {
   const [owner, setOwner] = useState({});
   const { lobbyId } = useParams();
   const { lobbyname } = useParams();
+  const username = localStorage.getItem("username");
 
   useEffect(() => {
     fetchLobbyData();
+    const room = lobbyId;
+    socket.emit("joinchat", { username, room });
   }, [lobbyId]);
 
   const fetchLobbyData = async () => {
@@ -81,27 +84,34 @@ export default function Lobby() {
       <div className={styles.lobbycontainer}>
         <div className={styles.sidebar}>
           <div className={styles.lobbyheader}>Gracze:</div>
-          {players.map((player) => (
-            <div key={player.id}>
+          {players.map((player, index) => (
+            <div key={index} className={styles.players}>
               <img src={player.avatar} className={styles.avatar} />
-              {player.nickname}
+              {player.username}
             </div>
           ))}
         </div>
         <div className={styles.maincontent}>
           <div className={styles.lobbyheader}>
-            Lobby: <span>{lobbyname}</span>
+            <div className={styles.headerContent}>
+              <span>Lobby: {lobbyname}</span>
+            </div>
+            <button className={styles.leaveButton}>opusc lobby</button>
           </div>
+
           <div className={styles.ownerheader}>Właściciel: {owner.username}</div>
           <div className={styles.chatheader}>Chat</div>
           <div className={styles.chatoutput}>
             {/* {output.map((line, index) => (
               <div key={index}>{line}</div>
             ))} */}
-            <Messages socket={socket}></Messages>
+            <Messages
+              socket={socket}
+              username={"kemnaz"}
+              roomId={lobbyId}
+            ></Messages>
           </div>
           <div className={styles.inputcontainer}>
-            <span>C:Users\User&gt;</span>
             {/* <input
               type="text"
               value={inputValue}
@@ -111,7 +121,7 @@ export default function Lobby() {
             /> */}
             <SendMessage
               socket={socket}
-              username={"kemnaz"}
+              username={username}
               room={lobbyId}
             ></SendMessage>
           </div>

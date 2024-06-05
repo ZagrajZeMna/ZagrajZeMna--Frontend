@@ -1,21 +1,22 @@
+import { expandLink } from "../fetches/expandLink";
 import styles from "./Lobby.module.css";
 import { useState, useEffect, useRef } from "react";
 
-const Messages = ({ socket }) => {
-  const [messagesRecieved, setMessagesReceived] = useState([]);
+const Messages = ({ socket, roomId }) => {
+  const [messagesReceived, setMessagesReceived] = useState([]);
 
-  const messagesColumnRef = useRef(null); // Add this
-
-  // Runs whenever a socket event is recieved from the server
+  const messagesColumnRef = useRef(null);
+  console.log(roomId);
+  // Runs whenever a socket event is received from the server
   useEffect(() => {
     socket.on("receive_message", (data) => {
-      console.log(data);
       setMessagesReceived((state) => [
         ...state,
         {
           message: data.message,
           username: data.username,
-          __createdtime__: data.__createdtime__,
+          date: data.date,
+          time: data.time,
         },
       ]);
     });
@@ -24,28 +25,59 @@ const Messages = ({ socket }) => {
     return () => socket.off("receive_message");
   }, [socket]);
 
-  // Add this
+  // Fetch the last 100 messages sent in the chat room (fetched from the db in backend)
   useEffect(() => {
-    // Last 100 messages sent in the chat room (fetched from the db in backend)
-    socket.on("last_100_messages", (last100Messages) => {
-      console.log("Last 100 messages:", JSON.parse(last100Messages));
-      last100Messages = JSON.parse(last100Messages);
-      // Sort these messages by __createdtime__
-      last100Messages = sortMessagesByDate(last100Messages);
-      setMessagesReceived((state) => [...last100Messages, ...state]);
-    });
+    fetchMessages();
+  }, []);
 
-    return () => socket.off("last_100_messages");
-  }, [socket]);
+  const fetchMessages = async () => {
+    try {
+      const response = await fetch(
+        expandLink("/api/lobbyInside/latest100messages"),
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            room: `${roomId}`,
+          }),
+        }
+      );
 
-  // Add this
+      if (!response.ok) {
+        throw new Error("Internal Server Error");
+      }
+
+      const data = await response.json();
+      console.log("Fetched data:", data); // Log the response data
+
+      if (!Array.isArray(data.message)) {
+        throw new Error("Response is not an array");
+      }
+
+      const formattedMessages = data.message.map((msg) => ({
+        message: msg.message,
+        username: msg.username,
+        date: msg.date,
+        time: msg.time,
+      }));
+
+      setMessagesReceived((state) => [...state, ...formattedMessages]);
+    } catch (error) {
+      console.error("Failed to fetch messages:", error);
+    }
+  };
+
   // Scroll to the most recent message
   useEffect(() => {
-    messagesColumnRef.current.scrollTop =
-      messagesColumnRef.current.scrollHeight;
-  }, [messagesRecieved]);
+    if (messagesColumnRef.current) {
+      messagesColumnRef.current.scrollTop =
+        messagesColumnRef.current.scrollHeight;
+    }
+  }, [messagesReceived]);
 
-  // Add this
+  // Sort messages by date
   function sortMessagesByDate(messages) {
     return messages.sort(
       (a, b) => parseInt(a.__createdtime__) - parseInt(b.__createdtime__)
@@ -59,18 +91,16 @@ const Messages = ({ socket }) => {
   }
 
   return (
-    // Add ref to this div
     <div className={styles.messagesColumn} ref={messagesColumnRef}>
-      {messagesRecieved.map((msg, i) => (
+      {sortMessagesByDate(messagesReceived).map((msg, i) => (
         <div className={styles.message} key={i}>
-          <div style={{ display: "flex", justifyContent: "space-between" }}>
-            <span className={styles.msgMeta}>{msg.username}</span>
+          <div className={styles.messagewrapper}>
+            <span className={styles.msgMeta}>{msg.username} </span>
             <span className={styles.msgMeta}>
-              {formatDateFromTimestamp(msg.__createdtime__)}
+              {formatDateFromTimestamp(msg.date, msg.time)}
             </span>
           </div>
-          <p className={styles.msgText}>{msg.message}</p>
-          <br />
+          <p className={styles.msgText}>C:Users\{msg.message}</p>
         </div>
       ))}
     </div>
