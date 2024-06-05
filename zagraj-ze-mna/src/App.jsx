@@ -18,6 +18,7 @@ import EditUserPage from "./edtiPage/editUserPage";
 import Notification from "./Notification/notification";
 import NotiPage from "./Notification/NotiPage";
 import Lobby from './Lobby/Lobby';
+import MyLobby from "./MyLobby/MyLobby";
 
 function App() {
 
@@ -25,25 +26,32 @@ function App() {
     <AuthProvider>
       <MyNavbar/>
       <Space/>
+      <Notification/>
       <Routes>
         <Route path="/registration" element={<Registration />} />
         <Route path="/" element={<Home />} />
         
         <Route path="/login" element={<Login />} />
         <Route path="/resetPassword" element={<ResetPassword/>}/>
-
+        
 
           <Route path="/category/:game" element={<GameCategory />} />
+          <Route path="/userPage" element={<UserPage />} />
           <Route path="/category/:game/:lobbyname/:lobbyId" element={<Lobby/>}/>
 
           <Route path="/lobbyForm" element={<LobbyForm/>}/>
+
+          <Route path="/myLobby" element={
+            <ProtectedRoute>
+            <MyLobby/>
+            </ProtectedRoute>}></Route>
 
           <Route path="/adminPage" element={
           <AdminRoute>
             <AdminPage />
           </AdminRoute>} />
 
-          <Route path="/userPage" element={
+           <Route path="/userPage" element={
           <ProtectedRoute>
             <UserPage />
           </ProtectedRoute>

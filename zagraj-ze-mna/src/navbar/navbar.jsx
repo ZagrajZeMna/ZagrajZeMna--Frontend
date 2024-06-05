@@ -102,7 +102,7 @@ const MyNavbar = () => {
 
         myPage = '/userPage';
         myNot  = '/notification';
-        firstButton = '/userLobbys';
+        firstButton = '/myLobby';
         secondButton = '/';
         firstButtonText = 'MOJE LOBBY';
         secondButtonText = 'HOME';

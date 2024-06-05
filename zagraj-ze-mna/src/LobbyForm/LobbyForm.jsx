@@ -73,7 +73,7 @@ function LobbyForm({ gameNameProp,lopata,setLopata}) {
     const isNeedUsersValid = !isNaN(values.NeedUsers);
 
     if (!allFieldsFilled || !isNeedUsersValid) {
-      setError('Please fill in all fields and provide a valid number for Need Users.');
+      setError('Uzupełnij wszystkie pola.');
       return;
     }
 
