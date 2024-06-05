@@ -21,7 +21,7 @@ function MyLobby() {
             setIsLoading(true);
             const token = localStorage.getItem("token");
             const tokenWithoutQuotes = token.replace(/"/g, '');
-            const response = await fetch('http://localhost:4001/api/profile/usersLobby', {
+            const response = await fetch('https://zagrajzemna-backend.onrender.com/api/profile/usersLobby', {
                 method: 'POST',
                 headers: {
                     'Content-Type' : 'application/json',
