@@ -1,5 +1,5 @@
 //variables
-const connectionLink = 'https://zagrajzemna-backend.onrender.com';
+const connectionLink = 'http://localhost:4001';
 
 //react
 import { useState, useEffect } from 'react';
@@ -131,7 +131,7 @@ const UserPage = () =>
                 const tokenWithoutQuotes = token.replace(/"/g, '');
 
                 //fetching user data
-                const response = await fetch('https://zagrajzemna-backend.onrender.com/api/profile/getUserDetails',{
+                const response = await fetch('http://localhost:4001/api/profile/getUserDetails',{
                     method:'GET',
                     headers: {
                         'Authorization' : `Bearer ${tokenWithoutQuotes}`
