@@ -7,13 +7,16 @@
 import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 
+import {postFetchJWT} from '../fetches/postFetch'
+import useGetToken from '../fetches/useFetch';
+
 import './editPageUserDataForm.css';
 
 const EditPageUserDataForm = () =>{
 
     //data from fetch
     //user data = all actual profile info
-    const [dataFromGet, setDataFromGet] = useState(null);
+    //const [dataFromGet, setDataFromGet] = useState(null);
     //languages = all languages that are in database
     const [allLanguages, setALanguages] = useState(null);
 
@@ -21,6 +24,7 @@ const EditPageUserDataForm = () =>{
     const [error, setError] = useState(null);
     const [errorLang, setErrorLang] = useState(null);
     const [errorPost, setErrorPost] = useState(null);
+    const [dataLoad, setDataLoad] = useState(false);
 
     //erros message to display
     const [displayErrorMessage, setDEM] = useState('');
@@ -28,6 +32,8 @@ const EditPageUserDataForm = () =>{
     //if there is no errors this is set to true and message
     //that data was properly updated is shown
     const [dataUpdated, setDU] = useState(false);
+
+    const [firstTime ,setFT] = useState(true);
     
     //used for storing user data 
     //and displaying it in form inputs
@@ -55,11 +61,19 @@ const EditPageUserDataForm = () =>{
     //if true display info that data was changed
     const [dataActualized, setActualized] = useState(false);
 
+    const [langLoaded, setLangLoaded] = useState(false);
+    
+    //getting data needed for this page
+    const {isPending, isError, errorMessage, data} = useGetToken('/api/profile/getUserDetails');
+    const DataRespond = useGetToken('/api/profile/getAllLanguages');
+    
 
     //handles submit
-    const handleSubmit = async(e) =>{
+    const handleSubmit = async (e) =>{
         e.preventDefault();
-
+        let is_error = null;
+        let errorMessage = null;
+        let respond= {};
         //username needs to be something
         if(nickChange && !myNick.trim())
         {
@@ -70,8 +84,8 @@ const EditPageUserDataForm = () =>{
         //if nick was sets to the previous version we sets
         //that there is no need to update nick
         //without this error shows that username must be unique
-        if(dataFromGet != null)
-            if(nickChange && myNick == dataFromGet.username);
+        if(data != null)
+            if(nickChange && myNick == data.username);
                 setNickChange(false);
 
         //BELOW
@@ -107,56 +121,73 @@ const EditPageUserDataForm = () =>{
             if(nickChange)
             {
                 let body = { "username": `${myNick}` };
-                let url = 'https://zagrajzemna-backend.onrender.com/api/profile/postUsername'
-                fetchPostBody(e,url,body);
+                let url = '/api/profile/postUsername'
+                respond = await postFetchJWT(url,body);
+                is_error = respond.isError;
+                errorMessage = respond.errorMessage;
                 setNickChange(false);
             }
             if(aboutChange)
             {
                 let body = { "about": `${aboutMe}` };
-                let url = 'https://zagrajzemna-backend.onrender.com/api/profile/updateAbout'
-                fetchPostBody(e,url,body);
+                let url = '/api/profile/updateAbout'
+                respond = await postFetchJWT(url,body);
+                is_error = respond.isError;
+                errorMessage = respond.errorMessage;
                 setAboutChange(false);
             }
             if(langChange)
             {
                 let body = { "languageId": `${choosenLang}` };
-                let url = 'https://zagrajzemna-backend.onrender.com/api/profile/setUserLanguage'
-                fetchPostBody(e,url,body);
+                let url = '/api/profile/setUserLanguage'
+                respond = await postFetchJWT(url,body);
+                is_error = respond.isError;
+                errorMessage = respond.errorMessage;
                 setLangChange(false);
             }
             if(cityChange)
             {
                 let body = { "city": `${myCity}` };
-                let url = 'https://zagrajzemna-backend.onrender.com/api/profile/updateCity'
-                fetchPostBody(e,url,body);
+                let url = '/api/profile/updateCity';
+                respond = await postFetchJWT(url,body);
+                is_error = respond.isError;
+                errorMessage = respond.errorMessage;
                 setCityChange(false);
             }
             if(countryChange)
             {
                 let body = { "country": `${myCountry}` };
-                let url = 'https://zagrajzemna-backend.onrender.com/api/profile/updateCountry'
-                fetchPostBody(e,url,body);
+                let url = '/api/profile/updateCountry'
+                respond = await postFetchJWT(url,body);
+                is_error = respond.isError;
+                errorMessage = respond.errorMessage;
                 setCountryChange(false);
             }
             if(contactChange)
             {
                 let body = { "contact": `${myContact}` };
-                let url = 'https://zagrajzemna-backend.onrender.com/api/profile/updateContact'
-                fetchPostBody(e,url,body);
+                let url = '/api/profile/updateContact'
+                respond = await postFetchJWT(url,body);
+                is_error = respond.isError;
+                errorMessage = respond.errorMessage;
                 setContactChange(false);
             }
 
             
             setChange(false);
             setDU(false);
-            console.log(errorPost);
 
-            if(errorPost != null)
+            if(is_error)
             {
-                if(errorPost == "This username is already taken.")
+                setErrorPost(true);
+                if(errorMessage == "This username is already taken.")
                 {
                     setDEM('Nazwa użytkownika jest już zajęta! Wybiesz inną!');
+                    console.log(displayErrorMessage);
+                }
+                else if(errorMessage == 'Forbiden request! Please log in!')
+                {
+                    setDEM('Sesja wygasła, proszę się zalogować.')
                     console.log(displayErrorMessage);
                 }
             }
@@ -165,67 +196,8 @@ const EditPageUserDataForm = () =>{
 
             
         }
-        
-        
-        
+            
     }
-    /* FETCH FOR UPDATING USER DATA
-    - as parameters it takes:
-    - e
-    - url - witch is url to back like http://localhost:4001/api/profile/updateContact
-    - body - witch is something like body = {"data_name": "data"}
-    */
-    const fetchPostBody = async(e, url, body) =>{
-        try {
-            
-            //clearing previous errors
-            setErrorPost(null);
-
-            //taking token
-            const token = localStorage.getItem('token');
-                
-            //if token not exist = we are log out
-            //TODO: add checking if token is expired
-            if(!token)
-            {   
-                //setting error that we are log out
-                setErrorPost('Twoja sesja wygasła');
-                return;
-            }
-            //deleting Quotes from token
-            const tokenWithoutQuotes = token.replace(/"/g, '');
-
-            //connection with backend
-            //headers are importatant, we set there conections-type
-            //and sends token to back (backend needs token to check if we are log in or log out)
-            const response = await fetch(url, {
-                method: 'POST',
-                headers: {
-                    'Authorization' : `Bearer ${tokenWithoutQuotes}`,
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify(
-                    body
-                ),
-            });
-            
-            //checking backend respond
-            if(!response.ok){
-                const errorData = await response.json();
-                throw new Error(errorData.message || 'Błąd logowania');
-            }
-            
-
-            //below is text respond of backend it is something like:
-            //country properly updated, I am not using it
-            //const text = await response.text();
-
-            //error catching
-        } catch (error2) {
-            setErrorPost(error2.message);
-        }
-    }
-
 
     //function that is used for adding all languages to select box
     //returns just select box options
@@ -267,128 +239,47 @@ const EditPageUserDataForm = () =>{
         return content;
     }
 
-    //fetching user data from backend
-    /*  USER DATA:
-        - user's nick
-        - user's bio
-        - user's contact data
-        - user's languge
-        - user's city
-        - user's country
-     */
-    useEffect(()=>{
-        const getData = async () => {
-            try{
+    function setData()
+    {
 
-                const token = localStorage.getItem('token');
-                
-                //if token not exist = we are log out
-                if(!token){
-                    setError('Please log in');
-                    return;
-                }
-                const tokenWithoutQuotes = token.replace(/"/g, '');
 
-                //fetching user data
-                const response = await fetch('https://zagrajzemna-backend.onrender.com/api/profile/getUserDetails',{
-                    method:'GET',
-                    headers: {
-                        'Authorization' : `Bearer ${tokenWithoutQuotes}`
-                    }
-                    });
-
-                    //if response is bad
-                    if(!response.ok){
-                        throw new Error('can not reach Your data');
-                    }
-
-                    //parsing to json
-                    const dataFromGet = await response.json();
+        if(data != null && !dataLoad){
+            setDataLoad(true);
+            if(data.username != null)
+                setMyNick(data.username);
                     
-                    //setting data
-                    setDataFromGet(dataFromGet);
-                    setError(null);
-                    console.log("Dane: ", dataFromGet);
-                    if(dataFromGet)
-                    {
-                        if(dataFromGet.username != null)
-                            setMyNick(dataFromGet.username);
-                        
-                        if(dataFromGet.about != null)
-                            setAboutMe(dataFromGet.about);
-                        
-                        if(dataFromGet.ID_LANGUAGE != null)
-                            setchLang(dataFromGet.ID_LANGUAGE)
-                        
-                        if(dataFromGet.country != null)
-                            setMyCountry(dataFromGet.country)
-                        
-                        if(dataFromGet.city != null)
-                            setMyCity(dataFromGet.city)
-                        
-                        if(dataFromGet.contact != null)
-                            setMyContact(dataFromGet.contact)
-                    }
+            if(data.about != null)
+                setAboutMe(data.about);
                     
-                }catch (error){
-                //setting error if occurs
-                setError(error.message);
-            }
-        };
+            if(data.ID_LANGUAGE != null)
+                setchLang(data.ID_LANGUAGE)
+                    
+            if(data.country != null)
+                setMyCountry(data.country)
+                    
+            if(data.city != null)
+                setMyCity(data.city)
+                    
+            if(data.contact != null)
+                setMyContact(data.contact)
+        }
         
-        getData();
-    }, []);
+    }
 
-    //fetching data from backend
-    //gets all languages from database
-    useEffect(()=>{
-        const getLanguages = async () => {
-            try{
+    function setDataLang()
+    {
+        if(DataRespond.data != null && !langLoaded){
+            setLangLoaded(true);
+            setALanguages(DataRespond.data);
+        }
+    }
 
-                const token = localStorage.getItem('token');
-                
-                //if token not exist = we are log out
-                if(!token){
-                    setErrorLang('Please log in');
-                    return;
-                }
-                const tokenWithoutQuotes = token.replace(/"/g, '');
-
-                //fetching user data
-                const response = await fetch('https://zagrajzemna-backend.onrender.com/api/profile/getAllLanguages',{
-                    method:'GET',
-                    headers: {
-                        'Authorization' : `Bearer ${tokenWithoutQuotes}`
-                    }
-                    });
-
-                    //if response is bad
-                    if(!response.ok){
-                        throw new Error('can not reach Your data');
-                    }
-
-                    //parsing to json
-                    const allLanguages = await response.json();
-                    
-                    //setting data
-                    setALanguages(allLanguages);
-                    setErrorLang(null);
-                    console.log("Dane: ", allLanguages);
-                    console.log("Długość: ", allLanguages.length)
-                }catch (error){
-                //setting error if occurs
-                setErrorLang(error.message);
-            }
-        };
-        
-        getLanguages();
-    }, []);
-
-
+//*/
     //return HTML structure
     return(
         <div className="userFormContainer col-12">
-
+           {!isError && (<div className='dataGetter' onLoad={setData()}></div>)}
+           {!DataRespond.isError && (<div className='dataGetter' onLoad={setDataLang()}></div>)}
 
             <form className="myFormClass col-12" onSubmit={handleSubmit}>
 

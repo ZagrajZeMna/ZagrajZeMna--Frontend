@@ -14,9 +14,16 @@ const PlayerCard = ({ player, onBan, onUnban, onClick }) => {
 
   return (
     <div className="player-card" onClick={() => onClick(player)}>
+      <img src={player.avatar} alt="Avatar" className="player-avatar" />
       <div className="player-info">
-        <span className="player-nickname">Nickname: <span className="player-detail">{player.username}</span></span>
-        <span className="player-email">Email: <span className="player-detail">{player.email}</span></span>
+        <span className="player-nickname">
+          <span className="label">Nickname: </span> 
+          <span className="player-detail">{player.username}</span>
+        </span>
+        <span className="player-email">
+          <span className="label">Email: </span> 
+          <span className="player-detail">{player.email}</span>
+        </span>
       </div>
       {player.isBanned ? (
         <button className="unban-button" onClick={handleUnban}>Unban</button>

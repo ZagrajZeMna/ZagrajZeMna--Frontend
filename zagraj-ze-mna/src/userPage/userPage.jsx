@@ -178,7 +178,7 @@ const UserPage = () =>
                 if(window.scrollY != 'Infinity' && document.body.offsetHeight != 'undefined')
                 {
                     //back image
-                    if(document.getElementById('backImageId') != 'null')
+                    if(document.getElementById('backImageId') != null)
                         height_computed = document.getElementById('backImageId').offsetHeight;
 
 
@@ -195,13 +195,13 @@ const UserPage = () =>
                     }
 
                     //another elements that are above packman (they are used for setting pacman start position)
-                    if(document.getElementById('BannerID') != 'null')
+                    if(document.getElementById('BannerID') != null)
                         height_computed+=document.getElementById('BannerID').offsetHeight;
 
-                    if(document.getElementById('backTraingleID') != 'null')
+                    if(document.getElementById('backTraingleID') != null)
                         height_computed+=document.getElementById('backTraingleID').offsetHeight;
 
-                    if(document.getElementById('spaceHeight1') != 'null')
+                    if(document.getElementById('spaceHeight1') != null)
                         height_computed+=document.getElementById('spaceHeight1').offsetHeight;
 
                     //substratction of height because starting point is when pacman is on bottom of page 

@@ -1,6 +1,4 @@
 .background2 {
-  /*background-image: url('src/assets/back-image.png');*/
-  /* display: flex; */
   background: linear-gradient(135deg, #000000, #333333);
   background-color: grey;
   background-size: cover;
@@ -13,6 +11,104 @@
 .search-bar {
   margin-top: 20px;
   margin-bottom: 20px;
+}
+
+/* Wrapper for centering and max-width */
+.game-info-wrapper {
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  width: 100%;
+  gap: 20px;
+  flex-wrap: wrap;
+}
+
+/* General improvements for the game info panel */
+.game-info {
+  display: flex;
+  flex-direction: row;
+  align-items: flex-start;
+  background-color: rgba(51, 51, 51, 0.9);
+  border-radius: 10px;
+  padding: 20px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+  max-width: 75%;
+  flex-grow: 1;
+}
+
+/* Styling for the game image */
+.game-info .game-image {
+  margin: 10px;
+  max-width: 200px;
+  width: 100%;
+  height: auto;
+  border-radius: 10px;
+}
+
+/* Container for category text and description */
+.game-details {
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
+}
+
+/* Styling for the category text */
+.category-text {
+  font-size: 24px;
+  color: white;
+  margin-bottom: 10px;
+}
+
+/* Styling for the game description */
+.game-info .game-description {
+  padding: 20px;
+  background-color: rgba(255, 255, 255, 0.1);
+  border-radius: 10px;
+  color: white;
+  word-wrap: break-word;
+}
+
+/* Styling for the description text */
+.game-info .description-text {
+  font-size: 20px;
+  line-height: 1.5;
+}
+
+/* Styling for add game panel */
+.add-game {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  background-color: rgba(51, 51, 51, 0.9);
+  border-radius: 10px;
+  padding: 20px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+  max-width: 200px;
+  flex-grow: 1;
+}
+
+/* Styling for the add game button */
+.add-game-button {
+  padding: 10px 20px;
+  background-color: #363b41;
+  color: #fff;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 16px;
+  margin-bottom: 10px;
+}
+
+.add-game-button:hover {
+  background-color: #363b419f;
+}
+
+/* Styling for the add game text */
+.add-game-text {
+  font-size: 14px;
+  color: white;
+  text-align: center;
 }
 
 .search-bar input[type="text"] {
@@ -88,11 +184,13 @@
 
 .lobby-tile {
   display: flex;
+  flex-direction: row;
   align-items: center;
   background-color: #333;
-  border-radius: 1500px;
+  border-radius: 15px;
   padding: 16px;
   margin-bottom: 16px;
+  flex-wrap: wrap;
 }
 
 .lobby-tile .lobby-image {
@@ -108,6 +206,8 @@
 
 .lobby-tile .lobby-details {
   color: #fff;
+  flex-grow: 1;
+  word-wrap: break-word;
 }
 
 .lobby-image {
@@ -121,6 +221,7 @@
   align-items: center;
   margin-left: auto;
   color: white;
+  flex-shrink: 0;
 }
 
 .player-count button {
@@ -164,8 +265,50 @@
 @media (max-width: 768px) {
   .player-count {
     flex-direction: column;
+    width: 100%;
+    text-align: center;
+    margin-left: 0;
   }
+
+  .player-count button {
+    width: 100%;
+    font-size: 48px;
+    margin: 0px;
+  }
+
+  .lobby-tile {
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+  }
+
   .available-lobby-text {
     font-size: 30px;
+  }
+
+  .game-info-wrapper {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .game-info {
+    max-width: 100%;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .game-info .game-image {
+    margin: 0px;
+    max-width: 60%;
+    margin-bottom: 20px;
+  }
+
+  .add-game {
+    max-width: 100%;
+    margin-top: 20px;
+  }
+
+  .add-game-button {
+    width: 100%;
   }
 }

@@ -6,7 +6,7 @@ const AdminRoute = ({ children }) => {
   const { currentUser, loading } = useAuth();
 
   if (loading) {
-    return <div>Loading...</div>; 
+    return <div>Loading...</div>;
   }
 
   return currentUser && currentUser.isAdmin ? children : <Navigate to="/" />;

@@ -8,7 +8,7 @@ import Home from "./Home/Home";
 import { Routes, Route } from 'react-router-dom';
 import ResetPassword from "./ResetPassword/ResetPassword";
 import GameCategory from './GameCategory/GameCategory';
-
+import AdminRoute from './AuthContext/AdminRoute';
 import LobbyForm from "./LobbyForm/LobbyForm"
 
 import Space from "./navbar/space";
@@ -18,6 +18,7 @@ import EditUserPage from "./edtiPage/editUserPage";
 import Notification from "./Notification/notification";
 import NotiPage from "./Notification/NotiPage";
 import Lobby from './Lobby/Lobby';
+import MyLobby from "./MyLobby/MyLobby";
 
 function App() {
 
@@ -32,19 +33,25 @@ function App() {
         
         <Route path="/login" element={<Login />} />
         <Route path="/resetPassword" element={<ResetPassword/>}/>
-
+        
 
           <Route path="/category/:game" element={<GameCategory />} />
+          <Route path="/userPage" element={<UserPage />} />
           <Route path="/category/:game/:lobbyname/:lobbyId" element={<Lobby/>}/>
 
           <Route path="/lobbyForm" element={<LobbyForm/>}/>
 
-          <Route path="/adminPage" element={
-          <ProtectedRoute>
-            <AdminPage />
-          </ProtectedRoute>} />
+          <Route path="/myLobby" element={
+            <ProtectedRoute>
+            <MyLobby/>
+            </ProtectedRoute>}></Route>
 
-          <Route path="/userPage" element={
+          <Route path="/adminPage" element={
+          <AdminRoute>
+            <AdminPage />
+          </AdminRoute>} />
+
+           <Route path="/userPage" element={
           <ProtectedRoute>
             <UserPage />
           </ProtectedRoute>

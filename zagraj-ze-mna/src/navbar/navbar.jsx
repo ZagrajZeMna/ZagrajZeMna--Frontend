@@ -73,14 +73,16 @@ const MyNavbar = () => {
     let secondButtonTextSmall = 'Dołącz';
 
     //checking if token is decoded properly
-    console.log(decoded);
+    //console.log(decoded);
 
 
     //checikng if token is done properly
     if(decoded.exp * 1000 < currentDate.getTime() || token == null)
     {
-        //console.log("you are log out");
-        //console.log(decoded.exp);
+
+        console.log("you are logged out");
+        console.log(decoded.exp);
+
         login = false;
 
         myPage = '/login';
@@ -94,13 +96,13 @@ const MyNavbar = () => {
     }
     else if(token != null && decoded.exp * 1000 >= currentDate.getTime() )
     {
-        console.log("you are log in");
+        console.log("you are logged in");
         console.log(decoded.exp);
         login = true;
 
         myPage = '/userPage';
         myNot  = '/notification';
-        firstButton = '/userLobbys';
+        firstButton = '/myLobby';
         secondButton = '/';
         firstButtonText = 'MOJE LOBBY';
         secondButtonText = 'HOME';
@@ -111,6 +113,12 @@ const MyNavbar = () => {
     const handleLogout = () => {
         logout();
     };
+
+    const handleFunction = () => {
+        handleLogout();
+        settingHidder();
+        
+    }
     //curent path
     const path = useLocation();
 
@@ -278,7 +286,7 @@ const MyNavbar = () => {
                     <Link to="/editUserPage" onClick={settingHidder}><p>Ustawienia profilu</p></Link>
                     <Link to="/notification" onClick={settingHidder}><p>Powiadomienia</p></Link>
                     <Link to="/editNotificationsPage" onClick={settingHidder}><p>Dodane gry</p></Link>
-                    <Link to="/" onClick={handleLogout}> <p>Wyloguj</p></Link>
+                    <Link to="/" onClick={handleFunction}> <p>Wyloguj</p></Link>
                 </div>)}
 
                 </div>
@@ -341,7 +349,7 @@ const MyNavbar = () => {
                         <Link to="/editUserPage" onClick={settingHidder}><p>Ustawienia profilu</p></Link>
                         <Link to="/editNotificationsPage" onClick={settingHidder}><p>Powiadomienia</p></Link>
                         <Link to="/editNotificationsPage" onClick={settingHidder}><p>Dodane gry</p></Link>
-                        <Link to="/" onClick={handleLogout}> <p>Wyloguj</p></Link>
+                        <Link to="/" onClick={handleFunction}> <p>Wyloguj</p></Link>
                     </div>)}
 
                     <div className='clear'></div>

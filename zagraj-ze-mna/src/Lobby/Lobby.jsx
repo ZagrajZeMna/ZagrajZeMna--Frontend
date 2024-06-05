@@ -1,116 +1,111 @@
-import styles from './Lobby.module.css';
-import { useState, useEffect } from 'react';
-import { useParams } from 'react-router-dom';
+import styles from "./Lobby.module.css";
+import { useState, useEffect } from "react";
+import { useParams } from "react-router-dom";
+import { expandLink } from "../fetches/expandLink";
 
 export default function Lobby() {
-    const [output, setOutput] = useState([]);
-    const [inputValue, setInputValue] = useState('');
-    const [players, setPlayers] = useState([]);
-    const [owner, setOwner] = useState({});
-    const { lobbyId } = useParams();
-    const {lobbyname} = useParams();
+  const [output, setOutput] = useState([]);
+  const [inputValue, setInputValue] = useState("");
+  const [players, setPlayers] = useState([]);
+  const [owner, setOwner] = useState({});
+  const { lobbyId } = useParams();
+  const { lobbyname } = useParams();
 
-    useEffect(() => {
-        fetchLobbyData();
-    }, [lobbyId]);
+  useEffect(() => {
+    fetchLobbyData();
+  }, [lobbyId]);
 
-    const fetchLobbyData = async () => {
-        try {
-            const playersResponse = await fetch("https://zagrajzemna-backend.onrender.com/api/lobbyInside/getUserList", {
-                method: 'GET',
-                headers: {
-                    'Content-Type': 'application/json',
-                    'x-access-token': localStorage.getItem('token'),
-                    'lobbyId': lobbyId
-                }
-            });
-            if (!playersResponse.ok) {
-                throw new Error('Failed to fetch players');
-            }
-            const playersData = await playersResponse.json();
-            setPlayers(playersData);
+  const fetchLobbyData = async () => {
+    try {
+      const playersResponse = await fetch(
+        expandLink(`/api/lobbyInside/getUserList?lobbyId=${lobbyId}`)
+      );
+      if (!playersResponse.ok) {
+        throw new Error("Failed to fetch players");
+      }
+      const playersData = await playersResponse.json();
+      console.log(playersData);
+      setPlayers(playersData);
 
-            const ownerResponse = await fetch("https://zagrajzemna-backend.onrender.com/api/lobbyInside/getOwnerLobbyData", {
-                method: 'GET',
-                headers: {
-                    'Content-Type': 'application/json',
-                    'x-access-token': localStorage.getItem('token'),
-                    'lobbyId': lobbyId
-                }
-            });
-            if (!ownerResponse.ok) {
-                throw new Error('Failed to fetch owner');
-            }
-            const ownerData = await ownerResponse.json();
-            setOwner(ownerData);
-        } catch (error) {
-            console.error('Error fetching lobby data:', error);
-        }
-    };
+      const ownerResponse = await fetch(
+        expandLink(`/api/lobbyInside/getOwnerLobbyData?lobbyId=${lobbyId}`)
+      );
 
-    const handleInputChange = (e) => {
-        setInputValue(e.target.value);
-    };
+      if (!ownerResponse.ok) {
+        throw new Error("Failed to fetch owner");
+      }
+      const ownerData = await ownerResponse.json();
+      setOwner(ownerData);
+    } catch (error) {
+      console.error("Error fetching lobby data:", error);
+    }
+  };
 
-    const handleKeyDown = async (e) => {
-        if (e.key === 'Enter') {
-            const message = inputValue;
-            setOutput([...output, `C:Users\\User>${message}`]);
-            setInputValue('');
+  const handleInputChange = (e) => {
+    setInputValue(e.target.value);
+  };
 
-        //------experimental code for adding the message to database------
+  const handleKeyDown = async (e) => {
+    if (e.key === "Enter") {
+      const message = inputValue;
+      setOutput([...output, `C:Users\\User>${message}`]);
+      setInputValue("");
 
-        //     try {
-        //         const response = await fetch("/api/lobbyInside/addMessage", {
-        //             method: 'POST',
-        //             headers: {
-        //                 'Content-Type': 'application/json',
-        //                 'x-access-token': localStorage.getItem('token')
-        //             },
-        //             body: JSON.stringify({ lobbyId, message, userId: localStorage.getItem('userId') }) 
-        //         });
-        //         if (!response.ok) {
-        //             throw new Error('Failed to send message');
-        //         }
-        //     } catch (error) {
-        //         console.error('Error sending message:', error);
-        //     }
-        }
-    };
+      //------experimental code for adding the message to database------
 
-    return (
-        <div className={styles.background}>
-            <div className={styles.lobbycontainer}>
-                <div className={styles.sidebar}>
-                    <div className={styles.lobbyheader}>Players</div>
-                    {players.map(player => (
-                        <div key={player.ID_USER}>
-                            <img src={player.avatar} alt="Avatar" className={styles.avatar} />
-                            {player.username}
-                        </div>
-                    ))}
-                </div>
-                <div className={styles.maincontent}>
-                    <div className={styles.lobbyheader}>Lobby: {lobbyname}</div>
-                    <div className={styles.ownerheader}>Owner: {owner.username}</div>
-                    <div className={styles.chatheader}>Chat</div>
-                    <div className={styles.chatoutput}>
-                        {output.map((line, index) => (
-                            <div key={index}>{line}</div>
-                        ))}
-                    </div>
-                    <div className={styles.inputcontainer}>
-                        <span>C:Users\User&gt;</span>
-                        <input
-                            type="text"
-                            value={inputValue}
-                            onChange={handleInputChange}
-                            onKeyDown={handleKeyDown}
-                            maxLength={100}
-                        />
-                    </div>
-                </div>
+      //     try {
+      //         const response = await fetch("/api/lobbyInside/addMessage", {
+      //             method: 'POST',
+      //             headers: {
+      //                 'Content-Type': 'application/json',
+      //                 'x-access-token': localStorage.getItem('token')
+      //             },
+      //             body: JSON.stringify({ lobbyId, message, userId: localStorage.getItem('userId') })
+      //         });
+      //         if (!response.ok) {
+      //             throw new Error('Failed to send message');
+      //         }
+      //     } catch (error) {
+      //         console.error('Error sending message:', error);
+      //     }
+    }
+  };
+
+  return (
+    <div className={styles.background}>
+      <div className={styles.lobbycontainer}>
+        <div className={styles.sidebar}>
+          <div className={styles.lobbyheader}>Players</div>
+          {players.map((player) => (
+            <div key={player.id}>
+              <img src={player.avatar} className={styles.avatar} />
+              {player.nickname}
             </div>
+          ))}
         </div>
-    );
+        <div className={styles.maincontent}>
+          <div className={styles.lobbyheader}>
+            Lobby: <span>{lobbyname}</span>
+          </div>
+          <div className={styles.ownerheader}>Owner: {owner.username}</div>
+          <div className={styles.chatheader}>Chat</div>
+          <div className={styles.chatoutput}>
+            {output.map((line, index) => (
+              <div key={index}>{line}</div>
+            ))}
+          </div>
+          <div className={styles.inputcontainer}>
+            <span>C:Users\User&gt;</span>
+            <input
+              type="text"
+              value={inputValue}
+              onChange={handleInputChange}
+              onKeyDown={handleKeyDown}
+              maxLength={100}
+            />
+          </div>
+        </div>
+      </div>
+    </div>
+  );
 }

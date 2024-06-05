@@ -1,6 +1,8 @@
 import React, { createContext, useContext, useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 
+import { jwtDecode } from 'jwt-decode';
+
 const AuthContext = createContext();
 
 export function useAuth() {
@@ -16,7 +18,9 @@ export function AuthProvider({ children }) {
     const token = localStorage.getItem('token');
     if (token) {
       
-      setCurrentUser({ token });
+      const decoded = jwtDecode(token);
+      const isAdmin = decoded.ADMIN !== undefined;
+      setCurrentUser({ token, isAdmin });
     }
     setLoading(false);
   }, []);
@@ -36,9 +40,16 @@ export function AuthProvider({ children }) {
         throw new Error(errorData.message || 'Błąd logowania');
       }
 
-      const token = await response.text();
+      const responseData = await response.json();
+      console.log("data:", responseData);
+      const { token, username } = responseData;
+      const decoded = jwtDecode(token);  
+      console.log("decoded", decoded);
+      const isAdmin = decoded.ADMIN !== undefined;
+      console.log("isadmin", isAdmin);
       localStorage.setItem('token', token);
-      setCurrentUser({ token });
+      localStorage.setItem('username', username);
+      setCurrentUser({ token, isAdmin, username });
       navigate('/');
     } catch (error) {
       throw error;
@@ -47,6 +58,7 @@ export function AuthProvider({ children }) {
 
   const logout = () => {
     localStorage.removeItem('token');
+    localStorage.removeItem('username');
     setCurrentUser(null);
     navigate('/login');
   };

@@ -4,8 +4,7 @@ import "react-toastify/dist/ReactToastify.css";
 import io from "socket.io-client";
 
 function Notification(){
-    const socket = io.connect("https://zagrajzemna-backend.onrender.com");
-    const [notificationSent, setNotificationSent] = useState(false);
+    const socket = io.connect("http://localhost:4001");
     const token = localStorage.getItem('token');
 
     useEffect(() => {
@@ -20,7 +19,6 @@ function Notification(){
             else{
                 if (!notificationSent) {
                     handleActivityNotification(data,lobbyName);
-                    setNotificationSent(true);
                 }
             }
         });
@@ -28,7 +26,7 @@ function Notification(){
         return () => {
             socket.off(token);
         };
-    }, [notificationSent]);
+    });
     
     function accepted(lobbyName) {
         toast.success(
