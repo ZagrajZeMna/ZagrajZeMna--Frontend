@@ -10,7 +10,7 @@ import { Link } from "react-router-dom";
 import { expandLink } from "../fetches/expandLink";
 
 import io from "socket.io-client";
-const socket = io.connect("http://localhost:4001");
+const socket = io.connect("https://zagrajzemna-backend.onrender.com");
 
 const GameCategory = () => {
   const [error, setError] = useState(null);
