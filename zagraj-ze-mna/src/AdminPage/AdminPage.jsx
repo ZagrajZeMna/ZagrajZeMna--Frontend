@@ -45,7 +45,7 @@ const AdminPage = () => {
           return;
         }
 
-        const response = await fetch(`https://zagrajzemna-backend.onrender.com/api/admin/${endpoint}`, {
+        const response = await fetch(`http://localhost:4001/api/admin/${endpoint}`, {
           method: 'GET',
           headers: {
             'Authorization': `Bearer ${tokenWithoutQuotes}`
@@ -72,7 +72,7 @@ const AdminPage = () => {
   const handleBanUser = async (id) => {
     try {
       const token = localStorage.getItem('token');
-      const response = await fetch('https://zagrajzemna-backend.onrender.com/api/admin/banUser', {
+      const response = await fetch('http://localhost:4001/api/admin/banUser', {
         method: 'PUT',
         headers: {
           'Content-Type': 'application/json',
@@ -98,7 +98,7 @@ const AdminPage = () => {
   const handleUnbanUser = async (id) => {
     try {
       const token = localStorage.getItem('token');
-      const response = await fetch('https://zagrajzemna-backend.onrender.com/api/admin/unbanUser', {
+      const response = await fetch('http://localhost:4001/api/admin/unbanUser', {
         method: 'PUT',
         headers: {
           'Content-Type': 'application/json',
@@ -176,7 +176,7 @@ const handleSubmit = async (e) => {
 
   try {
     const token = localStorage.getItem('token');
-    const response = await fetch('https://zagrajzemna-backend.onrender.com/api/admin/addNewGame', {
+    const response = await fetch('http://localhost:4001/api/admin/addNewGame', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
