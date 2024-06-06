@@ -40,11 +40,16 @@ export function AuthProvider({ children }) {
         throw new Error(errorData.message || 'Błąd logowania');
       }
 
-      const token = await response.text();
-      const decoded = jwtDecode(token);
+      const responseData = await response.json();
+      console.log("data:", responseData);
+      const { token, username } = responseData;
+      const decoded = jwtDecode(token);  
+      console.log("decoded", decoded);
       const isAdmin = decoded.ADMIN !== undefined;
+      console.log("isadmin", isAdmin);
       localStorage.setItem('token', token);
-      setCurrentUser({ token, isAdmin });
+      localStorage.setItem('username', username);
+      setCurrentUser({ token, isAdmin, username });
       navigate('/');
     } catch (error) {
       throw error;
@@ -53,6 +58,7 @@ export function AuthProvider({ children }) {
 
   const logout = () => {
     localStorage.removeItem('token');
+    localStorage.removeItem('username');
     setCurrentUser(null);
     navigate('/login');
   };

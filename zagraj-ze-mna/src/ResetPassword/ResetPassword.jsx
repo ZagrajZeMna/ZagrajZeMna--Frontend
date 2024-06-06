@@ -34,9 +34,9 @@ function ResetPassword() {
         const passwordRegex = /^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#.?&])[A-Za-z\d@$!%*#.?&]{8,20}$/;
     
         if(password.length < 8 || password.length > 20 || !passwordRegex.test(password)){
-            setError("8-20 char(1 number, 1 letter and 1 special char)");
+            setError("Hasło od 8-20 (1 litera, 1 cyfra, 1 znak specjalny");
         } else if (repeatPassword.length > 0 && password !== repeatPassword){
-            setError('Passwords do not match.');
+            setError('Hasła nie są podobne');
         } else {
             setError('');
         }
@@ -46,7 +46,7 @@ function ResetPassword() {
     const handleRepeatPasswordChange = (e) => {
         setRepeatPassword(e.target.value);
         if (e.target.value !== password) {
-            setError('Passwords do not match.');
+            setError('Hasła nie są takie same');
         } else {
             setError('');
         }
@@ -62,7 +62,7 @@ function ResetPassword() {
         }
         const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
         if (!emailRegex.test(email)) {
-            setError('Please enter a valid email address.');
+            setError('Proszę wprować poprawny adres email');
             return;
         }else{
             setError('');
@@ -75,25 +75,25 @@ function ResetPassword() {
 
 
         if (!email.trim() || !password.trim() || !repeatPassword.trim()) {
-            setError('Please fill all fields.');
+            setError('Proszę wypełnij wszystkie pola');
             return;
         }
 
         const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
         if (!emailRegex.test(email)) {
-            setError('Please enter a valid email address.');
+            setError('Proszę wprować poprawny adres email');
             return;
         }
 
         const passwordRegex = /^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#.?&])[A-Za-z\d@$!%*#.?&]{8,20}$/;
         if (!passwordRegex.test(password)) {
-            setError('8-20 char(1 number, 1 letter and 1 special char)');
+            setError('Hasło od 8-20 (1 litera, 1 cyfra, 1 znak specjalny"');
             return;
         }
 
     
         if (password !== repeatPassword) {
-            setError('Passwords do not match.');
+            setError('Hasła nie są takie same');
             return;
         }
 
@@ -130,7 +130,7 @@ function ResetPassword() {
         <div className={styles.parent}>
                 <form className={styles.login} onSubmit={handleSubmit} >
                     <div className={styles.formContainer}>
-                        <div className={styles.title}>Restart Password</div>
+                        <div className={styles.title}>Zmień Hasło</div>
 
                         <div className={styles.inputbox}>
                         <input 
@@ -146,7 +146,7 @@ function ResetPassword() {
                             <input 
                             className={styles.inpBox}
                             type={showPassword ? "text" : "password"} 
-                            placeholder="new password" 
+                            placeholder="nowe hasło" 
                             value={password} 
                             onChange={handlePasswordChange} ></input>
 
@@ -159,7 +159,7 @@ function ResetPassword() {
                             <input 
                             className={styles.inpBox}
                             type={showRepeatPassword ? "text" : "password"} 
-                            placeholder="repeat new password" 
+                            placeholder="powtórz nowe hasło" 
                             value={repeatPassword} 
                             onChange={handleRepeatPasswordChange} ></input>
 
@@ -170,9 +170,9 @@ function ResetPassword() {
                         </div>
                         <div className={styles.error}>{error}</div>
                         <div className={styles.error}>{success}</div>
-                        <button className={styles.resetBtn} type="submit">Confirm</button>
+                        <button className={styles.resetBtn} type="submit">Zatwierdź</button>
                         
-                        <p className={styles.textToLogIn}>Log in <a href="/login">here</a></p>
+                        <p className={styles.textToLogIn}>Zaloguj się <a href="/login">tutaj</a></p>
                     </div>
                 </form>
             </div>

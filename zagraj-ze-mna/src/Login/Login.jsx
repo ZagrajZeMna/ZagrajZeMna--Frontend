@@ -76,7 +76,7 @@ function Login(){
             <form className={styles.login} onSubmit={handleSubmit} >
             <div className={styles.formContainer}>
                 <div className={styles.forms}>
-                    <div className={styles.title}>WELCOME</div>
+                    <div className={styles.title}>LOGOWANIE</div>
 
                     <div className={styles.inputbox}>
                         <input 
@@ -92,7 +92,7 @@ function Login(){
                         <input 
                         className={styles.inpBox}
                         type={showPassword ? "text" : "password"} 
-                        placeholder="password" 
+                        placeholder="haslo" 
                         value={password} 
                         onChange={(e) => setPassword(e.target.value)} ></input>
 
@@ -104,12 +104,12 @@ function Login(){
                     
                     <div className={styles.forgot}>
                         
-                        <a href="/resetPassword">Forgot password?</a>
+                        <a href="/resetPassword">Zresetuj hasło</a>
                     </div>
                     <div className={styles.error}>{error}</div>
-                    <button className={styles.btnSub} type="submit">Log in</button>
+                    <button className={styles.btnSub} type="submit">Zaloguj się</button>
                     
-                    <p className={styles.taxtToSignup}>Sign up in <a href="/registration">here</a></p>
+                    <p className={styles.taxtToSignup}>Zarejestruj się <a href="/registration">tutaj</a></p>
                 </div>
                 </div>
             </form>

@@ -31,28 +31,28 @@ function Registration() {
         id:1,
         name:"username",
         type:"text",
-        placeholder:"username",
-        errorMessage:"Uername should be 5-16 characters"
+        placeholder:"nazwa użytkownika",
+        errorMessage:"nazwa powinna zawierać od 5 do 16 znaków"
     },
     {
         id:2,
         name:"email",
         type:"text",
         placeholder:"email",
-        errorMessage:"It should be a valid eamil address"
+        errorMessage:"Wprowadź poprawny email"
     },
     {
         id:3,
         name:"password",
         type: showPassword ? "text" : "password",        
-        placeholder:"password",
-        errorMessage:"Password should be 8-20 characters and include at least 1 letter, 1 number and 1 special character"
+        placeholder:"hasło",
+        errorMessage:"Hasło powinno zawierać od 8 do 20 znaków w tym 1 litere, 1 cyfre  i 1 znak specjalny"
       },
     {
         id:4,
         name:"confirmPassword",
         type: showConfirmPassword ? "text" : "password",
-        placeholder:"confirm password",
+        placeholder:"powtórz hasło",
         errorMessage:"Passwords don't match"
     }
   ];
@@ -72,7 +72,7 @@ function Registration() {
     const allFieldsFilled = Object.values(values).every(value => value.trim() !== '');
 
     if (!allFieldsFilled) {
-      setErrors({ general: 'Please fill in all fields.' });
+      setErrors({ general: 'Proszę wypełnij wszystkie pola' });
       return;
     }
 
@@ -90,24 +90,24 @@ function Registration() {
 
     const validUsername = /^[a-zA-Z0-9]{5,16}$/.test(values.username);
     if (!validUsername) {
-      setErrors({ ...errors, username: 'Username should be 5-16 characters' });
+      setErrors({ ...errors, username: 'Nazwa powinna zawierać od 5 do 16 znaków' });
       return;
     }
 
     const validEmail = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(values.email);
     if (!validEmail) {
-      setErrors({ ...errors, email: 'Incorrect email address' });
+      setErrors({ ...errors, email: 'Niepoprawny adres email' });
       return;
     }
 
     const validPassword = /^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#.?&])[A-Za-z\d@$!%*#.?&]{8,20}$/.test(values.password);
     if (!validPassword) {
-      setErrors({ ...errors, password: '8-20 char(1 number, 1 letter and 1 special char)' });
+      setErrors({ ...errors, password: 'Hasło powinno zawierać od 8 do 20 znaków w tym 1 litere, 1 cyfre  i 1 znak specjalny' });
       return;
     }
 
     if (values.password !== values.confirmPassword) {
-      setErrors({ ...errors, confirmPassword: "Passwords don't match" });
+      setErrors({ ...errors, confirmPassword: "Hasła nie są takie same" });
       return;
     }
 
@@ -142,7 +142,7 @@ function Registration() {
         password: "",
         confirmPassword: "",
         general: "",
-        registrationSuccess: "Registration successful! Please check your email to confirm your registration."
+        registrationSuccess: "Zostałeś zarejestrowany! Sprawdź email w celu potwierdzenia konta"
       });
       setValues({
         username: "",
@@ -169,19 +169,19 @@ function Registration() {
     let errorMessage = "";
         if (name === "username" && value.length > 0) {
             if (value.length < 5 || value.length > 16) {
-                errorMessage = "Username should be 5-16 characters";
+                errorMessage = "Nazwa powinna zawierać od 5 do 16 znaków";
             }
         } else if (name === "email" && value.length > 0) {
             if(!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value)){
-              errorMessage = "incorrect email address";
+              errorMessage = "Niepoprawny adres email";
             }
         } else if (name === "password" && value.length > 0) {
             if(value.length < 8 || value.length > 20 || !letterRegex.test(value) || !digitRegex.test(value) || !specialCharRegex.test(value)){
-              errorMessage = "8-20 char(1 number, 1 letter and 1 special char)";
+              errorMessage = "Hasło powinno zawierać od 8 do 20 znaków w tym 1 litere, 1 cyfre  i 1 znak specjalny";
             }
         } else if (name === "confirmPassword" && value.length > 0) {
             if(value!==values.password){
-              errorMessage = "passwords don't match";
+              errorMessage = "Hasła nie są takie same";
             }
         }
         setErrors({ ...errors, [name]: errorMessage });
@@ -191,7 +191,7 @@ function Registration() {
       <div className={styles.registration}>
         <form onSubmit={handleSubmit}className={styles.registrationForm}>
           <div className={styles.forms}></div>
-            <div className={styles.registerTitle}>REGISTRATION</div>
+            <div className={styles.registerTitle}>Rejestracja</div>
             <div className={styles.indata}>
                 {
                   inputs.map((input) => (
@@ -211,8 +211,9 @@ function Registration() {
                         {input.name === "password" ? (showPassword ? <FaLockOpen/> : <FaLock/>) : (showConfirmPassword ? <FaLockOpen/> : <FaLock/>)}
                     </span>)}
                     </div>
+                    
                     {errors[input.name] && <span className={styles.errorsy}>{errors[input.name]}</span>}
-
+                    
                   </div>
                 ))}
             </div>
@@ -220,10 +221,10 @@ function Registration() {
               {errors.registrationSuccess && <div className={styles.registrationSuccess}>{errors.registrationSuccess}</div>}
             <div>
             
-                <button type="submit" className={styles.btn}>Sign up</button>
+                <button type="submit" className={styles.btn}>Zarejestruj się</button>
             </div>
             <div>
-                <p className={styles.textToLogin}>Click <a href='/login'>here</a> to log in</p>
+                <p className={styles.textToLogin}>Zaloguj się <a href='/login'>tutaj</a></p>
             </div>
         </form>
       </div>
