@@ -16,11 +16,18 @@ export function AuthProvider({ children }) {
 
   useEffect(() => {
     const token = localStorage.getItem('token');
+    const adminToken = localStorage.getItem('adminToken');
     if (token) {
-      
-      const decoded = jwtDecode(token);
-      const isAdmin = decoded.ADMIN !== undefined;
-      setCurrentUser({ token, isAdmin });
+      try {
+        let isAdmin = false;
+        if (adminToken) {
+          const decodedAdmin = jwtDecode(adminToken);
+          isAdmin = decodedAdmin.ADMIN === true;
+        }
+        setCurrentUser({ token, isAdmin, username: localStorage.getItem('username') });
+      } catch (error) {
+        console.error("Invalid token:", error);
+      }
     }
     setLoading(false);
   }, []);
@@ -41,14 +48,17 @@ export function AuthProvider({ children }) {
       }
 
       const responseData = await response.json();
-      console.log("data:", responseData);
-      const { token, username } = responseData;
-      const decoded = jwtDecode(token);  
-      console.log("decoded", decoded);
-      const isAdmin = decoded.ADMIN !== undefined;
-      console.log("isadmin", isAdmin);
+      const { token, username, admin } = responseData;
+      let isAdmin = false;
+      if (admin) {
+        const decodedAdmin = jwtDecode(admin);
+        isAdmin = decodedAdmin.ADMIN === true;
+      }
       localStorage.setItem('token', token);
       localStorage.setItem('username', username);
+      if (admin) {
+        localStorage.setItem('adminToken', admin); 
+      }
       setCurrentUser({ token, isAdmin, username });
       navigate('/');
     } catch (error) {
@@ -59,6 +69,7 @@ export function AuthProvider({ children }) {
   const logout = () => {
     localStorage.removeItem('token');
     localStorage.removeItem('username');
+    localStorage.removeItem('adminToken');
     setCurrentUser(null);
     navigate('/login');
   };

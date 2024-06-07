@@ -163,6 +163,8 @@
 .players img {
   width: 40%;
   border-radius: 50%;
+  border: white 1px solid;
+  background: black;
 }
 @media (max-width: 768px) {
   .lobbycontainer {

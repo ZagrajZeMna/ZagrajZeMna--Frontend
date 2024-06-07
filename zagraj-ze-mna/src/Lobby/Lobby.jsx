@@ -86,7 +86,7 @@ export default function Lobby() {
           <div className={styles.lobbyheader}>Gracze:</div>
           {players.map((player, index) => (
             <div key={index} className={styles.players}>
-              <img src={player.avatar} className={styles.avatar} />
+              <img src={player.avatar} alt="no avatar" className={styles.avatar} />
               {player.username}
             </div>
           ))}

@@ -2,11 +2,12 @@ import { expandLink } from "../fetches/expandLink";
 import styles from "./Lobby.module.css";
 import { useState, useEffect, useRef } from "react";
 
+
+
 const Messages = ({ socket, roomId }) => {
   const [messagesReceived, setMessagesReceived] = useState([]);
 
-  const messagesColumnRef = useRef(null);
-  console.log(roomId);
+  const scrollSpan = useRef();
   // Runs whenever a socket event is received from the server
   useEffect(() => {
     socket.on("receive_message", (data) => {
@@ -69,13 +70,15 @@ const Messages = ({ socket, roomId }) => {
     }
   };
 
-  // Scroll to the most recent message
+  //Scroll to the most recent message
   useEffect(() => {
-    if (messagesColumnRef.current) {
-      messagesColumnRef.current.scrollTop =
-        messagesColumnRef.current.scrollHeight;
-    }
-  }, [messagesReceived]);
+    // if (messagesColumnRef.current) {
+    //   messagesColumnRef.current.scrollIntoView =
+    //     messagesColumnRef.current.scrollHeight;
+    // }
+    scrollSpan.current.scrollIntoView({ behavior: "smooth" });
+
+    }, [messagesReceived]);
 
   // Sort messages by date
   function sortMessagesByDate(messages) {
@@ -91,7 +94,7 @@ const Messages = ({ socket, roomId }) => {
   }
 
   return (
-    <div className={styles.messagesColumn} ref={messagesColumnRef}>
+    <div className={styles.messagesColumn} ref={scrollSpan}>
       {sortMessagesByDate(messagesReceived).map((msg, i) => (
         <div className={styles.message} key={i}>
           <div className={styles.messagewrapper}>
@@ -100,8 +103,10 @@ const Messages = ({ socket, roomId }) => {
               {formatDateFromTimestamp(msg.date, msg.time)}
             </span>
           </div>
-          <p className={styles.msgText}>C:Users\{msg.message}</p>
+          <p className={styles.msgText} >C:Users\{msg.message}</p>
+          <span ref={scrollSpan}></span>
         </div>
+        
       ))}
     </div>
   );
