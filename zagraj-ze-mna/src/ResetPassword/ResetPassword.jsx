@@ -100,7 +100,7 @@ function ResetPassword() {
         
 
         try{
-            const response = await fetch('http://localhost:4001/api/auth/remember', {
+            const response = await fetch('https://zagrajzemna-backend.onrender.com/api/auth/remember', {
                 method: 'POST',
                 headers: {
                     'Content-Type':'application/json',

@@ -21,7 +21,7 @@ function Notification(){
                     handleActivityNotification(data,lobbyName);
                 }
             }
-        });
+        },[socket]);
 
         return () => {
             socket.off(token);

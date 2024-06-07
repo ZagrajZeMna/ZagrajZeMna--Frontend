@@ -17,7 +17,7 @@ function LobbyForm({ gameNameProp,lopata,setLopata}) {
   useEffect(()=>{
     const getData = async () => {
       try{
-        const response = await fetch(`http://localhost:4001/api/lobby/data`);
+        const response = await fetch(`https://zagrajzemna-backend.onrender.com/api/lobby/data`);
         if(!response.ok){
           throw new Error('Nie udało się pobrać danych');
         }
@@ -85,7 +85,7 @@ function LobbyForm({ gameNameProp,lopata,setLopata}) {
         return;
       }
       const tokenWithoutQuotes = token.replace(/"/g, '');
-      const response = await fetch('http://localhost:4001/api/lobby/add', {
+      const response = await fetch('https://zagrajzemna-backend.onrender.com/api/lobby/add', {
         method: 'POST',
         headers: {
           'Content-Type' : 'application/json',

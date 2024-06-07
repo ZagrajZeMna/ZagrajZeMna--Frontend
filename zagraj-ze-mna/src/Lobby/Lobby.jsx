@@ -6,7 +6,7 @@ import Messages from "./Messages";
 import SendMessage from "./SendMessage";
 import io from "socket.io-client";
 
-const socket = io.connect("http://localhost:4001");
+const socket = io.connect("https://zagrajzemna-backend.onrender.com");
 
 export default function Lobby() {
   const [output, setOutput] = useState([]);
