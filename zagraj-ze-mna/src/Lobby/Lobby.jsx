@@ -2,6 +2,11 @@ import styles from "./Lobby.module.css";
 import { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import { expandLink } from "../fetches/expandLink";
+import Messages from "./Messages";
+import SendMessage from "./SendMessage";
+import io from "socket.io-client";
+
+const socket = io.connect("http://localhost:4001");
 
 export default function Lobby() {
   const [output, setOutput] = useState([]);
@@ -10,9 +15,12 @@ export default function Lobby() {
   const [owner, setOwner] = useState({});
   const { lobbyId } = useParams();
   const { lobbyname } = useParams();
+  const username = localStorage.getItem("username");
 
   useEffect(() => {
     fetchLobbyData();
+    const room = lobbyId;
+    socket.emit("joinchat", { username, room });
   }, [lobbyId]);
 
   const fetchLobbyData = async () => {
@@ -75,34 +83,47 @@ export default function Lobby() {
     <div className={styles.background}>
       <div className={styles.lobbycontainer}>
         <div className={styles.sidebar}>
-          <div className={styles.lobbyheader}>Players</div>
-          {players.map((player) => (
-            <div key={player.id}>
-              <img src={player.avatar} className={styles.avatar} />
-              {player.nickname}
+          <div className={styles.lobbyheader}>Gracze:</div>
+          {players.map((player, index) => (
+            <div key={index} className={styles.players}>
+              <img src={player.avatar} alt="no avatar" className={styles.avatar} />
+              {player.username}
             </div>
           ))}
         </div>
         <div className={styles.maincontent}>
           <div className={styles.lobbyheader}>
-            Lobby: <span>{lobbyname}</span>
+            <div className={styles.headerContent}>
+              <span>Lobby: {lobbyname}</span>
+            </div>
+            <button className={styles.leaveButton}>opusc lobby</button>
           </div>
-          <div className={styles.ownerheader}>Owner: {owner.username}</div>
+
+          <div className={styles.ownerheader}>Właściciel: {owner.username}</div>
           <div className={styles.chatheader}>Chat</div>
           <div className={styles.chatoutput}>
-            {output.map((line, index) => (
+            {/* {output.map((line, index) => (
               <div key={index}>{line}</div>
-            ))}
+            ))} */}
+            <Messages
+              socket={socket}
+              username={"kemnaz"}
+              roomId={lobbyId}
+            ></Messages>
           </div>
           <div className={styles.inputcontainer}>
-            <span>C:Users\User&gt;</span>
-            <input
+            {/* <input
               type="text"
               value={inputValue}
               onChange={handleInputChange}
               onKeyDown={handleKeyDown}
               maxLength={100}
-            />
+            /> */}
+            <SendMessage
+              socket={socket}
+              username={username}
+              room={lobbyId}
+            ></SendMessage>
           </div>
         </div>
       </div>
