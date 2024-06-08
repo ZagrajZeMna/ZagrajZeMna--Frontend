@@ -12,6 +12,8 @@ const Contact = () => {
   const [successMessage, setSuccessMessage] = useState(null);
   const [isLoggedIn, setIsLoggedIn] = useState(false); 
 
+
+
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -27,6 +29,7 @@ const Contact = () => {
         
         const tokenWithoutQuotes = token.replace(/"/g, '');
 
+        setSuccessMessage(null);
         setError()
       } catch (error) {
         setError(error.message);
@@ -58,13 +61,14 @@ const handleInputChangeGame = (e) => {
 const handleSubmitGame = async (e) => {
   e.preventDefault();
   if (!newGameReq.name_game || !newGameReq.description) {
+    setSuccessMessage(null);
     setError('Aby dodać prośbę wszystkie pola muszą być uzupełnione.');
     return;
   }
 
   try {
     const token = localStorage.getItem('token');
-    const response = await fetch('`/api/review/addNewGameReq', {
+    const response = await fetch('http://localhost:4001/api/review/addGameReq', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -74,7 +78,9 @@ const handleSubmitGame = async (e) => {
     });
 
     if (!response.ok) {
-      throw new Error('Nie udało się wysłać prośby o dodanie nowej gry');
+      setSuccessMessage(null);
+      const errorData = await response.json();
+      throw new Error(errorData.message || 'Nie udało się wysłać prośby o dodanie nowej gry');
     }
 
     const data = await response.json();
@@ -89,6 +95,7 @@ const handleSubmitGame = async (e) => {
 const handleSubmitReview = async (e) => {
   e.preventDefault();
   if ( !newReview.username || !newReview.stars || !newReview.description) {
+    setSuccessMessage(null);
     setError('Aby dodać recenzje wszystkie pola muszą być uzupełnione.');
     return;
   }
@@ -105,13 +112,15 @@ const handleSubmitReview = async (e) => {
     });
 
     if (!response.ok) {
-      throw new Error('Nie udało się dodać recenzji');
+      setSuccessMessage(null);
+      const errorData = await response.json();
+      throw new Error(errorData.message || 'Nie udało się dodać recenzji');
     }
 
     const data = await response.json();
+    setError(null); 
     setSuccessMessage('Recenzja została pomyślnie dodana!'); 
     setNewReview({ username: '', stars: '3', description: '' });
-    setError(null); 
   } catch (error) {
     setError(error.message);
   }
@@ -128,6 +137,7 @@ const handleInputChangeReview = (e) => {
 const handleSubmitBan = async (e) => {
   e.preventDefault();
   if ( !banUser.username || !banUser.description) {
+    setSuccessMessage(null);
     setError('Aby zgłosić użytkownika wszystkie pola muszą być uzupełnione.');
     return;
   }
@@ -144,7 +154,9 @@ const handleSubmitBan = async (e) => {
     });
 
     if (!response.ok) {
-      throw new Error('Nie udało się zgłosić użytkownika.');
+      setSuccessMessage(null);
+      const errorData = await response.json();
+      throw new Error(errorData.message || 'Nie udało się zgłosić użytkownika.');
     }
 
     const data = await response.json();
@@ -167,6 +179,7 @@ const handleInputChangeBan = (e) => {
 const handleSubmitAsk = async (e) => {
   e.preventDefault();
   if ( !newAsk.name || !newAsk.message) {
+    setSuccessMessage(null);
     setError('Aby wysłać wiadomość wszystkie pola muszą być uzupełnione.');
     return;
   }
@@ -183,7 +196,9 @@ const handleSubmitAsk = async (e) => {
     });
 
     if (!response.ok) {
-      throw new Error('Nie udało się wysłać wiadomości.');
+      setSuccessMessage(null);   
+      const errorData = await response.json();
+      throw new Error(errorData.message || 'Nie udało się wysłać wiadomości.');
     }
 
     const data = await response.json();
@@ -271,6 +286,7 @@ return (
           </div>
           <button type="submit">Dodaj prośbę</button>
           {error && <p className="error-messageee">{error}</p>}
+          {!error && successMessage && <p className="succes-messageee">{successMessage}</p>}
         </form>
       )}
       {activeTab !== 'addNewGameReq' && activeTab === 'review' && isLoggedIn && (
@@ -284,7 +300,7 @@ return (
             onChange={handleInputChangeReview}
           />
         </div>
-        <div className='slider'>
+         <div className='slider'>
               <input
                 type="range"
                 value={newReview.stars}
@@ -296,6 +312,8 @@ return (
               <span>Ocena: {newReview.stars}</span>
         </div>
         
+
+
         <div>
           <label>Opis:</label>
           <textarea
@@ -307,6 +325,7 @@ return (
         </div>
         <button type="submit">Dodaj recenzje</button>
         {error && <p className="error-messageee">{error}</p>}
+        {successMessage && <p className="succes-messageee">{successMessage}</p>}
       </form>
     )}
       {activeTab !== 'addNewGameReq' && activeTab !== 'review' && activeTab === 'ban' && isLoggedIn && (
@@ -332,6 +351,7 @@ return (
         </div>
         <button type="submit">Zgłoś użytkownika</button>
         {error && <p className="error-messageee">{error}</p>}
+        {!error && successMessage && <p className="succes-messageee">{successMessage}</p>}
       </form>
     )}
       {activeTab !== 'addNewGameReq' && activeTab !== 'review' && activeTab !== 'ban' && activeTab === 'ask' && isLoggedIn && (
@@ -358,6 +378,7 @@ Uwaga! Nieuzasadnione wysyłanie wiadomości będzie karane" rows="5"
         </div>
         <button type="submit">Wyślij wiadomość</button>
         {error && <p className="error-messageee">{error}</p>}
+        {!error && successMessage && <p className="succes-messageee">{successMessage}</p>}
       </form>
     )}
     </div>
