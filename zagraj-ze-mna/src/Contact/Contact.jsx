@@ -68,7 +68,7 @@ const handleSubmitGame = async (e) => {
 
   try {
     const token = localStorage.getItem('token');
-    const response = await fetch('http://localhost:4001/api/review/addGameReq', {
+    const response = await fetch('https://zagrajzemna-backend.onrender.com/api/review/addGameReq', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -102,7 +102,7 @@ const handleSubmitReview = async (e) => {
 
   try {
     const token = localStorage.getItem('token');
-    const response = await fetch('http://localhost:4001/api/review/addReview', {
+    const response = await fetch('https://zagrajzemna-backend.onrender.com/api/review/addReview', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -144,7 +144,7 @@ const handleSubmitBan = async (e) => {
 
   try {
     const token = localStorage.getItem('token');
-    const response = await fetch('http://localhost:4001/api/review/reportUser', {
+    const response = await fetch('https://zagrajzemna-backend.onrender.com/api/review/reportUser', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -186,7 +186,7 @@ const handleSubmitAsk = async (e) => {
 
   try {
     const token = localStorage.getItem('token');
-    const response = await fetch('http://localhost:4001/api/review/sendMessage', {
+    const response = await fetch('https://zagrajzemna-backend.onrender.com/api/review/sendMessage', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
