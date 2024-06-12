@@ -43,6 +43,8 @@ function MyLobby() {
             setLobbies(fetchdata.Lobby);
             setTotalPages( fetchdata.pages);
             setCurrentPage(page);
+            
+            
         } catch (error) {
             setError(error.message);
         } finally {
@@ -58,7 +60,7 @@ function MyLobby() {
         if (!data.Lobby.length) return null;
         return data.Lobby.map((lobby, index) => {
 
-            return singleLobby(index, Ludek /*lobby.ownerAvatar*/, lobby.Name, lobby.Description, lobby.playerCount, lobby.NeedUsers, false); // Ustawienie last argumentu na false, ponieważ nie ma plusa w odpowiedzi
+            return singleLobby(index, lobby.gameName, Ludek /*lobby.ownerAvatar*/, lobby.Name, lobby.Description, lobby.playerCount, lobby.NeedUsers, true); // Ustawienie last argumentu na false, ponieważ nie ma plusa w odpowiedzi
         });
     };
 

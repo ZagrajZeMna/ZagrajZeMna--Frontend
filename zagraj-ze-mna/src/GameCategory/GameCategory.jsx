@@ -178,7 +178,7 @@ const GameCategory = () => {
                 </div>
                 <div className="player-count">
                   <Link
-                    to={`/category/${game}/${lobby.Name}/${lobby.ID_LOBBY}`}
+                    // to={`/category/${game}/${lobby.Name}/${lobby.ID_LOBBY}`}
                   >
                     <button onClick={() => sendMessage(lobby.ID_LOBBY)}>
                       <FaCirclePlus />

@@ -131,7 +131,7 @@
 }
 .messagewrapper {
   display: "flex";
-  justifycontent: "space-between";
+  justify-content: "space-between";
 }
 .message {
   background: var(--messagecolor);

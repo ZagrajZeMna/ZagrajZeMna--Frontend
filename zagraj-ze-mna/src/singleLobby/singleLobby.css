@@ -9,6 +9,10 @@
     padding: 1%;
     overflow: hidden;
     height: 20vh;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    
 }
 
 .lobbyOne:hover
@@ -16,13 +20,19 @@
     background-color: #ccc;
 }
 
-@media screen and (max-width: 767px) 
+@media screen and (max-width: 1099px) 
 {
     .lobbyOne
     {
         height: auto !important;
+        flex-direction: column;
+        text-align: center;
     }
-    
+    .lobbyPicture, .lobbyInfoContainer, .addedPlayers {
+        width: 100%;
+        text-align: center;
+        margin: 10px 0;
+    }
 }
 
 .lobbyPictureImg
@@ -43,20 +53,69 @@
 .lobbyTitle
 {
     font-weight: bold;
-    font-size: 20px;
+    font-size: 23px !important;
     padding-bottom: 2%;
+}
+.gameName{
+    font-weight: bold;
+    font-size: 30px ;
+    padding-bottom: 2%;
+}
+.lobbyDescription{
+    font-size: 20px !important;
+    font-weight: normal !important;
 }
 
 .addedPlayers
 {
     text-align: right;
-    padding-right: 3%;
-    padding-top: 1%;
     font-weight: bold;
     font-size: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    margin-left: -5%;
 }
 
 .clearer
 {
     clear: both;
 }
+.player-button {
+ 
+    display: flex;
+    padding-right: 30%;
+    justify-content: right;
+    align-items: center;
+    
+  }
+  
+.player-button button {
+    
+    font-size: 45px;
+    display: flex;
+    background: none;
+    border: none;
+    color: #000000;
+    width: 60px;
+    height: 60px;
+    cursor: pointer;
+    justify-content: right;
+    align-items: center;
+    transition: transform 0.5s ease;
+    
+}
+
+.player-button button:hover {
+    animation: spin 1s linear forwards;
+}
+
+@keyframes spin {
+0% {
+    transform: rotate(0deg);
+}
+100% {
+    transform: rotate(360deg);
+}
+}
+

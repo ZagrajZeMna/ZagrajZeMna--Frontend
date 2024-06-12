@@ -34,6 +34,7 @@
     transform: scale(1.2);
 }
 .title{
+    font-size: 75px;
     color: white;
     text-align: center;
     font-family: "IBM Plex Mono", monospace;

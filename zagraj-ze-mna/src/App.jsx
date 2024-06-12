@@ -37,7 +37,7 @@ function App() {
         
 
           <Route path="/category/:game" element={<GameCategory />} />
-          <Route path="/userPage" element={<UserPage />} />
+        
           <Route path="/category/:game/:lobbyname/:lobbyId" element={<Lobby/>}/>
 
           <Route path="/lobbyForm" element={<LobbyForm/>}/>

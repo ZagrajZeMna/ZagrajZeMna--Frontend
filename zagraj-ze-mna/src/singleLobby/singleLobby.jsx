@@ -17,11 +17,13 @@ add plus button for sending requet to enter the lobby. The place for this is pre
 
 import { FaUser } from "react-icons/fa";
 import { FaJoint } from "react-icons/fa";
+import { FaCirclePlus } from "react-icons/fa6";
+import { Link } from "react-router-dom";
 
 //CSS
 import './singleLobby.css';
 
-function singleLobby(id, lobbyPicture, lobbyName, lobbyDesc, currentPlayers, requiredPlayers, withPlus)
+function singleLobby(id, gameName ,lobbyPicture, lobbyName, lobbyDesc, currentPlayers, requiredPlayers, withPlus)
 {
     let content = [];
     
@@ -32,6 +34,7 @@ function singleLobby(id, lobbyPicture, lobbyName, lobbyDesc, currentPlayers, req
                 <img src={lobbyPicture} alt='obraz przedstawiający lobby' className='img-fluid lobbyPictureImg'/>
             </div>
             <div className='lobbyInfoContainer flotLeftClassOrSth col-6 col-md-9'>
+                <div className='gameName'> {gameName}</div>
                 <div className='lobbyTitle'> {lobbyName} </div>
                 <div className='lobbyDescription'> 
                     {lobbyDesc}
@@ -40,9 +43,19 @@ function singleLobby(id, lobbyPicture, lobbyName, lobbyDesc, currentPlayers, req
             
             <div className='addedPlayers flotLeftClassOrSth col-2 col-md-1'>
                 
-                 {currentPlayers}/{requiredPlayers}<FaUser/> </div>
-                 {withPlus && (<span ><FaJoint/> </span>)/* <==== TUTAJ TRZEBA TEN PRZYCISK DODAĆ*/}
+            
+                 {withPlus && (<span className="player-button" >
+                    <Link to={`/category/${gameName}/${lobbyName}/${id}`}>
+                        <button >
+                            <FaCirclePlus />
+                        </button>
+                    </Link> </span>)}
+                    <span className="player-button">
+                        {currentPlayers}/{requiredPlayers}<FaUser />
+                    </span>
+                     </div>
             <div className='clearer'></div>
+            
         </div>
     );
 

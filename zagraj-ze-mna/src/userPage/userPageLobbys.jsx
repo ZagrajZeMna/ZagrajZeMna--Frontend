@@ -41,12 +41,13 @@ const UserPageLobbys = () =>{
     const addlobbys = () =>
     {
         let content = [];
+        let gameName = "JD"
         let additionalClass = '';
         let description = 'W sumie to nie chce w nic grać o tak o se siedzę. Używam tego lobby jako listy zakupów tak naprawdę. A po co miejsce dla drugiej osoby? A w sumie to nie wiem'
         for(let i=0; i<3; i++)
         {  
             
-            content.push(singleLobby(i, Ludek, 'Moje lobby', description, 1,2,false));
+            content.push(singleLobby(i, gameName ,Ludek, 'Moje lobby', description, 1,2,true));
         }
 
         return content;
