@@ -14,17 +14,19 @@
   padding: 20px;
   position: relative;
 }
-.search-bar input[type="text"] {
+.searchBar input[type="text"] {
   padding: 10px;
   width: 200px;
   border-radius: 5px;
   border: 1px solid #ccc;
-  margin-bottom: 20px;
+  margin-bottom: 0px;
   font-size: 16px;
-  margin-right: 5px;
+  margin-right: 10px;
+  margin-left: 10px;
+  
 }
 
-.search-bar button {
+.searchBar button {
   padding: 10px 20px;
   background-color: #363b41;
   color: #fff;
@@ -32,11 +34,14 @@
   border-radius: 5px;
   cursor: pointer;
   font-size: 16px;
+  margin-bottom: 10px;
 }
 
-.search-bar button:hover {
+.searchBar button:hover {
   background-color: #363b419f;
+  margin-bottom: 0px;
 }
+
 .server-down-container {
   display: flex;
   flex-direction: column;
@@ -66,6 +71,8 @@
   width: 30%;
   height: 4rem;
   margin-top: 10px;
+  justify-content: center;
+  align-items: center;
   
   background: linear-gradient(130deg, #1f25eb, #6904a8, #be04df);
   background-size: 200% 200%;
@@ -90,8 +97,8 @@
   100%{background-position:10% 0%}
 }
 .category-button-text {
-  font-size: 20px;
-}
+  font-size: 30px;
+  }
 .category-button:hover {
   background-color: #6633cc;
 }
@@ -130,7 +137,7 @@
 
 .game-tiles-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(230px, 1fr));
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
   /*gap: 20px;*/
 }
 
@@ -178,11 +185,15 @@
 }
 .sorting-button {
   background: transparent;
-  font-size: 25px;
+  font-size: 35px;
   font-weight: bold;
   color: #6f598f;
   border: 0px;
   border-bottom: 2px solid #6f598f;
+  margin-bottom: 15px;
+}
+.spacing {
+  margin-top: 50px;
 }
 .category-content {
   margin-top: 20px;

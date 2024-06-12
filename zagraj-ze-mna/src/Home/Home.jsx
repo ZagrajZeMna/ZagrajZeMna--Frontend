@@ -14,10 +14,12 @@ function Home() {
   const [maxPages, setMaxPages] = useState(0);
   const [isLoading, setIsLoading] = useState(false);
   const [name, setName] = useState("");
+  const [recommendedGames, setRecommendedGames] = useState([]);
 
   const navigate = useNavigate();
   useEffect(() => {
     fetchGames();
+    fetchRecommendedGames();
   }, [currentPage]);
   const fetchGames = () => {
     setIsLoading(true);
@@ -43,6 +45,30 @@ function Home() {
         setError(error.message);
       });
     setIsLoading(false);
+  };
+
+const fetchRecommendedGames = () => {
+    setIsLoading(true);
+    fetch(expandLink(`/api/mainGame/getRecommendedGames`))
+      .then((res) => {
+        if (!res.ok) {
+          throw new Error("Internal Server Error");
+        }
+        setError(null);
+        return res.json();
+      })
+      .then((data) => {
+        setRecommendedGames(data);
+        console.log(recommendedGames)
+        console.log("---------------FETCH GIER PROPOWANOWANYCH---------------");
+        console.log(data);
+      })
+      .catch((error) => {
+        setError(error.message);
+      })
+      .finally(() => {
+        setIsLoading(false);
+      });
   };
 
   const handleClick = () => {
@@ -71,36 +97,53 @@ function Home() {
         <span className="caption">Giereczki</span>
         <div className="category-button-container">
           <div className="category-button">
-            <span className="category-button-text"> </span>
+            <span className="category-button-text">Graj</span>
           </div>
           <div className="category-button">
-            <span className="category-button-text"> </span>
+            <span className="category-button-text">Poznawaj</span>
           </div>
           <div className="category-button">
-            <span className="category-button-text"> </span>
+            <span className="category-button-text">Baw się</span>
           </div>
         </div>
-        <div className="search-bar">
-          <input
-            type="text"
-            value={name}
-            onChange={handleInputChange}
-            onKeyPress={handleKeyPress}
-          />
-          <button onClick={handleSearch}>Szukaj</button>
+      {isLoading ? (
+        <LoadingChad></LoadingChad>
+      ) : error ? (
+        <div className="server-down-container">
+          <span>Pora dotknąć trawy</span>
+          <img src="https://i.ibb.co/0FnRKhw/grass.jpg" />
         </div>
-        <div className="sorting-buttons">
-          <button className="sorting-button">Kategorie</button>
-        </div>
-        {isLoading ? (
-          <LoadingChad></LoadingChad>
-        ) : error ? (
-          <div className="server-down-container">
-            <span>Pora dotknąć trawy</span>
-            <img src="https://i.ibb.co/0FnRKhw/grass.jpg" />
-          </div>
-        ) : (
-          <>
+      ) : (
+        <>
+            <div className="sorting-buttons">
+              <button className="sorting-button">Popularne</button>
+            </div>
+            <div className="game-tiles-grid">
+              {recommendedGames.map((game, index) => (
+                <Link
+                  to={`/category/${game.name}`}
+                  key={index}
+                  className="game-tile"
+                >
+                  <img src={game.image} alt={game.name} />
+                  <span className="game-name">{game.name}</span>
+                  <span className="lobby-count">Liczba lobby: {game.lobbycount}</span>
+                </Link>
+              ))}
+            </div>
+            <div className="spacing"></div>
+            <div className="sorting-buttons">
+              <button className="sorting-button">Kategorie</button>
+            </div>
+            <div className="searchBar">
+              <input
+                type="text"
+                value={name}
+                onChange={handleInputChange}
+                onKeyPress={handleKeyPress}
+              />
+              <button onClick={handleSearch}>Szukaj</button>
+            </div>
             <div className="game-tiles-grid">
               {games.map((game, index) => (
                 <Link
