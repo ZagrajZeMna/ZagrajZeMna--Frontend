@@ -14,16 +14,20 @@
   padding: 20px;
   position: relative;
 }
+.searchBar {
+  display: flex;
+  align-items: center;
+  margin-bottom: 20px;
+  margin-left: 20px; /* Added margin to align with other elements */
+}
+
 .searchBar input[type="text"] {
   padding: 10px;
   width: 200px;
   border-radius: 5px;
   border: 1px solid #ccc;
-  margin-bottom: 0px;
   font-size: 16px;
   margin-right: 10px;
-  margin-left: 10px;
-  
 }
 
 .searchBar button {
@@ -34,18 +38,16 @@
   border-radius: 5px;
   cursor: pointer;
   font-size: 16px;
-  margin-bottom: 10px;
 }
 
 .searchBar button:hover {
   background-color: #363b419f;
-  margin-bottom: 0px;
 }
 
 .server-down-container {
   display: flex;
   flex-direction: column;
-  justify-items: center;
+  justify-content: center;
   align-items: center;
 }
 .server-down-container span {
@@ -54,8 +56,9 @@
   font-weight: bold;
 }
 .category-button-container {
-  margin: 30px;
   display: flex;
+  margin-bottom: 20px;
+  margin-left: 20px; /* Added margin to align with other elements */
 }
 .category-button {
   display: flex;
@@ -70,10 +73,9 @@
   margin-right: 15px;
   width: 30%;
   height: 4rem;
-  margin-top: 10px;
   justify-content: center;
   align-items: center;
-  
+
   background: linear-gradient(130deg, #1f25eb, #6904a8, #be04df);
   background-size: 200% 200%;
 
@@ -82,32 +84,51 @@
   animation: Animation 5s ease infinite;
 }
 @-webkit-keyframes Animation {
-  0%{background-position:10% 0%}
-  50%{background-position:91% 100%}
-  100%{background-position:10% 0%}
+  0% {
+    background-position: 10% 0%;
+  }
+  50% {
+    background-position: 91% 100%;
+  }
+  100% {
+    background-position: 10% 0%;
+  }
 }
 @-moz-keyframes Animation {
-  0%{background-position:10% 0%}
-  50%{background-position:91% 100%}
-  100%{background-position:10% 0%}
+  0% {
+    background-position: 10% 0%;
+  }
+  50% {
+    background-position: 91% 100%;
+  }
+  100% {
+    background-position: 10% 0%;
+  }
 }
-@keyframes Animation { 
-  0%{background-position:10% 0%}
-  50%{background-position:91% 100%}
-  100%{background-position:10% 0%}
+@keyframes Animation {
+  0% {
+    background-position: 10% 0%;
+  }
+  50% {
+    background-position: 91% 100%;
+  }
+  100% {
+    background-position: 10% 0%;
+  }
 }
 .category-button-text {
   font-size: 30px;
-  }
+}
 .category-button:hover {
   background-color: #6633cc;
 }
 .caption {
   font-size: 64px;
   font-weight: bold;
-  margin-left: 20px;
   color: white;
   text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5); /* Add text shadow for depth */
+  margin-bottom: 20px;
+  margin-left: 20px; /* Added margin to align with other elements */
 }
 .logout {
   margin-left: auto;
@@ -138,7 +159,7 @@
 .game-tiles-grid {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
-  /*gap: 20px;*/
+  gap: 20px; /* Adjusted gap between tiles */
 }
 
 .game-tile {
@@ -156,7 +177,6 @@
   overflow: hidden;
   transition: all 0.3s ease;
   margin: 10px;
-  margin-top: 16px;
   color: white;
   font-family: "Montserrat", sans-serif; /* Use Montserrat font */
 }
@@ -181,7 +201,9 @@
 }
 .sorting-buttons {
   display: flex;
-  margin-left: 20px;
+  align-items: center;
+  margin-bottom: 20px;
+  margin-left: 20px; /* Added margin to align with other elements */
 }
 .sorting-button {
   background: transparent;
@@ -190,7 +212,12 @@
   color: #6f598f;
   border: 0px;
   border-bottom: 2px solid #6f598f;
-  margin-bottom: 15px;
+  display: flex;
+  align-items: center;
+}
+.arrow-icon {
+  margin-left: 10px;
+  transition: transform 0.3s ease;
 }
 .spacing {
   margin-top: 50px;
