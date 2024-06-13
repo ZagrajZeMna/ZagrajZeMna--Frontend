@@ -1,8 +1,12 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { Link } from "react-router-dom";
-import { MdNavigateNext } from "react-icons/md";
-import { MdNavigateBefore } from "react-icons/md";
+import {
+  MdNavigateNext,
+  MdNavigateBefore,
+  MdExpandMore,
+  MdExpandLess,
+} from "react-icons/md"; // Import icons
 import LoadingChad from "../LoadingChad/LoadingChad";
 import "./Home.css";
 import Footer from "../footer/footer";
@@ -15,12 +19,15 @@ function Home() {
   const [isLoading, setIsLoading] = useState(false);
   const [name, setName] = useState("");
   const [recommendedGames, setRecommendedGames] = useState([]);
+  const [showPopular, setShowPopular] = useState(true); // Nowy stan
 
   const navigate = useNavigate();
+
   useEffect(() => {
     fetchGames();
     fetchRecommendedGames();
   }, [currentPage]);
+
   const fetchGames = () => {
     setIsLoading(true);
     fetch(
@@ -43,11 +50,13 @@ function Home() {
       })
       .catch((error) => {
         setError(error.message);
+      })
+      .finally(() => {
+        setIsLoading(false);
       });
-    setIsLoading(false);
   };
 
-const fetchRecommendedGames = () => {
+  const fetchRecommendedGames = () => {
     setIsLoading(true);
     fetch(expandLink(`/api/mainGame/getRecommendedGames`))
       .then((res) => {
@@ -58,8 +67,7 @@ const fetchRecommendedGames = () => {
         return res.json();
       })
       .then((data) => {
-        setRecommendedGames(data);
-        console.log(recommendedGames)
+        setRecommendedGames(data.Game);
         console.log("---------------FETCH GIER PROPOWANOWANYCH---------------");
         console.log(data);
       })
@@ -71,25 +79,31 @@ const fetchRecommendedGames = () => {
       });
   };
 
-  const handleClick = () => {
-    console.log(localStorage.getItem("token"));
-    localStorage.removeItem("token");
-    console.log(localStorage.getItem("token"));
-    navigate("/login");
-  };
   const handleInputChange = (event) => {
     setName(event.target.value); // Update name state on input change
   };
+
   const handleKeyPress = (event) => {
     if (event.key === "Enter") {
       handleSearch();
     }
   };
+
   const handleSearch = () => {
     fetchGames();
     setCurrentPage(0);
+    if (name.trim() !== "") {
+      setShowPopular(false); // Ukryj popularne gry przy wyszukiwaniu
+    } else {
+      setShowPopular(true); // Pokaż popularne gry, gdy pole wyszukiwania jest puste
+    }
   };
+
   const [games, setGames] = useState([]);
+
+  const togglePopularGames = () => {
+    setShowPopular(!showPopular); // Przełącz widoczność popularnych gier
+  };
 
   return (
     <div className="background">
@@ -106,20 +120,29 @@ const fetchRecommendedGames = () => {
             <span className="category-button-text">Baw się</span>
           </div>
         </div>
-      {isLoading ? (
-        <LoadingChad></LoadingChad>
-      ) : error ? (
-        <div className="server-down-container">
-          <span>Pora dotknąć trawy</span>
-          <img src="https://i.ibb.co/0FnRKhw/grass.jpg" />
+        <div className="searchBar">
+          <input
+            type="text"
+            value={name}
+            onChange={handleInputChange}
+            onKeyPress={handleKeyPress}
+          />
+          <button onClick={handleSearch}>Szukaj</button>
         </div>
-      ) : (
-        <>
-            <div className="sorting-buttons">
-              <button className="sorting-button">Popularne</button>
-            </div>
-            <div className="game-tiles-grid">
-              {recommendedGames.map((game, index) => (
+        <div className="sorting-buttons">
+          <button className="sorting-button" onClick={togglePopularGames}>
+            Popularne
+            {showPopular ? (
+              <MdExpandLess className="arrow-icon" />
+            ) : (
+              <MdExpandMore className="arrow-icon" />
+            )}
+          </button>
+        </div>
+        {showPopular && (
+          <div className="game-tiles-grid">
+            {Array.isArray(recommendedGames) &&
+              recommendedGames.map((game, index) => (
                 <Link
                   to={`/category/${game.name}`}
                   key={index}
@@ -127,23 +150,26 @@ const fetchRecommendedGames = () => {
                 >
                   <img src={game.image} alt={game.name} />
                   <span className="game-name">{game.name}</span>
-                  <span className="lobby-count">Liczba lobby: {game.lobbycount}</span>
+                  <span className="lobby-count">
+                    Liczba lobby: {game.lobbycount}
+                  </span>
                 </Link>
               ))}
-            </div>
-            <div className="spacing"></div>
-            <div className="sorting-buttons">
-              <button className="sorting-button">Kategorie</button>
-            </div>
-            <div className="searchBar">
-              <input
-                type="text"
-                value={name}
-                onChange={handleInputChange}
-                onKeyPress={handleKeyPress}
-              />
-              <button onClick={handleSearch}>Szukaj</button>
-            </div>
+          </div>
+        )}
+        <div className="spacing"></div>
+        <div className="sorting-buttons">
+          <button className="sorting-button">Kategorie</button>
+        </div>
+        {isLoading ? (
+          <LoadingChad />
+        ) : error ? (
+          <div className="server-down-container">
+            <span>Pora dotknąć trawy</span>
+            <img src="https://i.ibb.co/0FnRKhw/grass.jpg" alt="Grass" />
+          </div>
+        ) : (
+          <>
             <div className="game-tiles-grid">
               {games.map((game, index) => (
                 <Link
@@ -184,8 +210,7 @@ const fetchRecommendedGames = () => {
           </>
         )}
       </div>
-
-      <Footer></Footer>
+      <Footer />
     </div>
   );
 }
