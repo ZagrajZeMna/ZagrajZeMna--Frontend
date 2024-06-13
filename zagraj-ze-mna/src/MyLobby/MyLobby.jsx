@@ -59,8 +59,7 @@ function MyLobby() {
     const renderLobbies = () => {
         if (!data.Lobby.length) return null;
         return data.Lobby.map((lobby, index) => {
-
-            return singleLobby(index, lobby.gameName, Ludek /*lobby.ownerAvatar*/, lobby.Name, lobby.Description, lobby.playerCount, lobby.NeedUsers, true); // Ustawienie last argumentu na false, ponieważ nie ma plusa w odpowiedzi
+            return singleLobby(index + 1, lobby.gameName, lobby.ownerAvatar, lobby.Name, lobby.Description, lobby.playerCount, lobby.NeedUsers, true); // Ustawienie last argumentu na false, ponieważ nie ma plusa w odpowiedzi
         });
     };
 

@@ -14,14 +14,29 @@ export function AuthProvider({ children }) {
   const [loading, setLoading] = useState(true);
   const navigate = useNavigate();
 
+  const checkTokenExpiration = (token) => {
+    try {
+      const decodedToken = jwtDecode(token);
+      const currentTime = Date.now() / 1000;
+      if (decodedToken.exp < currentTime) {
+        logout();
+      }
+    } catch (error) {
+      console.error("Failed to decode token:", error);
+      logout();
+    }
+  };
+
   useEffect(() => {
     const token = localStorage.getItem('token');
     const adminToken = localStorage.getItem('adminToken');
     if (token) {
       try {
+        checkTokenExpiration(token);
         let isAdmin = false;
         if (adminToken) {
           const decodedAdmin = jwtDecode(adminToken);
+          checkTokenExpiration(adminToken);
           isAdmin = decodedAdmin.ADMIN === true;
         }
         setCurrentUser({ token, isAdmin, username: localStorage.getItem('username') });
