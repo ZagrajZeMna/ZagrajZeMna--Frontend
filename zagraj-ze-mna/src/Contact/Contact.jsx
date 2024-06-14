@@ -221,10 +221,10 @@ const handleInputChangeAsk = (e) => {
 
 return (
   <div className="contact">
-    <div className="sidebar">
-      <div className="tab">
+    <div className="sidebars-contact">
+      <div className="tab-contact">
         <div>
-          <h1 className="main-title">Gry</h1>
+          <h1 className="main-title-contact">Gry</h1>
         </div>
         <button
           className={`tab ${activeTab === 'addNewGameReq' ? 'active' : ''}`}
@@ -233,9 +233,9 @@ return (
           Dodaj Grę
         </button>
       </div>
-      <div className="tabs">
+      <div className="tabs-contact">
       <div>
-        <h1 className="main-title">Użytkownicy</h1>
+        <h1 className="main-title-contact">Użytkownicy</h1>
       </div>
         <button
           className={`tab ${activeTab === 'ban' ? 'active' : ''}`}
@@ -250,9 +250,9 @@ return (
           Dodaj recenzje użytkownika
         </button>
       </div>
-      <div className="tab">
+      <div className="tabs-contact">
       <div>
-        <h1 className="main-title">Kontakt</h1>
+        <h1 className="main-title-contact">Kontakt</h1>
         </div>
         <button
           className={`tab ${activeTab === 'ask' ? 'active' : ''}`}
@@ -263,9 +263,9 @@ return (
       </div>
     </div>
 
-    <div className="main-content">
+    <div className="main-content-contact">
       {activeTab === 'addNewGameReq' && isLoggedIn && (
-        <form onSubmit={handleSubmitGame} className="add-game-form">
+        <form onSubmit={handleSubmitGame} className="add-game-form-contact">
           <div>
             <label>Nazwa gry:</label>
             <input
@@ -300,7 +300,7 @@ return (
             onChange={handleInputChangeReview}
           />
         </div>
-         <div className='slider'>
+         <div className='slider-contact'>
               <input
                 type="range"
                 value={newReview.stars}
@@ -329,7 +329,7 @@ return (
       </form>
     )}
       {activeTab !== 'addNewGameReq' && activeTab !== 'review' && activeTab === 'ban' && isLoggedIn && (
-        <form onSubmit={handleSubmitBan} className="add-game-form">
+        <form onSubmit={handleSubmitBan} className="add-game-form-contact">
         <div>
           <label>Pseudonim gracza:</label>
           <input
@@ -355,7 +355,7 @@ return (
       </form>
     )}
       {activeTab !== 'addNewGameReq' && activeTab !== 'review' && activeTab !== 'ban' && activeTab === 'ask' && isLoggedIn && (
-        <form onSubmit={handleSubmitAsk} className="add-game-form">
+        <form onSubmit={handleSubmitAsk} className="add-game-form-contact">
         <div>
           <label>Temat:</label>
           <input
