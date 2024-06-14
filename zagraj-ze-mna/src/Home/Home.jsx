@@ -19,14 +19,16 @@ function Home() {
   const [isLoading, setIsLoading] = useState(false);
   const [name, setName] = useState("");
   const [recommendedGames, setRecommendedGames] = useState([]);
-  const [showPopular, setShowPopular] = useState(true); // Nowy stan
+  const [showPopular, setShowPopular] = useState(true);
 
   const navigate = useNavigate();
 
   useEffect(() => {
     fetchGames();
     fetchRecommendedGames();
+    console.log(showPopular);
   }, [currentPage]);
+
 
   const fetchGames = async () => {
     setIsLoading(true);
@@ -60,7 +62,7 @@ function Home() {
         throw new Error("Internal Server Error");
       }
       const data = await res.json();
-      setRecommendedGames(data.Game);
+      setRecommendedGames(data);
       console.log("---------------FETCH GIER PROPOWANOWANYCH---------------");
       console.log(data);
       setError(null);
