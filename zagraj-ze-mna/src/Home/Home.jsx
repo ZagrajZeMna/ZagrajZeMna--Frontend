@@ -28,55 +28,47 @@ function Home() {
     fetchRecommendedGames();
   }, [currentPage]);
 
-  const fetchGames = () => {
+  const fetchGames = async () => {
     setIsLoading(true);
-    fetch(
-      expandLink(
-        `/api/mainGame/getGamePagination?page=${currentPage}&name=${name}`
-      )
-    )
-      .then((res) => {
-        if (!res.ok) {
-          throw new Error("Internal Server Error");
-        }
-        setError(null);
-        return res.json();
-      })
-      .then((data) => {
-        setGames(data.Game);
-        setMaxPages(data.Pages);
-        console.log("---------------FETCH DO STRONY GŁÓWNEJ---------------");
-        console.log(data);
-      })
-      .catch((error) => {
-        setError(error.message);
-      })
-      .finally(() => {
-        setIsLoading(false);
-      });
+    try {
+      const res = await fetch(
+        expandLink(
+          `/api/mainGame/getGamePagination?page=${currentPage}&name=${name}`
+        )
+      );
+      if (!res.ok) {
+        throw new Error("Internal Server Error");
+      }
+      const data = await res.json();
+      setGames(data.Game);
+      setMaxPages(data.Pages);
+      console.log("---------------FETCH DO STRONY GŁÓWNEJ---------------");
+      console.log(data);
+      setError(null);
+    } catch (error) {
+      setError(error.message);
+    } finally {
+      setIsLoading(false);
+    }
   };
 
-  const fetchRecommendedGames = () => {
+  const fetchRecommendedGames = async () => {
     setIsLoading(true);
-    fetch(expandLink(`/api/mainGame/getRecommendedGames`))
-      .then((res) => {
-        if (!res.ok) {
-          throw new Error("Internal Server Error");
-        }
-        setError(null);
-        return res.json();
-      })
-      .then((data) => {
-        setRecommendedGames(data.Game);
-        console.log("---------------FETCH GIER PROPOWANOWANYCH---------------");
-        console.log(data);
-      })
-      .catch((error) => {
-        setError(error.message);
-      })
-      .finally(() => {
-        setIsLoading(false);
-      });
+    try {
+      const res = await fetch(expandLink(`/api/mainGame/getRecommendedGames`));
+      if (!res.ok) {
+        throw new Error("Internal Server Error");
+      }
+      const data = await res.json();
+      setRecommendedGames(data.Game);
+      console.log("---------------FETCH GIER PROPOWANOWANYCH---------------");
+      console.log(data);
+      setError(null);
+    } catch (error) {
+      setError(error.message);
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   const handleInputChange = (event) => {
