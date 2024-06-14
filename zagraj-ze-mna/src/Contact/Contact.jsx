@@ -79,8 +79,10 @@ const handleSubmitGame = async (e) => {
 
     if (!response.ok) {
       setSuccessMessage(null);
-      const errorData = await response.json();
-      throw new Error(errorData.message || 'Nie udało się wysłać prośby o dodanie nowej gry');
+      if(response.status === 403)
+        throw new Error('Błąd weryfikacji użytkownika.');
+      else
+        throw new Error('Nie udało się wysłać prośby o dodanie gry.');
     }
 
     const data = await response.json();
@@ -113,8 +115,16 @@ const handleSubmitReview = async (e) => {
 
     if (!response.ok) {
       setSuccessMessage(null);
-      const errorData = await response.json();
-      throw new Error(errorData.message || 'Nie udało się dodać recenzji');
+      if(response.status === 403)
+        throw new Error('Błąd weryfikacji użytkownika');
+      else if(response.status === 404)
+        throw new Error('Nie ma takiego użytkownika. Niepoprawny nick.');
+      else if(response.status === 405)
+        throw new Error('Nie możesz wystawić sobie opini.');
+      else if(response.status === 406)
+        throw new Error('Zostawiłeś już recenzje temu użytkownikowi');
+      else
+        throw new Error('Błąd. Nie udało się zostawić recenzji.');
     }
 
     const data = await response.json();
@@ -155,8 +165,14 @@ const handleSubmitBan = async (e) => {
 
     if (!response.ok) {
       setSuccessMessage(null);
-      const errorData = await response.json();
-      throw new Error(errorData.message || 'Nie udało się zgłosić użytkownika.');
+      if(response.status === 403)
+        throw new Error('Błąd weryfikacji użytkownika');
+      else if(response.status === 404)
+        throw new Error('Nie ma takiego użytkownika. Niepoprawny nick.');
+      else if(response.status === 405)
+        throw new Error('Użytkownik został już zbanowany.');
+      else
+        throw new Error('Błąd. Nie udało się zgłosić użytkownika.');
     }
 
     const data = await response.json();
