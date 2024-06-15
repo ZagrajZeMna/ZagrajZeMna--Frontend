@@ -1,8 +1,8 @@
 import styles from './MyLobby.module.css'
 import React, { useState, useEffect } from 'react';
-import singleLobby from '../singleLobby/singleLobby';
+import singleLobby from '../PageStructureElements/singleLobby/singleLobby';
 import Ludek from '../assets/testowy_ludek.png';
-import Footer from '../footer/footer';
+import Footer from '../PageStructureElements/footer/footer';
 import { MdNavigateNext } from "react-icons/md";
 import { MdNavigateBefore } from "react-icons/md";
 import { expandLink } from "../fetches/expandLink";
@@ -21,7 +21,8 @@ function MyLobby() {
             setIsLoading(true);
             const token = localStorage.getItem("token");
             const tokenWithoutQuotes = token.replace(/"/g, '');
-            const response = await fetch('http://localhost:4001/api/profile/usersLobby', {
+            let url = expandLink('/api/profile/usersLobby');
+            const response = await fetch(url, {
                 method: 'POST',
                 headers: {
                     'Content-Type' : 'application/json',
@@ -40,7 +41,7 @@ function MyLobby() {
 
             const fetchdata = await response.json();
             setData(fetchdata);
-            setLobbies(fetchdata.Lobby);
+            setLobbies(fetchdata);
             setTotalPages( fetchdata.pages);
             setCurrentPage(page);
             
@@ -59,7 +60,7 @@ function MyLobby() {
     const renderLobbies = () => {
         if (!data.Lobby.length) return null;
         return data.Lobby.map((lobby, index) => {
-            return singleLobby(index + 1, lobby.gameName, lobby.ownerAvatar, lobby.Name, lobby.Description, lobby.playerCount, lobby.NeedUsers, true); // Ustawienie last argumentu na false, ponieważ nie ma plusa w odpowiedzi
+            return singleLobby(lobby.ID_LOBBY, lobby.gameName, lobby.ownerAvatar, lobby.Name, lobby.Description, lobby.playerCount, lobby.NeedUsers, true); // Ustawienie last argumentu na false, ponieważ nie ma plusa w odpowiedzi
         });
     };
 

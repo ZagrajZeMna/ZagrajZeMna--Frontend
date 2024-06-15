@@ -2,7 +2,7 @@
   /* EDIT THE BORDER AND TEXT COLOR HERE */
   --lobbycolor: #ffffff;
   --lobbytextcolor: #ffffff;
-  --messagecolor: #707070;
+  --messagecolor: #111;
 }
 .background {
   background-color: black;
@@ -12,6 +12,33 @@
   align-items: center;
   height: 100vh;
   font-family: "Courier New", Courier, monospace;
+}
+
+.msgMeta2
+{
+  color: #895ec9;
+  font-weight: bold;
+}
+
+.msgMeta1
+{
+  color: #e3cf19;
+  font-weight: bold;
+}
+
+.msgLeft
+{
+  text-align: left !important;
+}
+
+.msgRight
+{
+  text-align: left !important;
+}
+
+.booldMessage
+{
+  font-weight: bold;
 }
 
 .lobbycontainer {
@@ -76,7 +103,7 @@
   border: 1px solid var(--lobbycolor);
   margin-bottom: 10px;
   overflow-y: auto;
-  background-color: #000;
+  background-color: #111;
   color: var(--lobbytextcolor);
   padding: 10px;
   border-radius: 5px;
@@ -133,11 +160,25 @@
   display: "flex";
   justify-content: "space-between";
 }
+
+.no_margin_added
+{
+  margin-top: 0px;
+  margin-bottom: 0px;
+  padding-bottom: 0px;
+}
+
+
+.margin_added
+{
+  margin-top: 25px;
+}
+
 .message {
   background: var(--messagecolor);
   border-radius: 25px;
-  margin: 2%;
-  padding-top: 10px;
+  /*margin: 2%;*/
+  padding-top: 5px;
   padding-left: 2%;
   padding-right: 2%;
   word-wrap: break-word;
@@ -152,7 +193,7 @@
   padding: 5px;
 }
 .message {
-  color: white;
+  color: #ccc;
 }
 .players {
   display: flex;

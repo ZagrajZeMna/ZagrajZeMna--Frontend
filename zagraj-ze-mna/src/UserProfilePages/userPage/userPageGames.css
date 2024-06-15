@@ -452,9 +452,10 @@
 
 .myTableOrSth
 {
-    width: 100%;
+    width: 100% !important;
     
 }
+
 
 .myTableOrSth tr, td
 {

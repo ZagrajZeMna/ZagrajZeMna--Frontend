@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import './Contact.css';
+import { expandLink } from '../fetches/expandLink';
 
 const Contact = () => {
   const [error, setError] = useState(null);
@@ -68,7 +69,8 @@ const handleSubmitGame = async (e) => {
 
   try {
     const token = localStorage.getItem('token');
-    const response = await fetch('http://localhost:4001/api/review/addGameReq', {
+    let url = expandLink('/api/review/addGameReq')
+    const response = await fetch(url, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -102,7 +104,8 @@ const handleSubmitReview = async (e) => {
 
   try {
     const token = localStorage.getItem('token');
-    const response = await fetch('http://localhost:4001/api/review/addReview', {
+    let url = expandLink('/api/review/addReview');
+    const response = await fetch(url, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -144,7 +147,8 @@ const handleSubmitBan = async (e) => {
 
   try {
     const token = localStorage.getItem('token');
-    const response = await fetch('http://localhost:4001/api/review/reportUser', {
+    let url = expandLink('/api/review/reportUser');
+    const response = await fetch(url, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -186,7 +190,8 @@ const handleSubmitAsk = async (e) => {
 
   try {
     const token = localStorage.getItem('token');
-    const response = await fetch('http://localhost:4001/api/review/sendMessage', {
+    let url = expandLink('/api/review/sendMessage');
+    const response = await fetch(url, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',

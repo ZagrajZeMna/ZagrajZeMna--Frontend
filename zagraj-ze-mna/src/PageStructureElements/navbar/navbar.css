@@ -375,7 +375,7 @@
 
 .navbar-light .navbar-toggler-icon
 {
-    background-image: url('../assets/krechy.png') !important;
+    background-image: url('../../assets/krechy.png') !important;
     color: white !important;
     transform: rotate(0deg);
 }

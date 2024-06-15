@@ -6,7 +6,7 @@ import Messages from "./Messages";
 import SendMessage from "./SendMessage";
 import io from "socket.io-client";
 
-const socket = io.connect("http://localhost:4001");
+const socket = io.connect(expandLink(''));
 
 export default function Lobby() {
   const [output, setOutput] = useState([]);
@@ -107,7 +107,7 @@ export default function Lobby() {
             ))} */}
             <Messages
               socket={socket}
-              username={"kemnaz"}
+              usernameMy={username}
               roomId={lobbyId}
             ></Messages>
           </div>

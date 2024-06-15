@@ -4,9 +4,9 @@
 
 import {Link, useLocation} from 'react-router-dom';
 import { useEffect, useState } from "react";
-import { useAuth } from '../AuthContext/AuthContext';
+import { useAuth } from '../../AuthContext/AuthContext';
 //function to check screen dimensions
-import useScreenSize from '../hooks/dimensions';
+import useScreenSize from '../../hooks/dimensions';
 
 //CSS file
 import './navbar.css';
@@ -18,9 +18,9 @@ import Navbar from 'react-bootstrap/Navbar';
 
 
 //images
-import dices from '../assets/dices.png'; 
-import notifications from '../assets/notifications.png'; 
-import account from '../assets/account.png'; 
+import dices from '../../assets/dices.png'; 
+import notifications from '../../assets/notifications.png'; 
+import account from '../../assets/account.png'; 
 
 //icons
 import { FaUser } from "react-icons/fa";
@@ -30,7 +30,10 @@ import { IoSettings } from "react-icons/io5";
 
 
 
-
+function Myreload()
+{
+    window.location.reload();
+}
 
 
 const MyNavbar = () => {
@@ -80,8 +83,8 @@ const MyNavbar = () => {
     if(decoded.exp * 1000 < currentDate.getTime() || token == null)
     {
 
-        console.log("you are logged out");
-        console.log(decoded.exp);
+        //console.log("you are logged out");
+        //console.log(decoded.exp);
 
         login = false;
 
@@ -96,8 +99,8 @@ const MyNavbar = () => {
     }
     else if(token != null && decoded.exp * 1000 >= currentDate.getTime() )
     {
-        console.log("you are logged in");
-        console.log(decoded.exp);
+        //console.log("you are logged in");
+        //console.log(decoded.exp);
         login = true;
 
         myPage = '/userPage';
@@ -230,7 +233,7 @@ const MyNavbar = () => {
             return (
                 <div>
 
-                <nav className="mynavbarBig mynavbar">
+                <nav className="mynavbarBig mynavbar" >
                     <Link to="/">
                     <div className='bannerBig banner col-12 col-md-6'>
                         <img className='myimage img-fluid' src ={dices} alt = "dices" width={50}/>

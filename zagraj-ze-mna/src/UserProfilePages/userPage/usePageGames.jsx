@@ -4,14 +4,18 @@ import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 
 //screen dimensions
-import useScreenSize from '../hooks/dimensions';
+import useScreenSize from '../../hooks/dimensions';
 
 //css
 import './userPageGames.css';
 
 //images
-import Tetris from '../assets/tetris.png';
-import Sus from '../assets/Sus.jpg';
+import Tetris from '../../assets/tetris.png';
+import Sus from '../../assets/Sus.jpg';
+
+//fetches
+import useGetToken from '../../fetches/useFetch';
+import { expandLink } from '../../fetches/expandLink';
 
 
 //icons
@@ -21,8 +25,9 @@ import { RxThickArrowRight } from "react-icons/rx";
 import { FaRegEdit, FaVenusMars } from "react-icons/fa";
 import { LuArrowBigLeftDash } from "react-icons/lu";
 import { LuArrowBigRightDash } from "react-icons/lu";
-import singleLobby from '../singleLobby/singleLobby';
+import singleLobby from '../../PageStructureElements/singleLobby/singleLobby';
 import { TbSquareRoundedLetterI } from 'react-icons/tb';
+
 
 
 
@@ -35,15 +40,27 @@ const UserPageGames = () =>
     //it force page to reRender when setReRender is used
     const [pageGames, setPageGames] = useState(0);
 
-    const [maxPageNumber, setMPNumber] = useState(11);
+    const [maxPageNumber, setMPNumber] = useState(1);
+    const [displayingGames, setdispG] = useState(0);
+    const [addedGames, setAG] = useState(0);
 
     const [gameList, setGameList] = useState(null);
 
     const [First, setFirst] = useState(false);
+    const [wasSettedMaxPage, setWS] = useState(false);
+    
+    //gets
+    const DataRespond = useGetToken('/api/profile/getUserStats');
+
 
     //paging buttos games
     function PageLeft()
     {
+        if(!wasSettedMaxPage && !DataRespond.isPending && !DataRespond.isError){
+                setWS(true);
+                let pages = DataRespond.data.gamesOnShelf;
+            }
+
         let page = pageGames;
         let previous = page;
         if(page>0)
@@ -75,13 +92,14 @@ const UserPageGames = () =>
                 size = 20;
 
 
-            console.log("STRONA: ", page);
+            //console.log("STRONA: ", page);
             // let strona = pageGames;
             let body = {'page': `${page}`,
-                    'size': `${size}`}
+                    'size': `${size}`};
 
             //fetching user data
-            const response = await fetch('http://localhost:4001/api/profile/usersGames',{
+            let url = expandLink('/api/profile/usersGames');
+            const response = await fetch(url,{
                 method:'POST',
                 headers: {
                     'Authorization' : `Bearer ${tokenWithoutQuotes}`,
@@ -104,7 +122,9 @@ const UserPageGames = () =>
                 
                 //setting data
                 setGameList(dataFromGet);
-                console.log("Dane: ", dataFromGet);
+                setMPNumber(dataFromGet.Pages);
+                setdispG(dataFromGet.Games.length);
+                //console.log("Dane: ", dataFromGet);
                 
             }catch (error){
             //setting error if occurs
@@ -144,7 +164,6 @@ const UserPageGames = () =>
 
             
     } 
-
 
     function only_once_on_load()
     {
@@ -199,7 +218,7 @@ const UserPageGames = () =>
         if (gameList!= null)
         {
             number_of_games = gameList.Games.length;
-            console.log("Games on page: ",number_of_games)
+            //setdispG(number_of_games);
         }
 
         for(let i = 0; i<20; i++)
@@ -238,19 +257,30 @@ const UserPageGames = () =>
 
             
             let game_name = '';
+            let game_name_link = '';
+            let begining = '/category/';
             let value_of_game =-1;
 
             if(i < number_of_games)
             {
                 game_name = gameList.Games[i].shortname;
+                game_name_link = gameList.Games[i].name;
+                begining = '/category/';
+            }
+            else
+            {
+                game_name_link = '';
+                begining = '';
             }
                 
 
             content.push(
-            <div key={i} className={'tetrisBlock tetrisBlock_withGame ' + colorClass} style={{height: + HeightOfBlock + 'px'}}>
-                {((number_of_games > i) && (<img src={Sus} alt="gra" className='img-fluid gameImage'/>))}
-                <p>{game_name}</p>
-            </div>);
+            <Link to={`${begining}${game_name_link}`} key={i}>
+                <div key={i} className={'tetrisBlock tetrisBlock_withGame ' + colorClass} style={{height: + HeightOfBlock + 'px'}}>
+                    {((number_of_games > i) && (<img src={Sus} alt="gra" className='img-fluid gameImage'/>))}
+                    <p>{game_name}</p>
+                </div>
+            </Link>);
                    
         }
         return content;
@@ -262,19 +292,27 @@ const UserPageGames = () =>
     const ShelfGamesLoop = () =>
     {
         let content = [];
-        for(let i=0; i<12; i++)
+        let number_of_games = 0;
+        let game_name_link = '/';
+        if(gameList != null)
+            number_of_games = gameList.Games.length;
+        
+        for(let i=0; i<number_of_games; i++)
         {
 
+
             content.push(
-                <div key={i} className='col-lg-2 col-md-3 col-sm-4 col-6 gamesShelf'>
-                    <div className='gamesShelfItem'>
-                        <div className={'gamesShelfItemInside colorClassGame' + ' whiteShadow'}>
-                            <img src={Sus} alt="gra" className='img-fluid gameImageSmall'/>
-                            <p>Among Us</p>
+                <Link to={`/category/${game_name_link}`} key={i}>
+                    <div key={i} className='col-lg-2 col-md-3 col-sm-4 col-6 gamesShelf'>
+                        <div className='gamesShelfItem'>
+                            <div className={'gamesShelfItemInside colorClassGame' + ' whiteShadow'}>
+                                <img src={Sus} alt="gra" className='img-fluid gameImageSmall'/>
+                                <p>{gameList.Games[i].shortname}</p>
+                            </div>
+                        
                         </div>
-                       
                     </div>
-                </div>
+                </Link>
             );
         }
 
@@ -340,8 +378,12 @@ const UserPageGames = () =>
                         <div className='addedGamesInfo'>Statystyki</div>
                         <div className='editTetrisIcon'><FaRegEdit /></div>
                         <div className='clearer'></div>
-                        <p>Wyświetlanych: 20</p>
-                        <p>Dodanych: 25</p>
+                        <p>Wyświetlanych: {displayingGames}</p>
+                        <p>Dodanych: 
+                            {DataRespond.isPending && (<span> ... </span>)}
+                            {DataRespond.data && <span> {DataRespond.data.gamesOnShelf}</span>}
+                            
+                        </p>
                         
                     </div>
 

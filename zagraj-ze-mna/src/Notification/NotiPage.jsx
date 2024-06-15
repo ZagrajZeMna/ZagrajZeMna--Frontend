@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom';
 
 //css
 import './NotiPage.css';
-import Footer from '../footer/footer';
+import Footer from '../PageStructureElements/footer/footer';
 //screen dimensions
 import useScreenSize from '../hooks/dimensions';
 
@@ -12,6 +12,7 @@ import useScreenSize from '../hooks/dimensions';
 import gang from '../assets/gangA.png';  
 import gang2 from '../assets/gangB.png';  
 import Ludek from '../assets/testowy_ludek.png';
+import { expandLink } from '../fetches/expandLink';
 
 //icons
 import { FaUser } from "react-icons/fa";
@@ -24,7 +25,7 @@ import { IoMdClose } from "react-icons/io";
 import { FaTrashCan } from "react-icons/fa6";
 //?
 import io from "socket.io-client";
-const socket = io.connect("http://localhost:4001");
+const socket = io.connect(expandLink(''));
 
 const NotiPage = () => {
     const { height, width } = useScreenSize();
@@ -43,7 +44,8 @@ const NotiPage = () => {
         try {
             const token = localStorage.getItem('token');
             const tokenWithoutQuotes = token.replace(/"/g, '');
-            const response = await fetch(`http://localhost:4001/api/noti/show`, {
+            let url = expandLink('/api/noti/show');
+            const response = await fetch(url, {
                 method: 'GET',
                 headers: {
                     'Content-Type': 'application/json',
@@ -64,7 +66,8 @@ const NotiPage = () => {
         try {
             const token = localStorage.getItem('token');
             const tokenWithoutQuotes = token.replace(/"/g, '');
-            const response = await fetch(`http://localhost:4001/api/noti/showinfo`, {
+            let url = expandLink('/api/noti/showinfo');
+            const response = await fetch(url, {
                 method: 'GET',
                 headers: {
                     'Content-Type': 'application/json',
@@ -121,7 +124,8 @@ const NotiPage = () => {
     const deleteNoti = async (IDNotifi) => {
         try {
             console.log(IDNotifi)
-            const response = await fetch(`http://localhost:4001/api/noti/delete`, {
+            let url = expandLink('/api/noti/delete');
+            const response = await fetch(url, {
                 method: 'POST',
                 headers: {
                     'Content-Type' : 'application/json',

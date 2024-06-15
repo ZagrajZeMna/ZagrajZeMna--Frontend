@@ -1,22 +1,19 @@
-//variables
-const connectionLink = 'http://localhost:4001';
-
 //react
 import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 
 //screen dimensions
-import useScreenSize from '../hooks/dimensions';
+import useScreenSize from '../../hooks/dimensions';
 
 //css
 import './userPage.css';
 
 
 //images
-import Ghost from '../assets/ghost.png';  
-import Ludek from '../assets/testowy_ludek.png';
-import BackImage from '../assets/back-image-smaller.png';
-import Points from '../assets/pac_manPoint.png';
+import Ghost from '../../assets/ghost.png';  
+import Ludek from '../../assets/testowy_ludek.png';
+import BackImage from '../../assets/back-image-smaller.png';
+import Points from '../../assets/pac_manPoint.png';
 
 
 //icons
@@ -26,7 +23,8 @@ import { FaRegEdit, FaVenusMars } from "react-icons/fa";
 //page parts
 import UserPageGames from './usePageGames';
 import UserPageLobbys from './userPageLobbys';
-import Footer from '../footer/footer';
+import Footer from '../../PageStructureElements/footer/footer';
+import { expandLink } from '../../fetches/expandLink';
 
 
 
@@ -43,6 +41,7 @@ const UserPage = () =>
 
     //error with fetching
     const [error, setError] = useState(null);
+    const [isLoading, setIsLoading] = useState(null);
 
     //data
     const [dataFromGet, setDataFromGet] = useState(null);
@@ -131,7 +130,8 @@ const UserPage = () =>
                 const tokenWithoutQuotes = token.replace(/"/g, '');
 
                 //fetching user data
-                const response = await fetch('http://localhost:4001/api/profile/getUserDetails',{
+                let url = expandLink('/api/profile/getUserDetails');
+                const response = await fetch(url,{
                     method:'GET',
                     headers: {
                         'Authorization' : `Bearer ${tokenWithoutQuotes}`
@@ -290,7 +290,7 @@ const UserPage = () =>
                         </div>
 
                         <div className='userImage'>
-                            <img src={Ludek} className='img-fuild userImage2' alt="your profile"/>
+                            {dataFromGet && (!error) && (<img src={dataFromGet.avatar} className='img-fuild userImage2' alt="your profile"/>)}
                         </div>
 
                         <div className='myData'>

@@ -11,11 +11,12 @@ import ResetPassword from "./ResetPassword/ResetPassword";
 import GameCategory from './GameCategory/GameCategory';
 import AdminRoute from './AuthContext/AdminRoute';
 import LobbyForm from "./LobbyForm/LobbyForm"
+import EasterEgg from "./PageStructureElements/footer/easterEgg";
 
-import Space from "./navbar/space";
-import MyNavbar from "./navbar/navbar";
-import UserPage from "./userPage/userPage";
-import EditUserPage from "./edtiPage/editUserPage";
+import Space from "./PageStructureElements/navbar/space";
+import MyNavbar from "./PageStructureElements/navbar/navbar";
+import UserPage from "./UserProfilePages/userPage/userPage";
+import EditUserPage from "./UserProfilePages/edtiPage/editUserPage";
 import Notification from "./Notification/notification";
 import NotiPage from "./Notification/NotiPage";
 import Lobby from './Lobby/Lobby';
@@ -41,6 +42,7 @@ function App() {
           <Route path="/category/:game/:lobbyname/:lobbyId" element={<Lobby/>}/>
 
           <Route path="/lobbyForm" element={<LobbyForm/>}/>
+          <Route path="/niktTuNieWejdzieSuperTajemniceTuSiedzaZaDlugaNazwaBySamemuToWpisacLosoweSlowaJabloPociagKostaryka" element={<EasterEgg/>}/>
 
           <Route path="/myLobby" element={
             <ProtectedRoute>

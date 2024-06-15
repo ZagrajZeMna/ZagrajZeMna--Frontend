@@ -1,0 +1,156 @@
+.clearer
+{
+    clear: both;
+}
+
+.dataGetter
+{
+    width: 0%;
+    height: 0px;
+}
+
+.withBig
+{
+    width: 100%;
+}
+
+.toTheLeft
+{
+    float: left;
+}
+
+.myFormClass
+{   
+    padding: 5%;
+    border-radius: 25px;
+    border-color: #eee;
+}
+
+.myInputClass
+{
+    width: 90%;
+    margin-left: 5%;
+    margin-bottom: 20px;
+    
+}
+
+.myInputClass input, select
+{
+    width: 50%;
+    border-radius: 5px;
+    padding: 1%;
+    font-size: 15px;
+    background-color: #eee;
+}
+
+.contactInput p 
+{
+    padding-top: 3%;
+}
+
+.errorMessage_form
+{
+    color: #d53e3e;
+    font-weight: bold;
+}
+
+.contactInput p i
+{
+    color: #b08ee4;
+}
+
+.aboutInput textarea
+{
+    width: 90%;
+    margin-left: 5%;
+    min-height: 400px;
+    max-height: 400px;
+}
+
+.aboutInput p
+{
+    margin-left: 5%; 
+}
+
+
+.EverythinkCorrect
+{
+    color: #3bdf11;
+}
+
+.MessageFromForm
+{
+    margin-left: 2.5%;
+}
+
+.SavingButton
+{
+    margin-left: 2.5%;
+    width: 10%;
+}
+
+
+.MessageFromForm
+{
+    padding-top: 20px;
+    font-size: 20px;
+    letter-spacing: 1px;
+    word-spacing: 8px;
+    text-align: left;
+}
+
+.RememberToSaveData
+{
+    color: #b08ee4;
+}
+
+.saveButton
+{
+    width: 100%;
+    text-align: center;
+    padding: 3%;
+    background-color: #5c16c5;
+    color: white;
+    border-radius: 10px;
+    
+}
+
+@media screen and (max-width: 767px) 
+{
+    .SavingButton
+    {
+        margin-left: 12% !important;
+        width: 76%;
+        margin-bottom: 60px;
+    }
+    .MessageFromForm
+    {
+        text-align: center;
+    }
+
+    .EditPageBanner h1 
+    {
+        border-top-left-radius: 15px;
+        border-top-right-radius: 15px;
+        border-top: 2px solid #eee;
+        font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+        padding-top: 2%;
+        padding-left: 2%;
+        width: 70%;
+        margin-left: 15%;
+        text-align: center;
+        word-spacing: 15px;
+        color: #eee;
+        padding-bottom: 1%;
+        margin-bottom: 0;
+    }
+
+    .myInputClass select, input
+    {
+        width: 100%;
+        border-radius: 5px;
+        padding: 1%;
+        font-size: 15px;
+        background-color: #eee;
+    }
+}
