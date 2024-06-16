@@ -7,10 +7,14 @@
 import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 
-import {postFetchJWT} from '../fetches/postFetch'
-import useGetToken from '../fetches/useFetch';
+import {postFetchJWT} from '../../fetches/postFetch'
+import useGetToken from '../../fetches/useFetch';
 
 import './editPageUserDataForm.css';
+import './editPageBanner.css'
+
+import Cropper from "react-cropper";
+import "cropperjs/dist/cropper.css";
 
 const EditPageUserDataForm = () =>{
 
@@ -66,6 +70,8 @@ const EditPageUserDataForm = () =>{
     //getting data needed for this page
     const {isPending, isError, errorMessage, data} = useGetToken('/api/profile/getUserDetails');
     const DataRespond = useGetToken('/api/profile/getAllLanguages');
+    const MyData = useGetToken('/api/profile/getUserById/?id=2');
+    //console.log('data:' ,MyData);
     
 
     //handles submit
@@ -183,12 +189,12 @@ const EditPageUserDataForm = () =>{
                 if(errorMessage == "This username is already taken.")
                 {
                     setDEM('Nazwa użytkownika jest już zajęta! Wybiesz inną!');
-                    console.log(displayErrorMessage);
+                    //console.log(displayErrorMessage);
                 }
                 else if(errorMessage == 'Forbiden request! Please log in!')
                 {
                     setDEM('Sesja wygasła, proszę się zalogować.')
-                    console.log(displayErrorMessage);
+                    //console.log(displayErrorMessage);
                 }
             }
             else
@@ -284,7 +290,9 @@ const EditPageUserDataForm = () =>{
             <form className="myFormClass col-12" onSubmit={handleSubmit}>
 
                 <div className='EditPageBanner'>
-                    <h1> Edytuj Profil </h1>
+                    <h1>
+                        <span className='colorLetterPurple'>E</span>dytuj <span className='colorLetterPurple'>P</span>rofil
+                    </h1>
                 </div>
 
                 <div className='formContainerSmall'>
@@ -328,9 +336,9 @@ const EditPageUserDataForm = () =>{
                         onChange={(e) => (setMyContact(e.target.value), setChange(true), setContactChange(true), setDU(false))} 
                         >
                         </input>
-                        <p><i>UWAGA! <br/> Twoje dane kontakowe są widoczne tylko dla użytkowników, z którymi dzielisz lobby.
+                        <p><i>UWAGA! </i><br/>
                             Jeżeli nie chcesz nie musisz dzielić się swoimi danymi kontatkowymi. Przykładowe dane kontakowe
-                            to mail albo konto na discordzie</i></p>
+                            to mail albo konto na discordzie</p>
                     </div>
 
                     <div className='selectLanguage myInputClass'>
@@ -354,21 +362,24 @@ const EditPageUserDataForm = () =>{
                 <div className='clearer'></div>
                 <div className='MessageFromForm'>
                     {wasChanged && (<div className='RememberToSaveData'>
-                    <p> Masz niezapisane zmiany</p>
+                    <p> Masz niezapisane zmiany!</p>
                     </div>)}
                     {errorPost && (<div className='errorMessage_form'>
                         <p>{displayErrorMessage}</p>
                     </div>)}
                     {dataUpdated && (<div className='EverythinkCorrect'>
-                        <p>Zaktualizowano</p>
+                        <p>Zaktualizowano!</p>
                     </div>)}
                 </div>
-                <div className='SavingButton'>
+                <div className="SavingButton">
                     <button className=" saveButton" type="submit"> Zapisz </button>
                 </div>
                 
                 </div>
             </form>
+
+            
+            
         </div>
     );    
 }

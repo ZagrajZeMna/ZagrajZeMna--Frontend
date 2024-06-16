@@ -9,7 +9,7 @@ About checkData:
 */
 
 //imports of unit tests
-import { CheckAllUserData } from "./userPageTesters";
+import { CheckAllUserData, CheckLobbyList, CheckUserStats } from "./userPageTesters";
 
 export const CheckData = async(url, data) =>{
 
@@ -18,6 +18,12 @@ export const CheckData = async(url, data) =>{
     {
         case '/api/profile/getUserDetails':
             correct = await CheckAllUserData(data);
+            break;
+        case '/api/profile/usersLobby':
+            correct = await CheckLobbyList(data);
+            break;
+        case '/api/profile/getUserStats':
+            correct = await CheckUserStats(data);
             break;
         default:
             correct = true;

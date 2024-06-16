@@ -35,7 +35,7 @@
     react useState
 
     EXMAPLE II.
-     {!DataRespond.isError && (<div className='dataWritter'>DataRespond.data.myElement</div>)}
+     {DataRespond.data && (<div className='dataWritter'>DataRespond.data.myElement</div>)}
      this above displays div that contains some dataElement if there is no error
 
 
@@ -45,7 +45,7 @@
 
 import React, { useState, useEffect } from 'react';
 import { jwtDecode } from 'jwt-decode';
-import { CheckData } from '../testers/checkData';
+import { CheckData } from './testers/checkData';
 import { expandLink } from './expandLink';
 
 

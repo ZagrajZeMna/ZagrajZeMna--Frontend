@@ -59,14 +59,14 @@
 
 .toTheLeftDude p a
 {
-    color: #555;
-    text-decoration: none;
+    color: #555 !important;
+    text-decoration: none !important;
 }
 
 .toTheLeftDude p a:hover
 {
-    color: #aaa;
-    text-decoration: none;
+    color: #aaa !important;
+    text-decoration: none !important;
 }
 
 .toTheLeftDude

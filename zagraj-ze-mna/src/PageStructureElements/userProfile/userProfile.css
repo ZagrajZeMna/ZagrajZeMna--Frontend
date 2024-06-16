@@ -1,0 +1,649 @@
+
+.userPageContainer
+{
+    width: 100%;
+    overflow-x:hidden !important;
+    background-color: #111111;
+}
+
+a
+{
+    text-decoration: none;
+    color: #333;
+}
+
+.allInfoProfileContainer
+{
+    width: 100%;
+    height: 100%;
+    padding-bottom: 2%;
+    display: block;
+    float: left;
+}
+
+.backTriangle
+{
+    width: 100%;
+    background: linear-gradient(to right bottom, #111 50%, #222 50%);
+}
+
+.mediumSpace
+{
+    width: 100%;
+    height: 5vh;
+    /*background-color: #111;*/
+}
+
+.mediumSpaceSecondGrey
+{
+    width: 100%;
+    height: 2vh;
+    /*background-color: #111;*/
+}
+
+
+.mediumSpaceSecond
+{
+    height: 10vh;
+    width: 100%;
+    /*background-color: #111;*/
+}
+
+
+.Banner
+{
+    width: 100%;
+    margin-bottom: 2%;
+    color: white;
+    padding-left: 10%;
+    text-align: left;
+    background-image: linear-gradient(to bottom, #000, #111);
+    letter-spacing: 1px;
+    word-spacing: 15px;
+    font-weight: bold;
+}
+
+
+@media screen and (min-width: 1200px)
+{
+    .BannerTitle
+    {
+        border-top-left-radius: 25px;
+        border-top: 2px solid #eee;
+        font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+        padding-top: 2%;
+        padding-left: 2%;
+        padding-bottom: 0.5%;
+        width: 50%;
+    }  
+    
+}
+
+@media screen and (max-width: 1199px) 
+{
+    .BannerTitle
+    {
+        border-top-left-radius: 15px;
+        border-top-right-radius: 15px;
+        border-top: 2px solid #eee;
+        font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+        padding-top: 2%;
+        padding-left: 2%;
+        width: 70%;
+        margin-left: 15%;
+        text-align: center;
+        word-spacing: 15px;
+        color: #eee;
+    }
+
+    .Banner
+    {
+        padding-left: 0%;
+    }
+    
+}
+
+
+.moreSpace
+{
+    height: 15vh;
+    background-color: #000;
+}
+
+.backImage
+{
+    width: 100%;
+    height: auto;
+}
+
+.tlo
+{
+    width: 100%;
+    height: auto;
+}
+/*ABOUT*/
+/*----------------------------------------------*/
+
+.generalInfo
+{
+    width: 100%;
+}
+
+.personalData
+{
+    width: 90%;
+    margin-left: 5%;
+    background-color: #eee;
+    height: auto;
+    border-radius: 25px;
+    padding-bottom: 40px;
+    float: left;
+    margin-bottom: 2%;
+}
+
+.personalData:hover, .bio:hover
+{
+    transform: scale(1.07);
+    animation-name: myBoxHover;
+    animation-duration: 1s;
+}
+
+.myEditIcon
+{
+    text-align: right;
+    padding-right: 2%;
+    font-size: 25px;
+    width: 100%;
+    color: #333 !important;
+}
+
+.userImage
+{
+    margin-top: 1%;
+    width: 40%;
+    height: auto;
+    margin-left: 5%;
+    float: left;
+    border-radius: 50%;
+    /*background-color: #111;*/
+    border: 3px solid black;
+    
+}
+
+.userImage2 
+{
+    width: 100%;
+    height: auto;
+    border-radius: 50%;
+}
+
+.myData
+{
+    margin-top: 5%;
+    padding-top: 20px;
+    padding-bottom: 3%;
+    border-top: 3px dotted #888;
+    border-bottom: 3px dotted #888;
+    border-radius: 25px;
+    width: 46%;
+    margin-left: 2%;
+    text-align: center;
+    float: left;
+    
+}
+
+.topSecret
+{
+    color: #2523E2;
+    font-weight: bold;
+}
+
+.nickname
+{
+    font-weight: bold;
+    font-size: 20px;
+}
+
+.Mymediocre
+{
+    padding-top: 15px;
+    font-size: 18px;
+}
+
+.Mymark
+{
+    margin-left: 5%;
+    font-size: 22px;
+}
+
+.bioContainer
+{
+    float: left;
+    /*background-color: #111;*/
+    margin-bottom: 2%;
+}
+
+.bio
+{
+    width: 90%;
+    margin-left: 5%;
+    float: left;
+    background-color: #eee;
+    border-radius: 25px;
+    
+}
+
+
+
+.bio_details
+{
+    width: 86%;
+    overflow-x: hidden;
+    overflow-y: auto;
+    height: 90%;
+    padding-right: 5%;
+    margin-left: 7%;
+    text-align: justify;
+    font-size: 15px;
+    
+}
+
+.bio_details h1
+{
+    padding-top: 10px;
+    width: 100%;
+    padding-bottom: 20px;
+    border-bottom: 1px dashed black;
+    text-align: center;
+    word-spacing: 30px;
+    letter-spacing: 2px;
+}
+
+.bio_details h2
+{
+    letter-spacing: 2px;
+    padding-top: 1%;
+    padding-bottom: 1%;
+    width: 40%;
+    border-bottom: 1px solid black;
+    font-size: 27px;
+}
+
+.bioAboutMe
+{
+    text-indent: 5%;
+    word-spacing: 5px;
+}
+
+.aboutMeLiTitle
+{
+    font-weight: bold;
+}
+
+.bioListElement
+{
+    padding-top: 6px;
+}
+
+.clearer
+{
+    clear: both;
+}
+
+/*PACMAN GHOST AND ANIMATIONS*/
+/*------------------------------------------------------------------------*/
+
+.pacmanMoving
+{
+    /*background-color: #111;*/
+    width: 100%;
+    height: 100px;
+    /*margin-top: 60px;*/
+   
+    border-top: 4px solid #2523E2;
+    border-bottom: 4px solid #2523E2;
+    
+}
+
+
+.pointsEater
+{
+    width: 14%;
+    position: absolute;
+    left: 0%;
+    background-color: #111;
+    height: 90px;
+    z-index: 2;
+
+    animation: points_eater 1s linear infinite;
+    animation-play-state: paused;
+    animation-delay: calc((var(--scroll) * -1s)*1.2);
+    animation-iteration-count: 1;
+    animation-fill-mode: both;
+}
+
+.pacmanPoints
+{
+    width: 82%;
+    float: left;
+    position: absolute;
+    right: 0%;
+    height: 90px;
+    z-index: 1;
+
+    overflow: hidden;
+
+    position: absolute;
+
+    background-image: url('../../assets/pac_manPoint.png');
+    
+}
+
+.pacman
+{
+
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    background: #f2d648;
+    margin-top: 20px;
+    z-index: 3;
+
+    position: absolute;
+    animation: pacman_movement 1s linear infinite;
+    
+    animation-play-state: paused;
+    animation-delay: calc((var(--scroll) * -1s)*1.2);
+
+    animation-iteration-count: 1;
+    animation-fill-mode: both;
+
+    width: 50px;
+    height: 50px;
+    float: left;
+    
+}
+
+.GhostMoving img
+{
+    animation-name: ghost_scale;
+    animation-duration: 1s;
+    animation-iteration-count: infinite;
+    z-index: 3;
+}
+
+.GhostMoving
+{
+    position: absolute;
+    animation: ghost_movement 1s linear infinite;
+    z-index: 3;
+    
+    
+    animation-play-state: paused;
+    animation-delay: calc((var(--scroll) * -1s)*1.2);
+
+    animation-iteration-count: 1;
+    animation-fill-mode: both;
+    float: left;
+    margin-top: 20px;
+}
+
+.pacman_eye 
+{
+    position: absolute;
+    width: 7px;
+    height: 7px;
+    border-radius: 50%;
+    margin-top: 10px;
+    margin-left: 25px;
+    background: #333333;
+    
+  }
+
+.pacman_mouth 
+{
+    background: #111;
+    position: absolute;
+    width: 101%;
+    height: 100%;
+    clip-path: polygon(101% 74%, 44% 48%, 101% 21%);
+
+    animation-name: eat;
+    animation-duration: 0.7s;
+    animation-iteration-count: infinite;
+
+}
+
+
+@keyframes pacman_movement 
+{  
+    0%
+    {
+        left: 8%;
+    }
+    100%
+    {
+        left: 95%;
+    }
+}
+
+@keyframes ghost_movement 
+{  
+    0%
+    {
+        left: 1%;
+    }
+    100%
+    {
+        left: 87%;
+    }
+}
+
+@keyframes points_eater {
+    0%
+    { 
+        width: 10%;
+    }
+    100%
+    {
+        width: 100%;
+    }
+}
+
+
+@keyframes eat {
+    0% {
+      clip-path: polygon(100% 74%, 44% 48%, 100% 21%);
+    }
+    25% {
+      clip-path: polygon(100% 60%, 44% 48%, 100% 40%);
+    }
+    50% {
+      clip-path: polygon(100% 50%, 44% 48%, 100% 50%);
+    }
+    75% {
+      clip-path: polygon(100% 59%, 44% 48%, 100% 35%);
+    }
+    100% {
+      clip-path: polygon(100% 74%, 44% 48%, 100% 21%);
+    }
+  }
+
+@keyframes ghost_scale 
+{
+  0%
+  {
+    scale: 1;
+  }  
+
+  50%
+  {
+    scale: 0.9;
+  }
+  100%
+  {
+    scale: 1;
+  }
+}
+
+@keyframes setAnimOn
+{
+    0%
+    {
+        transform: rotate(0deg);
+    }
+    100%
+    {
+        transform: rotate(180deg);
+    }
+}
+
+@keyframes setAnimOff
+{
+    0%
+    {
+        transform: rotate(180deg);
+    }
+    100%
+    {
+        transform: rotate(0deg);
+        
+    }
+}
+
+@keyframes myBoxHover 
+{
+    0%
+    {
+        transform: scale(1);
+    }
+    100%
+    {
+        transform: scale(1.07);
+    }
+    
+}
+
+/*TEXT COLOURS*/
+
+.greenBox
+{
+    color: green;
+    font-weight: bold;
+}
+
+.redBox
+{
+    color: red;
+    font-weight: bold;
+}
+
+.yellowBox
+{
+    color: yellow;
+    font-weight: bold;
+}
+
+
+/*FOOTER */
+
+.footerImage
+{
+    width: 100%;
+
+}
+
+.tlo2
+{
+    transform: rotate(180deg);
+}
+
+.footerGradient
+{
+    width: 100%;
+    background-image: linear-gradient(#111, black);
+    height: 50px;
+}
+
+/*MEDIA*/
+@media screen and (min-width: 1200px)
+{
+    /*.Banner
+    {
+        padding-left: 10%;
+    }*/
+    
+}
+
+@media screen and (max-width: 1100px)
+{
+    
+    
+}
+
+@media screen and (min-width: 768px) and (max-width: 1199px) 
+{
+   /* .Banner
+    {
+        padding-left: 2%;
+    }*/
+    
+}
+
+@media screen and (min-width: 768px)
+{
+    .personalData
+    {
+        width: 95%;
+    }
+
+    .userImage
+    {
+        margin-left: 25%;
+        width: 50%;
+    }
+
+    .myData
+    {
+        margin-left: 10%;
+        width: 80%;
+        margin-top: 10%;
+    }
+    
+}
+
+@media screen and (max-width: 767px)
+{
+    .bio
+    {
+        max-height: auto !important;
+        height: auto !important;
+
+    }
+
+    .nickname
+    {
+        font-size: 16px;
+    }
+
+    .Mymediocre
+    {
+        font-size: 14px;
+    }
+
+    .Mymark
+    {
+        font-size: 16px;
+    }
+
+    .bio_details
+    {
+        font-size: 13px;
+    }
+
+    .bio_details h2
+    {
+        font-size: 21px;
+    }
+
+}

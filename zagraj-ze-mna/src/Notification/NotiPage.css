@@ -370,7 +370,7 @@
     color: #111;
     padding: 1%;
     overflow: hidden;
-    height: 18vh;
+    height: auto !important;
 }
 
 .notificationOne:hover

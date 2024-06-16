@@ -1,58 +1,86 @@
-//variables
-const connectionLink = 'http://localhost:4001';
-
 //react
 import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 
 //screen dimensions
-import useScreenSize from '../hooks/dimensions';
+import useScreenSize from '../../hooks/dimensions';
 
 //css
-import './userPage.css';
+import './userProfile.css';
 
 
 //images
-import Ghost from '../assets/ghost.png';  
-import Ludek from '../assets/testowy_ludek.png';
-import BackImage from '../assets/back-image-smaller.png';
-import Points from '../assets/pac_manPoint.png';
+import Ghost from '../../assets/ghost.png';  
+import BackImage from '../../assets/back-image-smaller.png';
+import Points from '../../assets/pac_manPoint.png';
+import { useParams } from 'react-router-dom';
 
+import useGetToken from '../../fetches/useFetch';
 
 //icons
-
 import { FaRegEdit, FaVenusMars } from "react-icons/fa";
-
-//page parts
-import UserPageGames from './usePageGames';
-import UserPageLobbys from './userPageLobbys';
-import Footer from '../footer/footer';
+import { expandLink } from '../../fetches/expandLink';
+import { useToast } from 'react-toastify';
 
 
 
 
-const UserPage = () =>
- {
 
-    
+const UserProfile = () =>
+{
     //to check screen dimensions
     const { height, width } = useScreenSize();
 
     //use for setting interval
     const [firstTime, setFT] = useState(true);
-
-    //error with fetching
-    const [error, setError] = useState(null);
+    const [once, setOnce] = useState(true);
 
     //data
-    const [dataFromGet, setDataFromGet] = useState(null);
+    const [mediocre, setMed] = useState(0);
+    const [able_to_change, setAbleToChange] = useState(null);
 
+    let expample = {
+        data: null,
+        isError: false,
+        isPending: false
+    }
+
+    let dataFromGet = expample;
+
+    let currentUrl = window.location.href;
+
+    let go_to_link = '';
+
+    //getting data
+    if(currentUrl.slice(-9)=='/userPage'){
+        dataFromGet = useGetToken('/api/profile/getUserDetails');  
+        if(once){
+            setAbleToChange(true);
+            setOnce(false);
+            
+        }
+        go_to_link = '/editUserPage';
+        
+    }
+    else if(currentUrl.search('/userProfile/')){
+        let {id} = useParams();
+        dataFromGet = useGetToken(`/api/profile/getUserById?id=${id}`);
+        if(once){
+            setAbleToChange(null);
+            setOnce(false);
+            
+        }
+        go_to_link = `/userProfile/${id}`;
+    }
 
     //Variables
-    var mediocre = 4.5; //this is temporary in future will be replaced by data fetch
     var ColouringClass = 'greenBox'; //this tells what is colour of evaluation of profile, eg. 4.5 is green
     var profileDivHeight = 100; //this sets initial value of second div about character (about and domicile)
 
+    function checkAbleToChange()
+    {
+        return able_to_change;
+    }
 
     //this change variable value
     function setPDHeight(h)
@@ -115,51 +143,14 @@ const UserPage = () =>
             document.getElementById('heightTarget').style.height = helper ;
         }
     }
-
-    //fetching data from backend
-    useEffect(()=>{
-        const getData = async () => {
-            try{
-
-                const token = localStorage.getItem('token');
-                
-                //if token not exist = we are log out
-                if(!token){
-                    setError('Please log in');
-                    return;
-                }
-                const tokenWithoutQuotes = token.replace(/"/g, '');
-
-                //fetching user data
-                const response = await fetch('http://localhost:4001/api/profile/getUserDetails',{
-                    method:'GET',
-                    headers: {
-                        'Authorization' : `Bearer ${tokenWithoutQuotes}`
-                    }
-                    });
-
-                    //if response is bad
-                    if(!response.ok){
-                        throw new Error('can not reach Your data');
-                    }
-
-                    //parsing to json
-                    const dataFromGet = await response.json();
-                    
-                    //setting data
-                    setDataFromGet(dataFromGet);
-                    setError(null);
-                    console.log("Dane: ", dataFromGet);
-                    
-                }catch (error){
-                //setting error if occurs
-                setError(error.message);
-            }
-        };
-        
-        getData();
-    }, []);
     
+    function checkMed(med)
+    {
+        if(med == null)
+            return (<><br/>'brak ocen'</>);
+        else
+            return med;
+    }
 
     //------------------------------------------------
     //this below makes packman move 
@@ -254,10 +245,9 @@ const UserPage = () =>
       //end of packman movement
 
 
-    //RETURN
-    //---------------------------------------------------------------------------------------------------------------
+
     return(
-        <div className="userPageContainer" onLoad={firstTimeSettingInterval}>
+        <div className="userProfileContainer" onLoad={firstTimeSettingInterval}>
             {/* PAGE BACK IMAGE -> game pad*/}
             <div className='backImage col-12' id="backImageId">  
                 <img src={BackImage} alt='pad do gry jako tło strony' className='img-fluid tlo'/>
@@ -282,51 +272,54 @@ const UserPage = () =>
             
             {/* two dives with personal infromation */}
             <div id ='profileContainerId' className='allInfoProfileContainer'>
-                <div className="generalInfo col-10 offset-1 offset-md-0 col-md-4 offset-xl-1 col-xl-3">
-                    <div className="personalData" id="personalDataId">
-                        
-                        <div className='myEditIcon'>
-                            <FaRegEdit />
-                        </div>
-
-                        <div className='userImage'>
-                            <img src={Ludek} className='img-fuild userImage2' alt="your profile"/>
-                        </div>
-
-                        <div className='myData'>
-                            <p className='nickname'> {dataFromGet && (!error) && dataFromGet.username}</p>
-                            <p> <span className='topSecret'>Top secret: </span> {dataFromGet && (!error) && dataFromGet.contact}</p>
-                            <p className='Mymediocre'><span>Ocena profilu: </span> <span className={ColouringClass + ' Mymark'}>{mediocre}</span></p> 
-                        </div>
+                <Link to={go_to_link}>
+                    <div className="generalInfo col-10 offset-1 offset-md-0 col-md-4 offset-xl-1 col-xl-3">
+                        <div className="personalData" id="personalDataId">
                             
+                            {(able_to_change) && (
+                                <div className='myEditIcon'>
+                                    <FaRegEdit />
+                                </div>)}
 
+                            <div className='userImage'>
+                                {dataFromGet.data && (!dataFromGet.isError) && (<img src={dataFromGet.data.avatar} className='img-fuild userImage2' alt="your profile"/>)}
+                            </div>
+
+                            <div className='myData'>
+                                <p className='nickname'> {dataFromGet.data && (!dataFromGet.data.isError) && dataFromGet.data.username}</p>
+                                <p> <span className='topSecret'>Kontakt: </span> {dataFromGet.data && (!dataFromGet.data.isError) && dataFromGet.data.contact}</p>
+                                <p className='Mymediocre'><span>Ocena profilu: </span> <span className={ColouringClass + ' Mymark'}>{dataFromGet.data && (!dataFromGet.data.isError) && (checkMed(dataFromGet.data.averageRating))}</span></p> 
+                            </div>
+                                
+
+                        </div>
                     </div>
-                </div>
+                </Link>
 
 
                 <div  className='bioContainer offset-1 col-10 offset-md-0 col-md-8 col-xl-7'  id=" screenPercent" >
 
                     <div className="bio" id="heightTarget" style={{height: + profileDivHeight + 'px'}}>
 
-                        <div className='myEditIcon'>
+                        {(able_to_change) && (<div className='myEditIcon'>
                             <FaRegEdit />
-                        </div>
+                        </div>)}
                         
                         <div className='bio_details' onLoad={checkHeight}>
 
                             <h2> Dane: </h2>                      
                             <p className='bioListElement'>
-                                <span className='aboutMeLiTitle'>Pochodzenie: </span> {dataFromGet && (!error) && dataFromGet.country}- {dataFromGet && (!error) && dataFromGet.city}
+                                <span className='aboutMeLiTitle'>Pochodzenie: </span> {dataFromGet.data && (!dataFromGet.data.isError) && dataFromGet.data.country}- {dataFromGet.data && (!dataFromGet.data.isError) && dataFromGet.data.city}
                             </p>
                             
                             <p className='bioListElement'>
-                                <span className='aboutMeLiTitle'>Język: </span> {dataFromGet && (!error) && dataFromGet.language}
+                                <span className='aboutMeLiTitle'>Język: </span> {dataFromGet.data && (!dataFromGet.data.isError) && dataFromGet.data.language}
                             </p>
                             
 
                             <h2> Opis postaci: </h2>
                             <p className='bioAboutMe small-font-size'>
-                                {dataFromGet && (!error) && dataFromGet.about}   
+                                {dataFromGet.data && (!dataFromGet.data.isError) && dataFromGet.data.about}   
                             </p>
 
                         </div>
@@ -356,13 +349,8 @@ const UserPage = () =>
 
             <div className='clearer'></div>
 
-            {/*Another parts of page */}
-            <UserPageGames/>
-            <UserPageLobbys/>
-            <Footer/>
-
         </div>
     );
 }
 
-export default UserPage;
+export default UserProfile;

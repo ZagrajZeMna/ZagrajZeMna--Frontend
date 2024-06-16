@@ -9,7 +9,7 @@ import {
 } from "react-icons/md"; // Import icons
 import LoadingChad from "../LoadingChad/LoadingChad";
 import "./Home.css";
-import Footer from "../footer/footer";
+import Footer from "../PageStructureElements/footer/footer";
 import { expandLink } from "../fetches/expandLink";
 
 function Home() {

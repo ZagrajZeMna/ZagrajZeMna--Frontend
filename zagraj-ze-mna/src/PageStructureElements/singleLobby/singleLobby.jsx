@@ -29,13 +29,14 @@ function singleLobby(id, gameName ,lobbyPicture, lobbyName, lobbyDesc, currentPl
     
     
     content.push(
-        <div key={id} className='lobbyOne'>
+        <Link to={`/category/${gameName}/${lobbyName}/${id}`} key={id}>
+        <div className='lobbyOne'>
             <div className='lobbyPicture flotLeftClassOrSth col-4 col-md-2'>
                 <img src={lobbyPicture} alt='obraz przedstawiający lobby' className='img-fluid lobbyPictureImg'/>
             </div>
             <div className='lobbyInfoContainer flotLeftClassOrSth col-6 col-md-9'>
-                <div className='gameName'> {gameName}</div>
-                <div className='lobbyTitle'> {lobbyName} </div>
+                {/*<div className='gameName'> {gameName}</div>*/}
+                <div className='lobbyTitle'> {lobbyName} - {gameName} </div>
                 <div className='lobbyDescription'> 
                     {lobbyDesc}
                 </div>
@@ -45,11 +46,10 @@ function singleLobby(id, gameName ,lobbyPicture, lobbyName, lobbyDesc, currentPl
                 
             
                  {withPlus && (<span className="player-button" >
-                    <Link to={`/category/${gameName}/${lobbyName}/${id}`}>
-                        <button >
-                            <FaCirclePlus />
-                        </button>
-                    </Link> </span>)}
+                    <button >
+                        <FaCirclePlus />
+                    </button>
+                    </span>)}
                     <span className="player-button">
                         {currentPlayers}/{requiredPlayers}<FaUser />
                     </span>
@@ -57,6 +57,7 @@ function singleLobby(id, gameName ,lobbyPicture, lobbyName, lobbyDesc, currentPl
             <div className='clearer'></div>
             
         </div>
+        </Link>
     );
 
     return content

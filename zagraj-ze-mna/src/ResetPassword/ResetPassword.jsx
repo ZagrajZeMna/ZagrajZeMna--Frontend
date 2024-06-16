@@ -1,6 +1,7 @@
 import { FaLock, FaLockOpen, FaUser } from "react-icons/fa";
 import {useState} from 'react';
 import styles from './ResetPassword.module.css'
+import { expandLink } from "../fetches/expandLink";
 
 function ResetPassword() {
     
@@ -100,7 +101,8 @@ function ResetPassword() {
         
 
         try{
-            const response = await fetch('http://localhost:4001/api/auth/remember', {
+            let url = expandLink('/api/auth/remember');
+            const response = await fetch(url, {
                 method: 'POST',
                 headers: {
                     'Content-Type':'application/json',

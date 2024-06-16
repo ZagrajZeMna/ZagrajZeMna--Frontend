@@ -1,0 +1,55 @@
+.EditPageBanner
+{
+    width: 100%;
+    margin-bottom: 2%;
+    color: white;
+    text-align: left;
+    letter-spacing: 1px;
+    word-spacing: 15px;
+    font-weight: bold;
+
+}
+
+.colorLetterPurple
+{
+    color: #895ec9;
+}
+
+
+.EditPageBanner h1
+{
+    border-top-left-radius: 25px;
+    border-top: 2px solid #eee;
+    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+    padding-top: 2%;
+    padding-left: 2%;
+    padding-bottom: 0.5%;
+    width: 50%;
+}
+
+.paddingBanner
+{
+    
+    padding-left: 5%;
+    padding-right: 5%;
+}
+
+@media screen and (max-width: 767px) 
+{
+    .EditPageBanner h1 
+    {
+        border-top-left-radius: 15px;
+        border-top-right-radius: 15px;
+        border-top: 2px solid #eee;
+        font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+        padding-top: 2%;
+        padding-left: 2%;
+        width: 70%;
+        margin-left: 15%;
+        text-align: center;
+        word-spacing: 15px;
+        color: #eee;
+        padding-bottom: 1%;
+        margin-bottom: 0;
+    }
+}

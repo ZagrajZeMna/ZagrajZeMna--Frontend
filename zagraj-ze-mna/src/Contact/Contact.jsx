@@ -69,6 +69,7 @@ const handleSubmitGame = async (e) => {
 
   try {
     const token = localStorage.getItem('token');
+
     const response = await fetch(expandLink('/api/review/addGameReq'), {
       method: 'POST',
       headers: {
@@ -203,7 +204,9 @@ const handleSubmitAsk = async (e) => {
 
   try {
     const token = localStorage.getItem('token');
+
     const response = await fetch(expandLink('/api/review/sendMessage'), {
+
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',

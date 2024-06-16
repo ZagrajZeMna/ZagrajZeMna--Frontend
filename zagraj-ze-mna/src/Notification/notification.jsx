@@ -2,9 +2,10 @@ import React, { useEffect, useState } from 'react';
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import io from "socket.io-client";
+import { expandLink } from '../fetches/expandLink';
 
 function Notification(){
-    const socket = io.connect("http://localhost:4001");
+    const socket = io.connect(expandLink(''));
     const token = localStorage.getItem('token');
 
     useEffect(() => {

@@ -2,6 +2,7 @@ import React, { createContext, useContext, useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 import { jwtDecode } from 'jwt-decode';
+import { expandLink } from '../fetches/expandLink';
 
 const AuthContext = createContext();
 
@@ -49,7 +50,8 @@ export function AuthProvider({ children }) {
 
   const login = async (email, password) => {
     try {
-      const response = await fetch('http://localhost:4001/api/auth/signin', {
+      let url = expandLink('/api/auth/signin');
+      const response = await fetch(url, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

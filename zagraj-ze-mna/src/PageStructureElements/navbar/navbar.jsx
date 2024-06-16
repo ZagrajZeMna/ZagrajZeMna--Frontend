@@ -4,9 +4,9 @@
 
 import {Link, useLocation} from 'react-router-dom';
 import { useEffect, useState } from "react";
-import { useAuth } from '../AuthContext/AuthContext';
+import { useAuth } from '../../AuthContext/AuthContext';
 //function to check screen dimensions
-import useScreenSize from '../hooks/dimensions';
+import useScreenSize from '../../hooks/dimensions';
 
 //CSS file
 import './navbar.css';
@@ -18,9 +18,9 @@ import Navbar from 'react-bootstrap/Navbar';
 
 
 //images
-import dices from '../assets/dices.png'; 
-import notifications from '../assets/notifications.png'; 
-import account from '../assets/account.png'; 
+import dices from '../../assets/dices.png'; 
+import notifications from '../../assets/notifications.png'; 
+import account from '../../assets/account.png'; 
 
 //icons
 import { FaUser } from "react-icons/fa";
@@ -30,7 +30,10 @@ import { IoSettings } from "react-icons/io5";
 
 
 
-
+function Myreload()
+{
+    window.location.reload();
+}
 
 
 const MyNavbar = () => {
@@ -44,6 +47,7 @@ const MyNavbar = () => {
 
     //jwt token
     const token = localStorage.getItem('token');
+    const adminToken = localStorage.getItem('adminToken');
 
     //for side bar maneu
     const [additaionlMenu, setAdditionalMenu] = useState(false);
@@ -72,16 +76,19 @@ const MyNavbar = () => {
     let firstButtonTextSmall = 'Logowanie';
     let secondButtonTextSmall = 'Dołącz';
 
+    let isAdmin = false;
+
     //checking if token is decoded properly
     //console.log(decoded);
 
 
     //checikng if token is done properly
+    console.log(decoded);
     if(decoded.exp * 1000 < currentDate.getTime() || token == null)
     {
 
-        console.log("you are logged out");
-        console.log(decoded.exp);
+        //console.log("you are logged out");
+        //console.log(decoded.exp);
 
         login = false;
 
@@ -96,8 +103,8 @@ const MyNavbar = () => {
     }
     else if(token != null && decoded.exp * 1000 >= currentDate.getTime() )
     {
-        console.log("you are logged in");
-        console.log(decoded.exp);
+        //console.log("you are logged in");
+        
         login = true;
 
         myPage = '/userPage';
@@ -108,6 +115,11 @@ const MyNavbar = () => {
         secondButtonText = 'HOME';
         firstButtonTextSmall = 'Moje lobby';
         secondButtonTextSmall = 'Home';
+
+        if(adminToken){
+            const decodedAdmin = jwtDecode(adminToken);
+            isAdmin = decodedAdmin.ADMIN === true;
+        }
     }
 
     const handleLogout = () => {
@@ -230,7 +242,7 @@ const MyNavbar = () => {
             return (
                 <div>
 
-                <nav className="mynavbarBig mynavbar">
+                <nav className="mynavbarBig mynavbar" >
                     <Link to="/">
                     <div className='bannerBig banner col-12 col-md-6'>
                         <img className='myimage img-fluid' src ={dices} alt = "dices" width={50}/>
@@ -285,7 +297,7 @@ const MyNavbar = () => {
                     <Link to="/ResetPassword" onClick={settingHidder}> <p>Zmień hasło</p></Link>
                     <Link to="/editUserPage" onClick={settingHidder}><p>Ustawienia profilu</p></Link>
                     <Link to="/notification" onClick={settingHidder}><p>Powiadomienia</p></Link>
-                    <Link to="/editNotificationsPage" onClick={settingHidder}><p>Dodane gry</p></Link>
+                    {isAdmin && (<Link to="/adminPage" onClick={settingHidder}><p>Admin panel</p></Link>)}
                     <Link to="/" onClick={handleFunction}> <p>Wyloguj</p></Link>
                 </div>)}
 
@@ -347,8 +359,8 @@ const MyNavbar = () => {
                         <p className='settingsHeader'>USTAWIENIA</p>
                         <Link to="/ResetPassword" onClick={settingHidder}> <p>Zmień hasło</p></Link>
                         <Link to="/editUserPage" onClick={settingHidder}><p>Ustawienia profilu</p></Link>
-                        <Link to="/editNotificationsPage" onClick={settingHidder}><p>Powiadomienia</p></Link>
-                        <Link to="/editNotificationsPage" onClick={settingHidder}><p>Dodane gry</p></Link>
+                        <Link to="/notification" onClick={settingHidder}><p>Powiadomienia</p></Link>
+                        {isAdmin && (<Link to="/adminPage" onClick={settingHidder}><p>Admin panel</p></Link>)}
                         <Link to="/" onClick={handleFunction}> <p>Wyloguj</p></Link>
                     </div>)}
 

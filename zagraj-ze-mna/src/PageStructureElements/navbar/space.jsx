@@ -1,6 +1,6 @@
 import { useLocation } from 'react-router-dom';
 import './space.css';
-import useScreenSize from '../hooks/dimensions';
+import useScreenSize from '../../hooks/dimensions';
 
 
 //this thing is just to be below navbar because navbar sticks to the top (so this div prevents navbar from covering other stuff)

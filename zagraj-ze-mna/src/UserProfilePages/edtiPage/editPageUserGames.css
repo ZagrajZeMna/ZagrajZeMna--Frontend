@@ -1,0 +1,87 @@
+.gameListOne
+{
+    width: 100%;
+}
+
+.image_conteiner_game
+{
+    width: 50%;
+    margin-right: 10%;
+}
+
+.image_conteiner_game img
+{
+    border-radius: 15px;
+}
+
+.noGamesHlip
+{
+    width: 80%;
+    margin-left: 10%;
+    text-align: center;
+    color: #eee;
+    font-size: 23px;
+    margin-bottom: 100px;
+    margin-top: 100px;
+    line-height: 42px;
+}
+
+.pageArrowLobbySecond
+{
+    width: 80%;
+    text-align: center;
+    margin-left: 10%;
+    margin-bottom: 40px;
+}
+
+.tableWithLobbyArrowsSecond
+{
+    width: 100%;
+}
+
+.button_remove
+{
+    margin-top: 50px;
+    text-align: center;
+    padding: 2%;
+    width: 100%;
+    background-color: #5c16c5;
+    color: white;
+    border-radius: 10px;
+}
+
+.gimmeSomeSpacePls
+{
+    height: 50px;
+    width: 100%;
+}
+
+.marginator
+{
+    border: 1px solid #895ec9;
+    box-shadow: 0 0 7px  #895ec9;
+    border-radius: 25px;
+    padding: 15px;
+    width: 80%;
+    margin-left: 10%;
+    margin-bottom: 40px;
+    height: auto;
+    min-height: 300px;
+}
+
+.toTheLeft
+{
+    float: left !important;
+}
+
+.game_container_bigger
+{
+    width: 100%;
+    margin-bottom: 40px;
+}
+
+.informations_game
+{
+    width: 40%;
+}
+

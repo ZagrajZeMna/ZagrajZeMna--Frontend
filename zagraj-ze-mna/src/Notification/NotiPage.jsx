@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom';
 
 //css
 import './NotiPage.css';
-import Footer from '../footer/footer';
+import Footer from '../PageStructureElements/footer/footer';
 //screen dimensions
 import useScreenSize from '../hooks/dimensions';
 
@@ -12,6 +12,7 @@ import useScreenSize from '../hooks/dimensions';
 import gang from '../assets/gangA.png';  
 import gang2 from '../assets/gangB.png';  
 import Ludek from '../assets/testowy_ludek.png';
+import { expandLink } from '../fetches/expandLink';
 
 //icons
 import { FaUser } from "react-icons/fa";
@@ -24,7 +25,7 @@ import { IoMdClose } from "react-icons/io";
 import { FaTrashCan } from "react-icons/fa6";
 //?
 import io from "socket.io-client";
-const socket = io.connect("http://localhost:4001");
+const socket = io.connect(expandLink(''));
 
 const NotiPage = () => {
     const { height, width } = useScreenSize();
@@ -43,7 +44,8 @@ const NotiPage = () => {
         try {
             const token = localStorage.getItem('token');
             const tokenWithoutQuotes = token.replace(/"/g, '');
-            const response = await fetch(`http://localhost:4001/api/noti/show`, {
+            let url = expandLink('/api/noti/show');
+            const response = await fetch(url, {
                 method: 'GET',
                 headers: {
                     'Content-Type': 'application/json',
@@ -55,6 +57,7 @@ const NotiPage = () => {
             }
             const dataFromGet = await response.json();
             setDataFromGet(dataFromGet);
+            console.log(dataFromGet);
         } catch (error) {
             console.error(error);
         }
@@ -64,7 +67,8 @@ const NotiPage = () => {
         try {
             const token = localStorage.getItem('token');
             const tokenWithoutQuotes = token.replace(/"/g, '');
-            const response = await fetch(`http://localhost:4001/api/noti/showinfo`, {
+            let url = expandLink('/api/noti/showinfo');
+            const response = await fetch(url, {
                 method: 'GET',
                 headers: {
                     'Content-Type': 'application/json',
@@ -121,7 +125,8 @@ const NotiPage = () => {
     const deleteNoti = async (IDNotifi) => {
         try {
             console.log(IDNotifi)
-            const response = await fetch(`http://localhost:4001/api/noti/delete`, {
+            let url = expandLink('/api/noti/delete');
+            const response = await fetch(url, {
                 method: 'POST',
                 headers: {
                     'Content-Type' : 'application/json',
@@ -143,12 +148,15 @@ const NotiPage = () => {
         const description = dataFromGet ? dataFromGet.Notification.map(noti => noti.message) : [];
         const notiIds = dataFromGet ? dataFromGet.Notification.map(noti => noti.idNoti) : [];
         const lobbyIds = dataFromGet ? dataFromGet.Notification.map(noti => noti.idLobby) : [];
+        const avatar = dataFromGet ? dataFromGet.Notification.map(noti => noti.ownerAvatar): [];
+        const senderId =  dataFromGet ? dataFromGet.Notification.map(noti => noti.senderId): [];
         for (let i = 0; i < description.length; i++) {
             content.push(
                 <div key={i} className={'notificationOne'}>
-                    <div className='lobbyPicture flotLeftClassOrSth col-4 col-md-2' href="/">
-                        <img src={Ludek} alt='obraz przedstawiający lobby' className='img-fluid lobbyPictureImg' />
-                    </div>
+                    <Link to={`/userProfile/${senderId}`}>
+                        <div className='lobbyPicture flotLeftClassOrSth col-4 col-md-2' href="/">
+                            <img src={avatar} alt='obraz przedstawiający lobby' className='img-fluid lobbyPictureImg' />
+                    </div></Link>
                     <div className='lobbyInfoContainer flotLeftClassOrSth col-7 col-md-10'>
                         <div className='lobbyDescription'> {description[i]}
                         </div>
@@ -171,11 +179,13 @@ const NotiPage = () => {
         let info = [];
         const notiinfo = notificationInfo ? notificationInfo.Notification.map(noti => noti.message) : [];
         const notiIds = notificationInfo ? notificationInfo.Notification.map(noti => noti.idNoti) : [];
+        const avatar = dataFromGet ? dataFromGet.Notification.map(noti => noti.ownerAvatar): [];
+        console.log(avatar);
         for (let i = 0; i < notiinfo.length; i++) {
             info.push(
                 <div key={i} className={'notificationOne'}>
                     <div className='lobbyPicture flotLeftClassOrSth col-4 col-md-2' href="/">
-                        <img src={Ludek} alt='obraz przedstawiający lobby' className='img-fluid lobbyPictureImg' />
+                        <img src={avatar} alt='obraz przedstawiający lobby' className='img-fluid lobbyPictureImg' />
                     </div>
                     <div className='lobbyInfoContainer flotLeftClassOrSth col-7 col-md-10'>
                         <div className='lobbyDescription'> {notiinfo[i]}</div>

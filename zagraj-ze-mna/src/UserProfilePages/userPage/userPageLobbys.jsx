@@ -6,48 +6,120 @@ import { Link } from 'react-router-dom';
 import './userPageLobbys.css';
 
 //screen dimensions
-import useScreenSize from '../hooks/dimensions';
+import useScreenSize from '../../hooks/dimensions';
 
 //images
-import gang from '../assets/gangA.png';  
-import gang2 from '../assets/gangB.png';  
-import Ludek from '../assets/testowy_ludek.png';
+import gang from '../../assets/gangA.png';  
+import gang2 from '../../assets/gangB.png';  
+import Ludek from '../../assets/testowy_ludek.png';
 
 //icons
-
 import { LuArrowBigLeftDash } from "react-icons/lu";
 import { LuArrowBigRightDash } from "react-icons/lu";
 import { RxThickArrowLeft } from "react-icons/rx";
 import { RxThickArrowRight } from "react-icons/rx";
 
 //fucntions
-import singleLobby from "../singleLobby/singleLobby"
+import singleLobby from "../../PageStructureElements/singleLobby/singleLobby"
+import { postFetchJWT } from '../../fetches/postFetch';
 
 const UserPageLobbys = () =>{
 
     const gangImages = [gang, gang2];
     const [curentGangImage, setCGImage] = useState(gang);
     const [firstTime, setFT] = useState(true);
+    const [once, setOnce] = useState(false);
     
 
     //to check screen dimensions
     const { height, width } = useScreenSize();
+    const [currentPage, setCurrentPage] = useState(0);
+    const [maxPage, setMaxPage] = useState(0);
+    const [lobbyList, setLobbyList] = useState(null);
 
     //variables
     var number = 0;
     var profileDivHeight = 100;
 
+    function toTheRight(){
+
+        let page = currentPage;
+        if(page < maxPage){
+            page++;
+            setCurrentPage(page);
+            getLobbys(page);
+        }
+
+    }
+
+    function toTheLast()
+    {
+        setCurrentPage(maxPage);
+        let page = maxPage;
+        getLobbys(page);
+    }
+
+    function toTheFirst()
+    {
+        setCurrentPage(0);
+        let page = 0;
+        getLobbys(page);
+    }
+
+    function toTheLeft(){
+            let page = currentPage;
+            if(page > 0){
+                page--;
+                setCurrentPage(page);
+                getLobbys(page);
+            }
+        }
+
+    const getLobbys = async (page) => {
+        let body = { 
+            'page':`${page}`,
+            'size': '3'};
+
+        let url = '/api/profile/usersLobby';
+        let respond = await postFetchJWT(url, body, true);
+        console.log(respond.data);
+        if(!respond.isError){
+            setLobbyList(respond.data);
+            console.log("lobby data", respond.data);
+            setMaxPage(respond.data.pages-1);
+        }
+        
+    }
+
+
     //functions
     const addlobbys = () =>
     {
         let content = [];
-        let gameName = "JD"
+        let gameName = "";
         let additionalClass = '';
-        let description = 'W sumie to nie chce w nic grać o tak o se siedzę. Używam tego lobby jako listy zakupów tak naprawdę. A po co miejsce dla drugiej osoby? A w sumie to nie wiem'
-        for(let i=0; i<3; i++)
+        let lobby_name = '';
+        let number_to_dispay = 0;
+        let players = 0;
+        let required_players =0;
+        let index_lobby = 0;
+        let ownerAvatar = '';
+
+        if(lobbyList!=null)
+            number_to_dispay = lobbyList.Lobby.length;
+        let description = '';
+
+        for(let i=0; i<number_to_dispay; i++)
         {  
-            
-            content.push(singleLobby(i, gameName ,Ludek, 'Moje lobby', description, 1,2,true));
+            index_lobby = lobbyList.Lobby[i].ID_LOBBY;
+            lobby_name = lobbyList.Lobby[i].Name;
+            required_players = lobbyList.Lobby[i].NeedUsers;
+            description = lobbyList.Lobby[i].Description;
+            players = lobbyList.Lobby[i].playerCount;
+            gameName =  lobbyList.Lobby[i].gameName;
+            ownerAvatar = lobbyList.Lobby[i].ownerAvatar;
+
+            content.push(singleLobby(index_lobby, gameName ,ownerAvatar, lobby_name, description, players,required_players, false));
         }
 
         return content;
@@ -73,8 +145,16 @@ const UserPageLobbys = () =>{
             setInterval(changeImage, 500);
             setInterval(changeHeightInterval, 200);
             setFT(false)
+        } 
+    }
+
+    function getLobbyFirsttime()
+    {
+        if(!once){
+            setOnce(true);
+            getLobbys(0);
+            setCurrentPage(0);
         }
-            
     }
 
 
@@ -140,11 +220,11 @@ const UserPageLobbys = () =>{
                     <table className='tableWithLobbyArrows flotLeftClassOrSth'>
                         <tbody>
                             <tr>
-                                <td> <div className='arrowLobby'><LuArrowBigLeftDash /></div></td> 
-                                <td> <div className='arrowLobby'><RxThickArrowLeft /></div></td> 
-                                <td> <div className='smallPageNumber'>1/2</div></td>  
-                                <td> <div className='arrowLobby'><RxThickArrowRight /></div></td>
-                                <td> <div className='arrowLobby'><LuArrowBigRightDash/></div></td>
+                                <td  onClick={toTheFirst}> <div className='arrowLobby'><LuArrowBigLeftDash/></div></td> 
+                                <td onClick={toTheLeft}> <div className='arrowLobby'><RxThickArrowLeft /></div></td> 
+                                <td> <div className='smallPageNumber'>{currentPage+1}/{maxPage+1}</div></td>  
+                                <td onClick={toTheRight}> <div className='arrowLobby'><RxThickArrowRight /></div></td>
+                                <td  onClick={toTheLast}> <div className='arrowLobby'><LuArrowBigRightDash/></div></td>
                                     
                             </tr>
                         </tbody>
@@ -155,9 +235,8 @@ const UserPageLobbys = () =>{
             
             </div>
             
-            
 
-            <div className='lobbylist'>
+            <div className='lobbylist'  onLoad={getLobbyFirsttime()}>
                 {addlobbys()}
             </div>
 

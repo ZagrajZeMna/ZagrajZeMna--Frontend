@@ -1,12 +1,13 @@
 import styles from './MyLobby.module.css'
 import React, { useState, useEffect } from 'react';
-import singleLobby from '../singleLobby/singleLobby';
+import singleLobby from '../PageStructureElements/singleLobby/singleLobby';
 import Ludek from '../assets/testowy_ludek.png';
-import Footer from '../footer/footer';
+import Footer from '../PageStructureElements/footer/footer';
 import { MdNavigateNext } from "react-icons/md";
 import { MdNavigateBefore } from "react-icons/md";
 import { expandLink } from "../fetches/expandLink";
 import LoadingChad from '../LoadingChad/LoadingChad';
+import useGetToken from '../fetches/useFetch';
 
 function MyLobby() {
     const [error, setError] = useState(null);
@@ -15,13 +16,16 @@ function MyLobby() {
     const [totalPages, setTotalPages] = useState(0);
     const [isLoading, setIsLoading] = useState(false);
     const [data, setData] = useState({ Lobby: [], pages: 0 });
+    const lastLobbies = useGetToken('/api/profile/lastLobbies');
+
 
    const fetchLobbies = async (page = 0) =>{
     try {
             setIsLoading(true);
             const token = localStorage.getItem("token");
             const tokenWithoutQuotes = token.replace(/"/g, '');
-            const response = await fetch('http://localhost:4001/api/profile/usersLobby', {
+            let url = expandLink('/api/profile/usersLobby');
+            const response = await fetch(url, {
                 method: 'POST',
                 headers: {
                     'Content-Type' : 'application/json',
@@ -29,7 +33,7 @@ function MyLobby() {
                 },
                 body: JSON.stringify({
                     page,
-                    size: 4  
+                    size: 5  
                 }),
             });
 
@@ -40,7 +44,7 @@ function MyLobby() {
 
             const fetchdata = await response.json();
             setData(fetchdata);
-            setLobbies(fetchdata.Lobby);
+            setLobbies(fetchdata);
             setTotalPages( fetchdata.pages);
             setCurrentPage(page);
             
@@ -59,7 +63,7 @@ function MyLobby() {
     const renderLobbies = () => {
         if (!data.Lobby.length) return null;
         return data.Lobby.map((lobby, index) => {
-            return singleLobby(index + 1, lobby.gameName, lobby.ownerAvatar, lobby.Name, lobby.Description, lobby.playerCount, lobby.NeedUsers, true); // Ustawienie last argumentu na false, ponieważ nie ma plusa w odpowiedzi
+            return singleLobby(lobby.ID_LOBBY, lobby.gameName, lobby.ownerAvatar, lobby.Name, lobby.Description, lobby.playerCount, lobby.NeedUsers, true); // Ustawienie last argumentu na false, ponieważ nie ma plusa w odpowiedzi
         });
     };
 
@@ -75,6 +79,29 @@ function MyLobby() {
         }
     };
 
+    function renderLastLobies(){
+        
+        let size = lastLobbies.data.Lobby.length;
+        console.log(lastLobbies);
+        let content = [];
+        for(let i=0; i<size; i++){
+            let oneLobby = lastLobbies.data.Lobby[i];
+            let push_data = singleLobby(oneLobby.ID_LOBBY, oneLobby.game_name, oneLobby.ownerAvatar, oneLobby.Name, oneLobby.Description, oneLobby.playerCount, oneLobby.NeedUsers, true );
+            content.push(
+                push_data
+            );
+        }
+        
+        if(size == 0){
+            content.push(
+                <p className={styles.ZeroLobbies} key={-1202}>
+                  Wygląda na to, że nie wysłało żadnej wiadomóoci w Twoich lobby 🤔. Chcesz z kimś pogadać? Wejdź do lobby i wysyłaj wiadomości!
+                </p>
+            );
+        }
+
+        return content;
+    }
     
 
 
@@ -87,8 +114,22 @@ function MyLobby() {
           <img src="https://i.ibb.co/0FnRKhw/grass.jpg" />
         </div>) : (
         <div className={styles.lobbies}>
-            <h1 className={styles.title}>Moje Lobby</h1>
-                
+            
+            <h1 className={styles.title}>Moje Drużyny</h1>
+            <div className={styles.myLobbies}>
+                <h2 className={styles.lobbySmallTitle}>Ostatnio aktwyne: </h2>
+            </div>
+           {lastLobbies.data && (<span>{renderLastLobies()}</span>) }
+            
+            
+           <div className={styles.GimmeSomeSpacePls}></div>
+
+            <div className={styles.myLobbies}>
+                <h2 className={styles.lobbySmallTitle}>Wszystkie: </h2>
+            </div>
+
+            
+            
             {renderLobbies()}
             <div className={styles.paginationContainer}>
 

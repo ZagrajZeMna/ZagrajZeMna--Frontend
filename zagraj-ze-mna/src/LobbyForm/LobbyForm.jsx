@@ -2,6 +2,8 @@ import styles from './LobbyForm.module.css'
 import React, { useState, useEffect } from 'react';
 import { IoAddCircleOutline } from "react-icons/io5";
 import { useNavigate } from 'react-router-dom';
+import { expandLink } from '../fetches/expandLink';
+
 
 function LobbyForm({ gameNameProp,lopata,setLopata}) {
   const [values, setValues] = useState({
@@ -17,7 +19,8 @@ function LobbyForm({ gameNameProp,lopata,setLopata}) {
   useEffect(()=>{
     const getData = async () => {
       try{
-        const response = await fetch(`http://localhost:4001/api/lobby/data`);
+        let url = expandLink('/api/lobby/data');
+        const response = await fetch(url);
         if(!response.ok){
           throw new Error('Nie udało się pobrać danych');
         }
@@ -85,7 +88,8 @@ function LobbyForm({ gameNameProp,lopata,setLopata}) {
         return;
       }
       const tokenWithoutQuotes = token.replace(/"/g, '');
-      const response = await fetch('http://localhost:4001/api/lobby/add', {
+      let url = expandLink('/api/lobby/add');
+      const response = await fetch(url, {
         method: 'POST',
         headers: {
           'Content-Type' : 'application/json',

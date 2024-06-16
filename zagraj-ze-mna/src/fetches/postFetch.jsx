@@ -35,9 +35,9 @@
 
 import { jwtDecode } from 'jwt-decode';
 import { expandLink } from './expandLink';
-import {CheckData} from '../testers/checkData';
+import {CheckData} from './testers/checkData';
 
-export const postFetchJWT = async (url,body) => {
+export const postFetchJWT = async (url,my_body, toJSON=true, postMethod=true) => {
     
     const token = localStorage.getItem('token');
     let data = null;
@@ -63,16 +63,39 @@ export const postFetchJWT = async (url,body) => {
             
         }
         const tokenWithoutQuotes = token.replace(/"/g, '');
+
+        let sender = null;
+        let my_headers = null;
+        if(toJSON)
+        {
+            sender = JSON.stringify(my_body);
+            my_headers = {
+                'Authorization' : `Bearer ${tokenWithoutQuotes}`,
+                'content-type': 'application/json'};
+        }
         
+        else
+        {
+            my_headers = {
+                'Authorization' : `Bearer ${tokenWithoutQuotes}`};
+             sender = my_body;
+        }
+        let post_m
+        if(postMethod)
+            post_m = 'POST';
+        else
+            post_m = 'DELETE';
+           
+
+        //console.log("body: ",sender);
+        //console.log("headers: ", my_headers);
+
         const response = await fetch(
         urlBig,
         {
-            method: 'POST',
-            headers: {
-            'Authorization' : `Bearer ${tokenWithoutQuotes}`,
-            'content-type': 'application/json',
-            },
-            body: JSON.stringify(body),
+            method: post_m,
+            headers: my_headers,
+            body:  sender,
         }
         );
 
@@ -86,8 +109,8 @@ export const postFetchJWT = async (url,body) => {
         else
         {
             data = await response.json();
-            console.log(data);
-            if(!CheckData(data)){
+            //console.log(data);
+            if(!CheckData(url, data)){
                 console.error("unexpected respond from backend!");
                 throw new Error('Unexpected respond from backend. JSON not form properly');
             }

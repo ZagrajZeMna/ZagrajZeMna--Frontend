@@ -5,8 +5,9 @@ import { expandLink } from "../fetches/expandLink";
 import Messages from "./Messages";
 import SendMessage from "./SendMessage";
 import io from "socket.io-client";
+import { Link } from 'react-router-dom';
 
-const socket = io.connect("http://localhost:4001");
+const socket = io.connect(expandLink(''));
 
 export default function Lobby() {
   const [output, setOutput] = useState([]);
@@ -85,10 +86,12 @@ export default function Lobby() {
         <div className={styles.sidebar}>
           <div className={styles.lobbyheader}>Gracze:</div>
           {players.map((player, index) => (
-            <div key={index} className={styles.players}>
-              <img src={player.avatar} alt="no avatar" className={styles.avatar} />
-              {player.username}
-            </div>
+            <Link to={`/userProfile/${player.ID_USER}` }key={player.ID_USER} className={styles.myLink}>
+              <div  className={styles.players}>
+                <img src={player.avatar} alt="no avatar" className={styles.avatar} />
+                <span className={styles.myText}>{player.username}</span>
+              </div>
+            </Link>
           ))}
         </div>
         <div className={styles.maincontent}>
@@ -107,7 +110,7 @@ export default function Lobby() {
             ))} */}
             <Messages
               socket={socket}
-              username={"kemnaz"}
+              usernameMy={username}
               roomId={lobbyId}
             ></Messages>
           </div>
