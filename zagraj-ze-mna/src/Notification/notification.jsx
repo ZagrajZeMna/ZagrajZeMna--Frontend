@@ -5,7 +5,7 @@ import io from "socket.io-client";
 import { expandLink } from '../fetches/expandLink';
 
 function Notification(){
-    const socket = io.connect(expandLink(''));
+    const socket = io.connect('https://zagrajzemna-backend.onrender.com');
     const token = localStorage.getItem('token');
 
     useEffect(() => {

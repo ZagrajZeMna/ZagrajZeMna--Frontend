@@ -25,7 +25,7 @@ import { IoMdClose } from "react-icons/io";
 import { FaTrashCan } from "react-icons/fa6";
 //?
 import io from "socket.io-client";
-const socket = io.connect(expandLink(''));
+const socket = io.connect('https://zagrajzemna-backend.onrender.com');
 
 const NotiPage = () => {
     const { height, width } = useScreenSize();
@@ -155,7 +155,7 @@ const NotiPage = () => {
                 <div key={i} className={'notificationOne'}>
                     <Link to={`/userProfile/${senderId}`}>
                         <div className='lobbyPicture flotLeftClassOrSth col-4 col-md-2' href="/">
-                            <img src={avatar} alt='obraz przedstawiający lobby' className='img-fluid lobbyPictureImg' />
+                            <img src={avatar[i]} alt='obraz przedstawiający lobby' className='img-fluid lobbyPictureImg' />
                     </div></Link>
                     <div className='lobbyInfoContainer flotLeftClassOrSth col-7 col-md-10'>
                         <div className='lobbyDescription'> {description[i]}

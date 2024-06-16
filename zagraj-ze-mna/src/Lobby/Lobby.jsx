@@ -7,7 +7,7 @@ import SendMessage from "./SendMessage";
 import io from "socket.io-client";
 import { Link } from 'react-router-dom';
 
-const socket = io.connect(expandLink(''));
+const socket = io.connect('https://zagrajzemna-backend.onrender.com');
 
 export default function Lobby() {
   const [output, setOutput] = useState([]);
