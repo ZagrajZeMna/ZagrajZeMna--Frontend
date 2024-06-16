@@ -54,7 +54,7 @@ a
 {
     width: 100%;
     margin-bottom: 2%;
-    color: white;
+    color: white !important;
     padding-left: 10%;
     text-align: left;
     background-image: linear-gradient(to bottom, #000, #111);
@@ -93,7 +93,7 @@ a
         margin-left: 15%;
         text-align: center;
         word-spacing: 15px;
-        color: #eee;
+        color: #eee !important;
     }
 
     .Banner
@@ -189,12 +189,13 @@ a
     margin-left: 2%;
     text-align: center;
     float: left;
+    color: #111 !important;
     
 }
 
 .topSecret
 {
-    color: #2523E2;
+    color: #2523E2 !important;
     font-weight: bold;
 }
 
@@ -528,19 +529,19 @@ a
 
 .greenBox
 {
-    color: green;
+    color: green !important;
     font-weight: bold;
 }
 
 .redBox
 {
-    color: red;
+    color: red !important;
     font-weight: bold;
 }
 
 .yellowBox
 {
-    color: yellow;
+    color: yellow !important;
     font-weight: bold;
 }
 
