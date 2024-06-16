@@ -9,7 +9,7 @@ function Notification(){
     const token = localStorage.getItem('token');
 
     useEffect(() => {
-        const con = socket.on(token, (data,lobbyName) => {
+        socket.on(token, (data,lobbyName) => {
             console.log(data)
             if(data == "Accepted"){
                 accepted(lobbyName);
@@ -21,7 +21,7 @@ function Notification(){
                 handleActivityNotification(data,lobbyName);
             }
         });
-    })[con];
+    });
     
     function accepted(lobbyName) {
         toast.success(
