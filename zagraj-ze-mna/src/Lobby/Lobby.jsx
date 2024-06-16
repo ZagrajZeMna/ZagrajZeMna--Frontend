@@ -6,7 +6,7 @@ import Messages from "./Messages";
 import SendMessage from "./SendMessage";
 import io from "socket.io-client";
 
-const socket = io.connect(expandLink(''));
+const socket = io.connect(expandLink(""));
 
 export default function Lobby() {
   const [output, setOutput] = useState([]);
@@ -49,33 +49,24 @@ export default function Lobby() {
     }
   };
 
-  const handleInputChange = (e) => {
-    setInputValue(e.target.value);
-  };
+  const leaveLobby = async () => {
+    try {
+      console.log("ID LOBBY I NAZWA UZYTKOWNIKA: " + lobbyId + " " + username);
 
-  const handleKeyDown = async (e) => {
-    if (e.key === "Enter") {
-      const message = inputValue;
-      setOutput([...output, `C:Users\\User>${message}`]);
-      setInputValue("");
-
-      //------experimental code for adding the message to database------
-
-      //     try {
-      //         const response = await fetch("/api/lobbyInside/addMessage", {
-      //             method: 'POST',
-      //             headers: {
-      //                 'Content-Type': 'application/json',
-      //                 'x-access-token': localStorage.getItem('token')
-      //             },
-      //             body: JSON.stringify({ lobbyId, message, userId: localStorage.getItem('userId') })
-      //         });
-      //         if (!response.ok) {
-      //             throw new Error('Failed to send message');
-      //         }
-      //     } catch (error) {
-      //         console.error('Error sending message:', error);
-      //     }
+      const res = await fetch(
+        expandLink(
+          `/api/lobbyInside/deleteUser?lobbyId=${lobbyId}&username=${username}`
+        ),
+        { method: "DELETE", headers: { accept: "*/*" } }
+      );
+      if (!res.ok) {
+        const errorText = await res.text();
+        throw new Error(`Failed to delete player from lobby: ${errorText}`);
+      }
+      // Redirect to /myLobby after successful DELETE
+      window.location.href = "/myLobby";
+    } catch (error) {
+      console.error("Error occurred while deleting player: ", error);
     }
   };
 
@@ -86,7 +77,11 @@ export default function Lobby() {
           <div className={styles.lobbyheader}>Gracze:</div>
           {players.map((player, index) => (
             <div key={index} className={styles.players}>
-              <img src={player.avatar} alt="no avatar" className={styles.avatar} />
+              <img
+                src={player.avatar}
+                alt="no avatar"
+                className={styles.avatar}
+              />
               {player.username}
             </div>
           ))}
@@ -96,15 +91,14 @@ export default function Lobby() {
             <div className={styles.headerContent}>
               <span>Lobby: {lobbyname}</span>
             </div>
-            <button className={styles.leaveButton}>opusc lobby</button>
+            <button className={styles.leaveButton} onClick={leaveLobby}>
+              opusc lobby
+            </button>
           </div>
 
           <div className={styles.ownerheader}>Właściciel: {owner.username}</div>
           <div className={styles.chatheader}>Chat</div>
           <div className={styles.chatoutput}>
-            {/* {output.map((line, index) => (
-              <div key={index}>{line}</div>
-            ))} */}
             <Messages
               socket={socket}
               usernameMy={username}
@@ -112,13 +106,6 @@ export default function Lobby() {
             ></Messages>
           </div>
           <div className={styles.inputcontainer}>
-            {/* <input
-              type="text"
-              value={inputValue}
-              onChange={handleInputChange}
-              onKeyDown={handleKeyDown}
-              maxLength={100}
-            /> */}
             <SendMessage
               socket={socket}
               username={username}
