@@ -69,8 +69,8 @@ const handleSubmitGame = async (e) => {
 
   try {
     const token = localStorage.getItem('token');
-    let url = expandLink('/api/review/addGameReq')
-    const response = await fetch(url, {
+
+    const response = await fetch(expandLink('/api/review/addGameReq'), {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -81,8 +81,10 @@ const handleSubmitGame = async (e) => {
 
     if (!response.ok) {
       setSuccessMessage(null);
-      const errorData = await response.json();
-      throw new Error(errorData.message || 'Nie udało się wysłać prośby o dodanie nowej gry');
+      if(response.status === 403)
+        throw new Error('Błąd weryfikacji użytkownika.');
+      else
+        throw new Error('Nie udało się wysłać prośby o dodanie gry.');
     }
 
     const data = await response.json();
@@ -104,8 +106,7 @@ const handleSubmitReview = async (e) => {
 
   try {
     const token = localStorage.getItem('token');
-    let url = expandLink('/api/review/addReview');
-    const response = await fetch(url, {
+    const response = await fetch(expandLink('/api/review/addReview'), {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -116,8 +117,16 @@ const handleSubmitReview = async (e) => {
 
     if (!response.ok) {
       setSuccessMessage(null);
-      const errorData = await response.json();
-      throw new Error(errorData.message || 'Nie udało się dodać recenzji');
+      if(response.status === 403)
+        throw new Error('Błąd weryfikacji użytkownika');
+      else if(response.status === 404)
+        throw new Error('Nie ma takiego użytkownika. Niepoprawny nick.');
+      else if(response.status === 405)
+        throw new Error('Nie możesz wystawić sobie opini.');
+      else if(response.status === 406)
+        throw new Error('Zostawiłeś już recenzje temu użytkownikowi');
+      else
+        throw new Error('Błąd. Nie udało się zostawić recenzji.');
     }
 
     const data = await response.json();
@@ -147,8 +156,7 @@ const handleSubmitBan = async (e) => {
 
   try {
     const token = localStorage.getItem('token');
-    let url = expandLink('/api/review/reportUser');
-    const response = await fetch(url, {
+    const response = await fetch(expandLink('/api/review/reportUser'), {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -159,8 +167,14 @@ const handleSubmitBan = async (e) => {
 
     if (!response.ok) {
       setSuccessMessage(null);
-      const errorData = await response.json();
-      throw new Error(errorData.message || 'Nie udało się zgłosić użytkownika.');
+      if(response.status === 403)
+        throw new Error('Błąd weryfikacji użytkownika');
+      else if(response.status === 404)
+        throw new Error('Nie ma takiego użytkownika. Niepoprawny nick.');
+      else if(response.status === 405)
+        throw new Error('Użytkownik został już zbanowany.');
+      else
+        throw new Error('Błąd. Nie udało się zgłosić użytkownika.');
     }
 
     const data = await response.json();
@@ -190,8 +204,9 @@ const handleSubmitAsk = async (e) => {
 
   try {
     const token = localStorage.getItem('token');
-    let url = expandLink('/api/review/sendMessage');
-    const response = await fetch(url, {
+
+    const response = await fetch(expandLink('/api/review/sendMessage'), {
+
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -226,10 +241,10 @@ const handleInputChangeAsk = (e) => {
 
 return (
   <div className="contact">
-    <div className="sidebar">
-      <div className="tab">
+    <div className="sidebars-contact">
+      <div className="tab-contact">
         <div>
-          <h1 className="main-title">Gry</h1>
+          <h1 className="main-title-contact">Gry</h1>
         </div>
         <button
           className={`tab ${activeTab === 'addNewGameReq' ? 'active' : ''}`}
@@ -238,9 +253,9 @@ return (
           Dodaj Grę
         </button>
       </div>
-      <div className="tabs">
+      <div className="tabs-contact">
       <div>
-        <h1 className="main-title">Użytkownicy</h1>
+        <h1 className="main-title-contact">Użytkownicy</h1>
       </div>
         <button
           className={`tab ${activeTab === 'ban' ? 'active' : ''}`}
@@ -255,9 +270,9 @@ return (
           Dodaj recenzje użytkownika
         </button>
       </div>
-      <div className="tab">
+      <div className="tabs-contact">
       <div>
-        <h1 className="main-title">Kontakt</h1>
+        <h1 className="main-title-contact">Kontakt</h1>
         </div>
         <button
           className={`tab ${activeTab === 'ask' ? 'active' : ''}`}
@@ -268,9 +283,9 @@ return (
       </div>
     </div>
 
-    <div className="main-content">
+    <div className="main-content-contact">
       {activeTab === 'addNewGameReq' && isLoggedIn && (
-        <form onSubmit={handleSubmitGame} className="add-game-form">
+        <form onSubmit={handleSubmitGame} className="add-game-form-contact">
           <div>
             <label>Nazwa gry:</label>
             <input
@@ -305,7 +320,7 @@ return (
             onChange={handleInputChangeReview}
           />
         </div>
-         <div className='slider'>
+         <div className='slider-contact'>
               <input
                 type="range"
                 value={newReview.stars}
@@ -334,7 +349,7 @@ return (
       </form>
     )}
       {activeTab !== 'addNewGameReq' && activeTab !== 'review' && activeTab === 'ban' && isLoggedIn && (
-        <form onSubmit={handleSubmitBan} className="add-game-form">
+        <form onSubmit={handleSubmitBan} className="add-game-form-contact">
         <div>
           <label>Pseudonim gracza:</label>
           <input
@@ -360,7 +375,7 @@ return (
       </form>
     )}
       {activeTab !== 'addNewGameReq' && activeTab !== 'review' && activeTab !== 'ban' && activeTab === 'ask' && isLoggedIn && (
-        <form onSubmit={handleSubmitAsk} className="add-game-form">
+        <form onSubmit={handleSubmitAsk} className="add-game-form-contact">
         <div>
           <label>Temat:</label>
           <input

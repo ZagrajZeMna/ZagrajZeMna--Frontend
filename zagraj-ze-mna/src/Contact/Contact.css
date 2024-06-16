@@ -7,7 +7,7 @@
   width: 100%;
 }
 
-.sidebar {
+.sidebars-contact {
   display: flex;
   flex-direction: column;
   align-items: flex-start;
@@ -16,27 +16,27 @@
   padding-left: 2px;
 }
 
-.slider input {
+.slider-contact input {
   outline: none;
   margin-right: 5px;
   margin-left: 10px;
 }
-.slider span {
+.slider-contact span {
   font-size: 16px;
   font-family: 'Arial', sans-serif;
   font-weight: bold;
 }
 
-.tabs {
+.tabs-contact {
   display: flex;
   flex-direction: column;
 }
 
-.tab {
+.tab-contact {
   background-color: transparent;
   border: none;
   color: white;
-  padding: 10px 10px;
+  padding: 10px 8px;
   cursor: pointer;
   margin: 5px 0;
   font-size: 15px;
@@ -46,11 +46,11 @@
   position: relative;
 }
 
-.tab.active {
+.tab-contact.active {
   color: #9370DB;
 }
 
-.tab.active::after {
+.tab-contact.active::after {
   content: '';
   display: block;
   width: 100%;
@@ -61,11 +61,11 @@
   left: 0;
 }
 
-.tab:hover {
+.tab-contact:hover {
   color: #9370DB;
 }
 
-.main-content {
+.main-content-contact {
   flex-grow: 1;
   display: flex;
   flex-direction: column;
@@ -77,7 +77,7 @@
   color: red;
 }
 
-.main-title {
+.main-title-contact {
   font-size: 36px;
   font-weight: bold;
   color: #deeaec;
@@ -89,7 +89,7 @@
   padding-bottom: 20px;
 }
 
-.add-game-form {
+.add-game-form-contact {
   display: flex;
   flex-direction: column;
   align-items: flex-start;
@@ -101,19 +101,19 @@
   width: 90%;
 }
 
-.add-game-form div {
+.add-game-form-contact div {
   margin-bottom: 45px;
   width: 100%;
 }
 
-.add-game-form label {
+.add-game-form-contact label {
   display: block;
   margin-bottom: 10px;
   color: #ffffff;
   font-weight: bold;
 }
 
-.add-game-form input{
+.add-game-form-contact input{
   width: 100%;
   padding: 10px;
   border-radius: 5px;
@@ -122,23 +122,24 @@
   color: #fff;
   box-sizing: border-box;
 }
-.add-game-form textarea {
+.add-game-form-contact textarea {
   width: 100%;
   padding: 10px;
   border-radius: 5px;
   border: none;
+  background-color: #444;
   color: #fff;
   box-sizing: border-box;
   resize: none;
 }
 
-.add-game-form input:focus,
-.add-game-form textarea:focus {
+.add-game-form-contact input:focus,
+.add-game-form-contact textarea:focus {
   outline: none;
-  box-shadow: 0 0 5px #ffffff;
+  box-shadow: 0 0 5px #ddd;
 }
 
-.add-game-form button {
+.add-game-form-contact button {
   background-color: #9370DB;
   border: none;
   color: white;
@@ -149,7 +150,7 @@
   transition: background-color 0.3s ease;
 }
 
-.add-game-form button:hover {
+.add-game-form-contact button:hover {
   background-color: #6a4db2;
 }
 

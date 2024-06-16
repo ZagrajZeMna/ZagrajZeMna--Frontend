@@ -1,7 +1,7 @@
 /* Sekcja ogólna */
 .admin-page {
   display: flex;
-  background-color: #333;
+  background: linear-gradient(135deg, #696969 0%, #333 100%);
   color: white;
   padding: 20px;
   min-height: 100vh;
@@ -96,7 +96,7 @@
   align-items: center;
   width: calc(100% - 270px);
   transition: width 0.3s ease, margin-left 0.3s ease;
-  margin-top: 0px;
+  margin-top: 30px;
 }
 
 .sidebar.hidden ~ .main-content {
@@ -247,7 +247,7 @@
 }
 
 .add-game-form div {
-  margin-bottom: 150px;
+  margin-bottom: 55px;
   width: 100%;
 }
 

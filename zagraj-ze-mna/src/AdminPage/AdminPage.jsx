@@ -406,17 +406,19 @@ const AdminPage = () => {
         body: JSON.stringify(newGame)
       });
 
-      if (!response.ok) {
+      if (response.status === 400) {
+        setError('Gra o podanej nazwie już istnieje w bazie danych.');
+    } else if (!response.ok) {
         throw new Error('Nie udało się dodać nowej gry');
-      }
-
-      const data = await response.json();
-      setSuccessMessage('Gra została pomyślnie dodana!');
-      setNewGame({ name: '', shortname: '', description: '', image: '' });
-      setError(null);
-    } catch (error) {
-      setError(error.message);
+    } else {
+        const data = await response.json();
+        setSuccessMessage('Gra została pomyślnie dodana!');
+        setNewGame({ name: '', shortname: '', description: '', image: '' });
+        setError(null);
     }
+} catch (error) {
+    setError(error.message);
+}
   };
 
   return (
