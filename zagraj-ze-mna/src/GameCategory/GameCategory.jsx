@@ -1,18 +1,19 @@
 import React, { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
-import "./GameCategory.css"; //
+import "./GameCategory.css";
 import LobbyForm from "../LobbyForm/LobbyForm";
-import { MdNavigateNext } from "react-icons/md";
-import { MdNavigateBefore } from "react-icons/md";
+import { MdNavigateNext, MdNavigateBefore } from "react-icons/md";
 import { FaCirclePlus } from "react-icons/fa6";
 import LoadingChad from "../LoadingChad/LoadingChad";
 import { Link } from "react-router-dom";
 import { expandLink } from "../fetches/expandLink";
-
 import io from "socket.io-client";
+
 const socket = io.connect("http://localhost:4001");
 
 const GameCategory = () => {
+  const [response, setResponse] = useState(null);
+  const [error2, setError2] = useState(null);
   const [error, setError] = useState(null);
   const [lobbies, setLobbies] = useState([]);
   const [lopata, setLopata] = useState(false);
@@ -20,20 +21,22 @@ const GameCategory = () => {
   const [size, setSize] = useState("");
   const [maxPages, setMaxPages] = useState(0);
   const [isLoading, setIsLoading] = useState(false);
-  //using params (from url)
+
   const { game } = useParams();
   const [name, setName] = useState("");
   const [sorting, setSorting] = useState("");
   const [language, setLanguage] = useState("");
   const [gameDesc, setGameDesc] = useState("");
   const [gameImg, setGameImg] = useState("");
+
   useEffect(() => {
     fetchUserId();
     fetchLobbies();
-  }, [game, currentPage, lopata]); // Update lobbies when game or name changes
+  }, [game, currentPage, lopata]);
+
   useEffect(() => {
     fetchCategoryInfo();
-  }, []); // load game info during initial render
+  }, []);
 
   const fetchUserId = async () => {
     const token = localStorage.getItem("token");
@@ -50,11 +53,12 @@ const GameCategory = () => {
       throw new Error(errorData.message || "Błąd tworzenia formularza");
     }
   };
+
   const fetchCategoryInfo = () => {
     fetch(expandLink(`/api/lobby/gameinfo?gameName=${game}`))
       .then((res) => {
         if (!res.ok) {
-          throw new Error("Internal Server Error");
+          throw new Error("Internal Server Error witch fetching category info");
         }
         return res.json();
       })
@@ -63,11 +67,9 @@ const GameCategory = () => {
         setGameDesc(data.description);
       });
   };
+
   const fetchLobbies = () => {
     setIsLoading(true);
-    console.log(
-      "---------------------------------------------- FETCH ODPALONY ----------------------------------------------"
-    );
     fetch(
       expandLink(
         `/api/lobby/show?page=${currentPage}&size=${5}&game=${game}&name=${name}`
@@ -75,7 +77,7 @@ const GameCategory = () => {
     )
       .then((res) => {
         if (!res.ok) {
-          throw new Error("Internal Server Error");
+          throw new Error("Internal Server Error witch fetching lobbies");
         }
         setError(null);
         return res.json();
@@ -83,18 +85,57 @@ const GameCategory = () => {
       .then((data) => {
         setLobbies(data.Lobby);
         setMaxPages(data.Pages);
-        // console.log("obecna strona: "+ currentPage);
-        // console.log("max strona: " + data.Pages);
-        console.log(
-          "---------------------------------------------- DANE ZAPISANE  ----------------------------------------------"
-        );
       })
-
       .catch((error) => {
         setError(error.message);
-        console.log(error.message);
       });
     setIsLoading(false);
+  };
+
+  const addGameToShelf = async () => {
+    try {
+      const token = localStorage.getItem("token");
+
+      const res = await fetch(expandLink(`/api/profile/addGameToShelf`), {
+        method: "POST",
+        headers: {
+          Accept: "application/json",
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+        body: JSON.stringify({ GAME_NAME: game }),
+      });
+
+      if (!res.ok) {
+        let errorMessage;
+        switch (res.status) {
+          case 409:
+            errorMessage = "Gra jest już dodana do kolekcji.";
+            break;
+          case 400:
+            errorMessage =
+              "Nieprawidłowe żądanie - problem z przesłanymi danymi.";
+            break;
+          case 403:
+            errorMessage =
+              "Nieautoryzowane - brak tokena lub token jest nieprawidłowy.";
+            break;
+          case 500:
+            errorMessage = "Wewnętrzny błąd serwera.";
+            break;
+          default:
+            errorMessage = `HTTP error! Status: ${res.status}`;
+        }
+        throw new Error(errorMessage);
+      }
+
+      const data = await res.json();
+      setResponse(data.message);
+      setError2(null); // Clear any previous errors
+    } catch (err) {
+      setError2(err.message);
+      setResponse(null); // Clear any previous response
+    }
   };
 
   async function sendMessage(ID) {
@@ -102,14 +143,13 @@ const GameCategory = () => {
   }
 
   const handleInputChange = (event) => {
-    setName(event.target.value); // Update name state on input change
+    setName(event.target.value);
   };
+
   const handleSearch = () => {
-    // Fetch data with updated name state
     fetchLobbies();
   };
 
-  // Function to handle Enter key press
   const handleKeyPress = (event) => {
     if (event.key === "Enter") {
       handleSearch();
@@ -128,10 +168,20 @@ const GameCategory = () => {
                 <span className="description-text">{gameDesc}</span>
               </div>
               <div className="add-game">
-                <button className="add-game-button">Dodaj</button>
-                <span className="add-game-text">
-                  Dodaj grę do kolekcji, aby wyświetlała się na twoim profilu!{" "}
-                </span>
+                <button className="add-game-button" onClick={addGameToShelf}>
+                  Dodaj
+                </button>
+                {error2 ? (
+                  <span className="add-game-text">{error2}</span>
+                ) : response ? (
+                  <span className="add-game-text">
+                    {JSON.stringify(response)}
+                  </span>
+                ) : (
+                  <span className="add-game-text">
+                    Dodaj grę do kolekcji, aby wyświetlała się na twoim profilu!
+                  </span>
+                )}
               </div>
             </div>
           </div>
@@ -177,9 +227,7 @@ const GameCategory = () => {
                   <p>{lobby.Description}</p>
                 </div>
                 <div className="player-count">
-                  <Link
-                    // to={`/category/${game}/${lobby.Name}/${lobby.ID_LOBBY}`}
-                  >
+                  <Link>
                     <button onClick={() => sendMessage(lobby.ID_LOBBY)}>
                       <FaCirclePlus />
                     </button>
