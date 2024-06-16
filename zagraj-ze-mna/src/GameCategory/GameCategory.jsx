@@ -21,6 +21,7 @@ const GameCategory = () => {
   const [size, setSize] = useState("");
   const [maxPages, setMaxPages] = useState(0);
   const [isLoading, setIsLoading] = useState(false);
+  const [showPopup, setShowPopup] = useState(false);
 
   const { game } = useParams();
   const [name, setName] = useState("");
@@ -138,9 +139,13 @@ const GameCategory = () => {
     }
   };
 
-  async function sendMessage(ID) {
+  const sendMessage = async (ID) => {
     await socket.emit("joinRoom", ID);
-  }
+    setShowPopup(true);
+    setTimeout(() => {
+      setShowPopup(false);
+    }, 5000);
+  };
 
   const handleInputChange = (event) => {
     setName(event.target.value);
@@ -172,11 +177,9 @@ const GameCategory = () => {
                   Dodaj
                 </button>
                 {error2 ? (
-                  <span className="add-game-text">{error2}</span>
+                  <div>Error: {error2}</div>
                 ) : response ? (
-                  <span className="add-game-text">
-                    {JSON.stringify(response)}
-                  </span>
+                  <div>{JSON.stringify(response)}</div>
                 ) : (
                   <span className="add-game-text">
                     Dodaj grę do kolekcji, aby wyświetlała się na twoim profilu!
@@ -232,7 +235,6 @@ const GameCategory = () => {
                       <FaCirclePlus />
                     </button>
                   </Link>
-
                   <span>
                     Gracze: {lobby.playerCount}/{lobby.NeedUsers}
                   </span>
@@ -265,6 +267,19 @@ const GameCategory = () => {
                 </span>
               </div>
             </div>
+          </div>
+        </div>
+      )}
+      {showPopup && (
+        <div className="popup">
+          <div className="popup-content">
+            <span className="popup-message">
+              Wysłano prośbę o dołączenie do lobby. Informacja o przyjęciu
+              wyświetli się w zakładce powiadomienia (dzwonek).
+            </span>
+            <button className="popup-close" onClick={() => setShowPopup(false)}>
+              ×
+            </button>
           </div>
         </div>
       )}
