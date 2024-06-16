@@ -163,7 +163,7 @@ const EditPageUserGames = () => {
             <div className='clearer'></div>
             <div className='with_space'>
                 {gameList && gameList.data && (<span>{createGames()}</span>)}
-                {(gameList.data == null) && (<p key={-2000} className='noGamesHlip'> Hmmm... 🤔. Wygląda na to, że półka jest pusta. Gry możesz dodać na stronie głównej, wystarczy wejść w daną grę i nacisnąć przycisk dodaj. 😎</p>)}
+                {gameList && (gameList.data == null) && (<p key={-2000} className='noGamesHlip'> Hmmm... 🤔. Wygląda na to, że półka jest pusta. Gry możesz dodać na stronie głównej, wystarczy wejść w daną grę i nacisnąć przycisk dodaj. 😎</p>)}
             </div>
 
             <div className='clearer'></div>
