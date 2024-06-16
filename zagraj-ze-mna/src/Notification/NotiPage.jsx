@@ -185,7 +185,7 @@ const NotiPage = () => {
             info.push(
                 <div key={i} className={'notificationOne'}>
                     <div className='lobbyPicture flotLeftClassOrSth col-4 col-md-2' href="/">
-                        <img src={avatar} alt='obraz przedstawiający lobby' className='img-fluid lobbyPictureImg' />
+                        <img src={avatar[i]} alt='obraz przedstawiający lobby' className='img-fluid lobbyPictureImg' />
                     </div>
                     <div className='lobbyInfoContainer flotLeftClassOrSth col-7 col-md-10'>
                         <div className='lobbyDescription'> {notiinfo[i]}</div>
