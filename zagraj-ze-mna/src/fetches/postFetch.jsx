@@ -37,7 +37,7 @@ import { jwtDecode } from 'jwt-decode';
 import { expandLink } from './expandLink';
 import {CheckData} from './testers/checkData';
 
-export const postFetchJWT = async (url,my_body, toJSON=true) => {
+export const postFetchJWT = async (url,my_body, toJSON=true, postMethod=true) => {
     
     const token = localStorage.getItem('token');
     let data = null;
@@ -80,16 +80,22 @@ export const postFetchJWT = async (url,my_body, toJSON=true) => {
                 'Authorization' : `Bearer ${tokenWithoutQuotes}`};
              sender = my_body;
         }
+        let post_m
+        if(postMethod)
+            post_m = 'POST';
+        else
+            post_m = 'DELETE';
            
 
-        console.log(sender);
+        //console.log("body: ",sender);
+        //console.log("headers: ", my_headers);
 
         const response = await fetch(
         urlBig,
         {
-            method: 'POST',
+            method: post_m,
             headers: my_headers,
-            body: sender
+            body:  sender,
         }
         );
 

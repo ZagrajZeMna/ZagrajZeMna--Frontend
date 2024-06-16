@@ -6,52 +6,81 @@ import { Link } from 'react-router-dom';
 import useScreenSize from '../../hooks/dimensions';
 
 //css
-import './userPage.css';
+import './userProfile.css';
+
 
 //images
 import Ghost from '../../assets/ghost.png';  
-import Ludek from '../../assets/testowy_ludek.png';
 import BackImage from '../../assets/back-image-smaller.png';
 import Points from '../../assets/pac_manPoint.png';
+import { useParams } from 'react-router-dom';
 
+import useGetToken from '../../fetches/useFetch';
 
 //icons
-
 import { FaRegEdit, FaVenusMars } from "react-icons/fa";
-
-//page parts
-import UserPageGames from './usePageGames';
-import UserPageLobbys from './userPageLobbys';
-import Footer from '../../PageStructureElements/footer/footer';
-import UserProfile from '../../PageStructureElements/userProfile/userProfile';
 import { expandLink } from '../../fetches/expandLink';
+import { useToast } from 'react-toastify';
 
 
 
 
-const UserPage = () =>
- {
 
-    
+const UserProfile = () =>
+{
     //to check screen dimensions
     const { height, width } = useScreenSize();
 
     //use for setting interval
     const [firstTime, setFT] = useState(true);
-
-    //error with fetching
-    const [error, setError] = useState(null);
-    const [isLoading, setIsLoading] = useState(null);
+    const [once, setOnce] = useState(true);
 
     //data
-    const [dataFromGet, setDataFromGet] = useState(null);
     const [mediocre, setMed] = useState(0);
+    const [able_to_change, setAbleToChange] = useState(null);
 
+    let expample = {
+        data: null,
+        isError: false,
+        isPending: false
+    }
+
+    let dataFromGet = expample;
+
+    let currentUrl = window.location.href;
+
+    let go_to_link = '';
+
+    //getting data
+    if(currentUrl.slice(-9)=='/userPage'){
+        dataFromGet = useGetToken('/api/profile/getUserDetails');  
+        if(once){
+            setAbleToChange(true);
+            setOnce(false);
+            
+        }
+        go_to_link = '/editUserPage';
+        
+    }
+    else if(currentUrl.search('/userProfile/')){
+        let {id} = useParams();
+        dataFromGet = useGetToken(`/api/profile/getUserById?id=${id}`);
+        if(once){
+            setAbleToChange(null);
+            setOnce(false);
+            
+        }
+        go_to_link = `/userProfile/${id}`;
+    }
 
     //Variables
     var ColouringClass = 'greenBox'; //this tells what is colour of evaluation of profile, eg. 4.5 is green
     var profileDivHeight = 100; //this sets initial value of second div about character (about and domicile)
 
+    function checkAbleToChange()
+    {
+        return able_to_change;
+    }
 
     //this change variable value
     function setPDHeight(h)
@@ -114,60 +143,10 @@ const UserPage = () =>
             document.getElementById('heightTarget').style.height = helper ;
         }
     }
-
-    //fetching data from backend
-    useEffect(()=>{
-        const getData = async () => {
-            try{
-
-                const token = localStorage.getItem('token');
-                
-                //if token not exist = we are log out
-                if(!token){
-                    setError('Please log in');
-                    return;
-                }
-                const tokenWithoutQuotes = token.replace(/"/g, '');
-
-                //fetching user data
-                let url = expandLink('/api/profile/getUserDetails');
-                const response = await fetch(url, {
-                    method:'GET',
-                    headers: {
-                        'Authorization' : `Bearer ${tokenWithoutQuotes}`,
-                        'accept': 'application/json',
-                    }
-                    });
-
-                    //if response is bad
-                    if(!response.ok){
-                        throw new Error('can not reach Your data');
-                    }
-
-                    //parsing to json
-                    const dataFromGet = await response.json();
-                    
-                    //setting data
-                    setDataFromGet(dataFromGet);
-                    setError(null);
-                    if(dataFromGet.averageRating == null)
-                        setMed(0);
-                    else
-                        setMed(dataFromGet.averageRating);
-                    //console.log("Dane: ", dataFromGet);
-                    
-                }catch (error){
-                //setting error if occurs
-                setError(error.message);
-            }
-        };
-        
-        getData();
-    }, []);
     
     function checkMed(med)
     {
-        if(med == 0)
+        if(med == null)
             return (<><br/>'brak ocen'</>);
         else
             return med;
@@ -267,18 +246,111 @@ const UserPage = () =>
 
 
 
-    //RETURN
-    //---------------------------------------------------------------------------------------------------------------
     return(
-        <div className="userPageContainer" onLoad={firstTimeSettingInterval}>
-            <UserProfile/>
-            {/*Another parts of page */}
-            <UserPageGames/>
-            <UserPageLobbys/>
-            <Footer/>
+        <div className="userProfileContainer" onLoad={firstTimeSettingInterval}>
+            {/* PAGE BACK IMAGE -> game pad*/}
+            <div className='backImage col-12' id="backImageId">  
+                <img src={BackImage} alt='pad do gry jako tło strony' className='img-fluid tlo'/>
+            </div>
+
+            {/* more space add additional space after backimage*/}
+            <div className='moreSpace' id='spaceHeight1'></div>
+            
+            
+            {/* Banner = header of character sheet */}
+            <div className='Banner' id='BannerID'>
+                <div className='BannerTitle'>
+                    <h1>KARTA POSTACI:</h1>
+                </div>
+                
+            </div>
+
+            {/* backTriangle = set triangular gradient in the back */}
+            <div className='backTriangle' id='backTraingleID'>
+            
+
+            
+            {/* two dives with personal infromation */}
+            <div id ='profileContainerId' className='allInfoProfileContainer'>
+                <Link to={go_to_link}>
+                    <div className="generalInfo col-10 offset-1 offset-md-0 col-md-4 offset-xl-1 col-xl-3">
+                        <div className="personalData" id="personalDataId">
+                            
+                            {(able_to_change) && (
+                                <div className='myEditIcon'>
+                                    <FaRegEdit />
+                                </div>)}
+
+                            <div className='userImage'>
+                                {dataFromGet.data && (!dataFromGet.isError) && (<img src={dataFromGet.data.avatar} className='img-fuild userImage2' alt="your profile"/>)}
+                            </div>
+
+                            <div className='myData'>
+                                <p className='nickname'> {dataFromGet.data && (!dataFromGet.data.isError) && dataFromGet.data.username}</p>
+                                <p> <span className='topSecret'>Kontakt: </span> {dataFromGet.data && (!dataFromGet.data.isError) && dataFromGet.data.contact}</p>
+                                <p className='Mymediocre'><span>Ocena profilu: </span> <span className={ColouringClass + ' Mymark'}>{dataFromGet.data && (!dataFromGet.data.isError) && (checkMed(dataFromGet.data.averageRating))}</span></p> 
+                            </div>
+                                
+
+                        </div>
+                    </div>
+                </Link>
+
+
+                <div  className='bioContainer offset-1 col-10 offset-md-0 col-md-8 col-xl-7'  id=" screenPercent" >
+
+                    <div className="bio" id="heightTarget" style={{height: + profileDivHeight + 'px'}}>
+
+                        {(able_to_change) && (<div className='myEditIcon'>
+                            <FaRegEdit />
+                        </div>)}
+                        
+                        <div className='bio_details' onLoad={checkHeight}>
+
+                            <h2> Dane: </h2>                      
+                            <p className='bioListElement'>
+                                <span className='aboutMeLiTitle'>Pochodzenie: </span> {dataFromGet.data && (!dataFromGet.data.isError) && dataFromGet.data.country}- {dataFromGet.data && (!dataFromGet.data.isError) && dataFromGet.data.city}
+                            </p>
+                            
+                            <p className='bioListElement'>
+                                <span className='aboutMeLiTitle'>Język: </span> {dataFromGet.data && (!dataFromGet.data.isError) && dataFromGet.data.language}
+                            </p>
+                            
+
+                            <h2> Opis postaci: </h2>
+                            <p className='bioAboutMe small-font-size'>
+                                {dataFromGet.data && (!dataFromGet.data.isError) && dataFromGet.data.about}   
+                            </p>
+
+                        </div>
+                    </div>
+                </div>
+            </div>   
+           
+           
+            {/* CLEARER = clear: both */}
+            <div className='clearer'></div>
+            <div className='mediumSpace' id='spaceHeight2'></div>
+            </div>
+
+
+            {/* pacman box */}
+            { (width>=992) && (<div className="pacmanMoving">
+                <div className='GhostMoving'>
+                    <img className='img-fluid' src ={Ghost} alt = "pacman ghost" width={50}/>
+                </div>
+                <div className="pacman">
+                    <div className='pacman_eye'></div>
+                    <div className='pacman_mouth'> </div>
+                </div>
+                <div className='pointsEater'></div>
+                <div className='pacmanPoints'> </div>
+            </div>)}
+
+            <div className='clearer'></div>
 
         </div>
     );
 }
 
-export default UserPage;
+export default UserProfile;

@@ -47,6 +47,7 @@ const MyNavbar = () => {
 
     //jwt token
     const token = localStorage.getItem('token');
+    const adminToken = localStorage.getItem('adminToken');
 
     //for side bar maneu
     const [additaionlMenu, setAdditionalMenu] = useState(false);
@@ -75,11 +76,14 @@ const MyNavbar = () => {
     let firstButtonTextSmall = 'Logowanie';
     let secondButtonTextSmall = 'Dołącz';
 
+    let isAdmin = false;
+
     //checking if token is decoded properly
     //console.log(decoded);
 
 
     //checikng if token is done properly
+    console.log(decoded);
     if(decoded.exp * 1000 < currentDate.getTime() || token == null)
     {
 
@@ -100,7 +104,7 @@ const MyNavbar = () => {
     else if(token != null && decoded.exp * 1000 >= currentDate.getTime() )
     {
         //console.log("you are logged in");
-        //console.log(decoded.exp);
+        
         login = true;
 
         myPage = '/userPage';
@@ -111,6 +115,11 @@ const MyNavbar = () => {
         secondButtonText = 'HOME';
         firstButtonTextSmall = 'Moje lobby';
         secondButtonTextSmall = 'Home';
+
+        if(adminToken){
+            const decodedAdmin = jwtDecode(adminToken);
+            isAdmin = decodedAdmin.ADMIN === true;
+        }
     }
 
     const handleLogout = () => {
@@ -288,7 +297,7 @@ const MyNavbar = () => {
                     <Link to="/ResetPassword" onClick={settingHidder}> <p>Zmień hasło</p></Link>
                     <Link to="/editUserPage" onClick={settingHidder}><p>Ustawienia profilu</p></Link>
                     <Link to="/notification" onClick={settingHidder}><p>Powiadomienia</p></Link>
-                    <Link to="/editNotificationsPage" onClick={settingHidder}><p>Dodane gry</p></Link>
+                    {isAdmin && (<Link to="/adminPage" onClick={settingHidder}><p>Admin panel</p></Link>)}
                     <Link to="/" onClick={handleFunction}> <p>Wyloguj</p></Link>
                 </div>)}
 
@@ -350,8 +359,8 @@ const MyNavbar = () => {
                         <p className='settingsHeader'>USTAWIENIA</p>
                         <Link to="/ResetPassword" onClick={settingHidder}> <p>Zmień hasło</p></Link>
                         <Link to="/editUserPage" onClick={settingHidder}><p>Ustawienia profilu</p></Link>
-                        <Link to="/editNotificationsPage" onClick={settingHidder}><p>Powiadomienia</p></Link>
-                        <Link to="/editNotificationsPage" onClick={settingHidder}><p>Dodane gry</p></Link>
+                        <Link to="/notification" onClick={settingHidder}><p>Powiadomienia</p></Link>
+                        {isAdmin && (<Link to="/adminPage" onClick={settingHidder}><p>Admin panel</p></Link>)}
                         <Link to="/" onClick={handleFunction}> <p>Wyloguj</p></Link>
                     </div>)}
 

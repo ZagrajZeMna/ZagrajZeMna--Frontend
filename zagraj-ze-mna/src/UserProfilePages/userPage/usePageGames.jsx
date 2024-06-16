@@ -99,7 +99,7 @@ const UserPageGames = () =>
 
             //fetching user data
             let url = expandLink('/api/profile/usersGames');
-            const response = await fetch(url,{
+            const response = await fetch(url, {
                 method:'POST',
                 headers: {
                     'Authorization' : `Bearer ${tokenWithoutQuotes}`,
@@ -119,6 +119,7 @@ const UserPageGames = () =>
 
                 //parsing to json
                 const dataFromGet = await response.json();
+                console.log("Giery: ",dataFromGet);
                 
                 //setting data
                 setGameList(dataFromGet);
@@ -260,24 +261,27 @@ const UserPageGames = () =>
             let game_name_link = '';
             let begining = '/category/';
             let value_of_game =-1;
+            let image = '';
 
             if(i < number_of_games)
             {
                 game_name = gameList.Games[i].shortname;
                 game_name_link = gameList.Games[i].name;
                 begining = '/category/';
+                image = gameList.Games[i].image;
             }
             else
             {
                 game_name_link = '';
                 begining = '';
+                image = Sus;
             }
                 
 
             content.push(
             <Link to={`${begining}${game_name_link}`} key={i}>
                 <div key={i} className={'tetrisBlock tetrisBlock_withGame ' + colorClass} style={{height: + HeightOfBlock + 'px'}}>
-                    {((number_of_games > i) && (<img src={Sus} alt="gra" className='img-fluid gameImage'/>))}
+                    {((number_of_games > i) && (<img src={image} alt="gra" className='img-fluid gameImage'/>))}
                     <p>{game_name}</p>
                 </div>
             </Link>);
@@ -294,19 +298,21 @@ const UserPageGames = () =>
         let content = [];
         let number_of_games = 0;
         let game_name_link = '/';
+        let image = '';
         if(gameList != null)
             number_of_games = gameList.Games.length;
         
         for(let i=0; i<number_of_games; i++)
         {
 
-
+            game_name_link = gameList.Games[i].name;
+            image = gameList.Games[i].image;
             content.push(
                 <Link to={`/category/${game_name_link}`} key={i}>
                     <div key={i} className='col-lg-2 col-md-3 col-sm-4 col-6 gamesShelf'>
                         <div className='gamesShelfItem'>
                             <div className={'gamesShelfItemInside colorClassGame' + ' whiteShadow'}>
-                                <img src={Sus} alt="gra" className='img-fluid gameImageSmall'/>
+                                <img src={image} alt="gra" className='img-fluid gameImageSmall'/>
                                 <p>{gameList.Games[i].shortname}</p>
                             </div>
                         
@@ -315,6 +321,13 @@ const UserPageGames = () =>
                 </Link>
             );
         }
+
+        if(number_of_games == 0)
+            content.push(
+                <div key={-1000} className='gamesNotAddedYet'>
+                    Jeszcze nie dodano żadnych gier na półkę. Możesz tego dokonać na stronie głównej.
+                </div>
+        );
 
         return content;
     }

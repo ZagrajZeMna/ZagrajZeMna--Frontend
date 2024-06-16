@@ -9,6 +9,12 @@
   border-radius: 15px;
 }
 
+a
+{
+  color: #eee !important;
+  text-decoration: none !important;
+}
+
 .registrationForm {
   display: none;
   flex-direction: row;

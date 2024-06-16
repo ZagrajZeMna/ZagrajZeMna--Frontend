@@ -50,7 +50,7 @@ const EditPageUserPicture = () => {
             setDError(myError);
             setErrorMessage(myErrorMessageHere);
             
-            console.log(myErrorMessage);
+            //console.log(myErrorMessage);
 
             if(!myError){
                 setSaved(true);

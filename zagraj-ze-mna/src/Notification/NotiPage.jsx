@@ -57,6 +57,7 @@ const NotiPage = () => {
             }
             const dataFromGet = await response.json();
             setDataFromGet(dataFromGet);
+            console.log(dataFromGet);
         } catch (error) {
             console.error(error);
         }
@@ -147,12 +148,15 @@ const NotiPage = () => {
         const description = dataFromGet ? dataFromGet.Notification.map(noti => noti.message) : [];
         const notiIds = dataFromGet ? dataFromGet.Notification.map(noti => noti.idNoti) : [];
         const lobbyIds = dataFromGet ? dataFromGet.Notification.map(noti => noti.idLobby) : [];
+        const avatar = dataFromGet ? dataFromGet.Notification.map(noti => noti.ownerAvatar): [];
+        const senderId =  dataFromGet ? dataFromGet.Notification.map(noti => noti.senderId): [];
         for (let i = 0; i < description.length; i++) {
             content.push(
                 <div key={i} className={'notificationOne'}>
-                    <div className='lobbyPicture flotLeftClassOrSth col-4 col-md-2' href="/">
-                        <img src={Ludek} alt='obraz przedstawiający lobby' className='img-fluid lobbyPictureImg' />
-                    </div>
+                    <Link to={`/userProfile/${senderId}`}>
+                        <div className='lobbyPicture flotLeftClassOrSth col-4 col-md-2' href="/">
+                            <img src={avatar} alt='obraz przedstawiający lobby' className='img-fluid lobbyPictureImg' />
+                    </div></Link>
                     <div className='lobbyInfoContainer flotLeftClassOrSth col-7 col-md-10'>
                         <div className='lobbyDescription'> {description[i]}
                         </div>
@@ -175,11 +179,13 @@ const NotiPage = () => {
         let info = [];
         const notiinfo = notificationInfo ? notificationInfo.Notification.map(noti => noti.message) : [];
         const notiIds = notificationInfo ? notificationInfo.Notification.map(noti => noti.idNoti) : [];
+        const avatar = dataFromGet ? dataFromGet.Notification.map(noti => noti.ownerAvatar): [];
+        console.log(avatar);
         for (let i = 0; i < notiinfo.length; i++) {
             info.push(
                 <div key={i} className={'notificationOne'}>
                     <div className='lobbyPicture flotLeftClassOrSth col-4 col-md-2' href="/">
-                        <img src={Ludek} alt='obraz przedstawiający lobby' className='img-fluid lobbyPictureImg' />
+                        <img src={avatar} alt='obraz przedstawiający lobby' className='img-fluid lobbyPictureImg' />
                     </div>
                     <div className='lobbyInfoContainer flotLeftClassOrSth col-7 col-md-10'>
                         <div className='lobbyDescription'> {notiinfo[i]}</div>

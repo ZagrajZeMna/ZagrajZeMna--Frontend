@@ -38,6 +38,8 @@
     color: white;
     text-align: center;
     font-family: "IBM Plex Mono", monospace;
+    margin-top: 40px;
+    margin-bottom: 40px;
 }
 .serverDownContainer {
     display: flex;
@@ -52,4 +54,84 @@
   }
 .wrapper{
     flex-grow: 1;
+}
+
+
+.myLobbies
+{
+    padding-top: 1%;
+    border-top-left-radius: 25px;
+    border-top-right-radius: 25px;
+    width: 80%;
+    margin-left: 10%;
+    word-spacing: 15px;
+    font-weight: bold;
+    text-align: left;
+    color: #eee;
+    margin-bottom: 1%;
+    font-family: "IBM Plex Mono", monospace;
+}
+
+.ZeroLobbies
+{
+    font-family: "IBM Plex Mono", monospace;
+    width: 80%;
+    margin-left: 10%;
+    text-indent: 5%;
+    font-size: 25px;
+    color: #eee;
+    margin-top: 80px;
+    margin-bottom: 80px;
+}
+
+.GimmeSomeSpacePls
+{   
+    width: 100%;
+    height: 40px;
+}
+
+.lobbySmallTitle
+{
+    font-weight: bold;
+    width: 50%;
+    padding-top: 2%;
+    padding-bottom: 0.5%;
+    margin-bottom: 30px;
+    padding-left: 2%;
+    border-top: 2px solid #eee;
+    border-top-left-radius: 25px;
+    
+}
+
+
+@media screen and (max-width: 1199px) 
+{
+    .lobbiSmallTitle
+    {
+        border-top-left-radius: 15px;
+        border-top-right-radius: 15px;
+        border-top: 2px solid #eee;
+        font-family: '"IBM Plex Mono", monospace';
+        padding-top: 2%;
+        padding-left: 2%;
+        width: 70%;
+        margin-left: 15%;
+        text-align: center;
+        word-spacing: 15px;
+        color: #eee;
+        padding-bottom: 1%;
+        margin-bottom: 0;
+    }
+
+
+
+    .lobbySmallTitle
+    {
+        margin-left: 0%;
+        width: 100%;
+        margin-bottom: 0.5%;
+        padding-bottom: 0.5%;
+        margin-top: 7%;
+    }
+    
 }

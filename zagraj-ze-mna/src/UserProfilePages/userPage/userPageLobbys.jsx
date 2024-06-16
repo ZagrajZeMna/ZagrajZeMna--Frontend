@@ -81,10 +81,14 @@ const UserPageLobbys = () =>{
             'size': '3'};
 
         let url = '/api/profile/usersLobby';
-        let respond = await postFetchJWT(url,body);
+        let respond = await postFetchJWT(url, body, true);
         console.log(respond.data);
-        setLobbyList(respond.data);
-        setMaxPage(respond.data.pages-1);
+        if(!respond.isError){
+            setLobbyList(respond.data);
+            console.log("lobby data", respond.data);
+            setMaxPage(respond.data.pages-1);
+        }
+        
     }
 
 

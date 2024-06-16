@@ -55,11 +55,12 @@ const Messages = ({ socket, usernameMy ,roomId}) => {
       }
 
       const data = await response.json();
-      console.log("Fetched data:", data); // Log the response data
+      //console.log("Fetched data:", data); // Log the response data
 
       if (!Array.isArray(data.message)) {
         throw new Error("Response is not an array");
       }
+
 
       const formattedMessages = data.message.map((msg) => ({
         message: msg.message,
@@ -68,7 +69,11 @@ const Messages = ({ socket, usernameMy ,roomId}) => {
         time: msg.time,
       }));
 
+      console.log(formattedMessages);
+
       setMessagesReceived((state) => [...state, ...formattedMessages]);
+
+      console.log('wiadomości: ',messagesReceived);
     } catch (error) {
       console.error("Failed to fetch messages:", error);
     }
@@ -86,6 +91,7 @@ const Messages = ({ socket, usernameMy ,roomId}) => {
 
   // Sort messages by date
   function sortMessagesByDate(messages) {
+    //console.log(messages);
     return messages.sort(
       (a, b) => parseInt(a.__createdtime__) - parseInt(b.__createdtime__)
     );
@@ -93,11 +99,13 @@ const Messages = ({ socket, usernameMy ,roomId}) => {
 
   // dd/mm/yyyy, hh:mm:ss
   function formatDateFromTimestamp(timestamp, justtime) {
-    console.log("czas: ", timestamp);
-    console.log(justtime);
+    //console.log("data: ", timestamp);
+    //console.log("czas: ",justtime);
     const date = new Date(timestamp);
     let value = date.toLocaleString();
+   
     value = value.substring(0, value.length-10);
+    value = value + " " + justtime;
     return value;
   }
 
@@ -148,22 +156,32 @@ const Messages = ({ socket, usernameMy ,roomId}) => {
 
   }
 
-  return (
-    <div className={styles.messagesColumn} ref={scrollSpan}>
-      {sortMessagesByDate(messagesReceived).map((msg, i) => (
-        <div className={styles.message + " " + doMagicClassNameAling(msg.username) + " "+ addintional_margin_class(msg.username, msg.date)} key={i}>
+  function create_message_list(messages)
+  {
+    let msg_sorted = sortMessagesByDate(messagesReceived);
+    let content = [];
+    console.log(msg_sorted);
+    for(let i=0; i<msg_sorted.length; i++)
+    {
+      content.push(
+        <div className={styles.message + " " + doMagicClassNameAling(msg_sorted[i].username) + " "+ addintional_margin_class(msg_sorted[i].username, msg_sorted[i].date)} key={i}>
           <div className={styles.messagewrapper}>
-            {vanisher_or_sth(msg.username, msg.date) && <span className={doMagicClassName(msg.username) + " " + styles.booldMessage}>{msg.username} </span>}
+            {vanisher_or_sth(msg_sorted[i].username, msg_sorted[i].date) && <span className={doMagicClassName(msg_sorted[i].username) + " " + styles.booldMessage}>{msg_sorted[i].username} </span>}
             <span className={styles.msgMeta}>
-              {hider && (formatDateFromTimestamp(msg.date, msg.time))}
+              {hider && (formatDateFromTimestamp(msg_sorted[i].date, msg_sorted[i].time))}
             </span>
           </div>
-          {/*<span className={styles.msgText} >C:Users\</span>*/}
-          <span className={styles.booldMessage}>{msg.message}</span>
+          <span className={styles.booldMessage}>{msg_sorted[i].message}</span>
           <span ref={scrollSpan}></span>
         </div>
-        
-      ))}
+      );
+    }
+    return content;
+  }
+
+  return (
+    <div className={styles.messagesColumn} ref={scrollSpan}>
+      {create_message_list(messagesReceived)}
     </div>
   );
 };

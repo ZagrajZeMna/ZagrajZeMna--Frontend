@@ -21,6 +21,7 @@ import Notification from "./Notification/notification";
 import NotiPage from "./Notification/NotiPage";
 import Lobby from './Lobby/Lobby';
 import MyLobby from "./MyLobby/MyLobby";
+import UserProfileOthrers from "./UserProfilePages/userProfileOthers/userProfileOthers";
 
 function App() {
 
@@ -47,6 +48,11 @@ function App() {
           <Route path="/myLobby" element={
             <ProtectedRoute>
             <MyLobby/>
+            </ProtectedRoute>}></Route>
+
+          <Route path="/userProfile/:id" element={
+            <ProtectedRoute>
+              <UserProfileOthrers/>
             </ProtectedRoute>}></Route>
 
           <Route path="/adminPage" element={

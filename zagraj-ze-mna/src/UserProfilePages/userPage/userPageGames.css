@@ -145,6 +145,11 @@
     
 }
 
+.informations_game p
+{
+    margin-top: 10px;
+}
+
 .blueTetrisBlockSmall
 {
     border: 1px solid #eee;
@@ -185,10 +190,10 @@
 {
     width: 60%;
     margin-left: 20%;
-
     height: auto;
-   
-    border-radius: 25px;
+    object-fit: cover;
+    aspect-ratio: 1/1;
+    border-radius: 10px;
 }
 
 .tetrisBlock p
@@ -409,11 +414,11 @@
 
 .gameImageSmall
 {
-    width: 50%;
-    margin-left: 25%;
-    height: auto;
+    width: 80%;
+    margin-left: 10%;
+    height: auto !important;
     border: 1px solid #eee;
-    border-radius: 25px;
+    border-radius: 10px;
 }
 
 
@@ -426,6 +431,12 @@
         margin-top: 2%;
         color: white;
     }
+
+    .gamesNotAddedYet
+    {
+        width: 80%;
+        margin-left: 10%;
+    }
 }
 
 @media screen and (max-width: 649px)
@@ -436,6 +447,20 @@
         color: white;
     }
 
+    .gamesNotAddedYet
+    {
+        width: 100%;
+    }
+
+}
+
+.gamesNotAddedYet
+{
+    color: #eee;
+    font-size: 25px;
+    margin-top: 150px;
+    margin-bottom: 150px;
+    text-align: center;
 }
 
 

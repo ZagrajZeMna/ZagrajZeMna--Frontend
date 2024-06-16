@@ -70,6 +70,8 @@ const EditPageUserDataForm = () =>{
     //getting data needed for this page
     const {isPending, isError, errorMessage, data} = useGetToken('/api/profile/getUserDetails');
     const DataRespond = useGetToken('/api/profile/getAllLanguages');
+    const MyData = useGetToken('/api/profile/getUserById/?id=2');
+    //console.log('data:' ,MyData);
     
 
     //handles submit
@@ -187,12 +189,12 @@ const EditPageUserDataForm = () =>{
                 if(errorMessage == "This username is already taken.")
                 {
                     setDEM('Nazwa użytkownika jest już zajęta! Wybiesz inną!');
-                    console.log(displayErrorMessage);
+                    //console.log(displayErrorMessage);
                 }
                 else if(errorMessage == 'Forbiden request! Please log in!')
                 {
                     setDEM('Sesja wygasła, proszę się zalogować.')
-                    console.log(displayErrorMessage);
+                    //console.log(displayErrorMessage);
                 }
             }
             else
