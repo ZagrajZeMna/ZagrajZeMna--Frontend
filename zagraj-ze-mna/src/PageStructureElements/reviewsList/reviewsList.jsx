@@ -24,7 +24,7 @@ const ReviewList = () =>{
     let size = 5; 
 
     let myUrl = ''
-
+    let {id} = useParams();
     let currentUrl = window.location.href;
 
     if(currentUrl.slice(-9)=='/userPage'){
@@ -32,6 +32,7 @@ const ReviewList = () =>{
         if(once){
             setOnce(false);
             myUrl = '/api/review/sendReviews';
+            console.log(myUrl);
             
         }
     }
@@ -40,7 +41,7 @@ const ReviewList = () =>{
         if(once){
             setOnce(false);  
             myUrl = `/api/review/sendReviewsByUrl?id=${id}`; 
-            //console.log(myUrl);
+            console.log(myUrl);
         }
     }
     
@@ -78,11 +79,24 @@ const ReviewList = () =>{
         }
     }
 
-    const getReviews = async () =>
+    const getReviews = async (page) =>
     {
+
+        if(currentUrl.slice(-9)=='/userPage'){
+            //dataFromGet = useGetToken('/api/profile/getUserDetails'); 
+            myUrl = '/api/review/sendReviews';
+            console.log(myUrl);
+        }
+        else if(currentUrl.search('/userProfile/')){
+            //let {id} = useParams();  
+            myUrl = `/api/review/sendReviewsByUrl?id=${id}`; 
+            console.log(myUrl);
+        }
+
+        console.log(page);
         let body =
         { 
-            "page": `${currentPage}`,
+            "page": `${page}`,
             "size": `${size}`
         };
 
@@ -90,16 +104,12 @@ const ReviewList = () =>{
 
         let respond = await postFetchJWT(url, body);
         console.log("data: ", respond.data);
-        if(!respond.isError){
+        setMP(0);
+        if(!respond.isError && respond.data != null){
             
             setReviewList(respond);
-            //console.log("review data: ", reviewList);
-            if(respond.data != null){
-                    setMP(respond.data.pages-1);
-                console.log(maxPage);
-            }
-            else
-                setMP(0);
+            setMP(respond.data.pages-1);
+            console.log(maxPage);
             
         }
     }
@@ -146,7 +156,7 @@ const ReviewList = () =>{
     {
         if(firstTime){
             setFTfrfr(false);
-            getReviews();
+            getReviews(0);
         }
     }
 
