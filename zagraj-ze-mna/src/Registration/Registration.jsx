@@ -224,7 +224,7 @@ function Registration() {
                 <button type="submit" className={styles.btn}>Zarejestruj się</button>
             </div>
             <div>
-                <p className={styles.textToLogin}>Zaloguj się <a href='/login'>tutaj</a></p>
+                <p className={styles.textToLogin}>Zaloguj się <a className={styles.linkDRUGI} href='/login'>tutaj</a></p>
             </div>
         </form>
       </div>
