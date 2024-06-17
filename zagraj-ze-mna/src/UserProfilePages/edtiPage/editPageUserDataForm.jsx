@@ -132,6 +132,10 @@ const EditPageUserDataForm = () =>{
                 is_error = respond.isError;
                 errorMessage = respond.errorMessage;
                 setNickChange(false);
+
+                if(!isError){
+                    localStorage.setItem('username', myNick);
+                }
             }
             if(aboutChange)
             {
@@ -177,6 +181,8 @@ const EditPageUserDataForm = () =>{
                 is_error = respond.isError;
                 errorMessage = respond.errorMessage;
                 setContactChange(false);
+
+                
             }
 
             
@@ -198,7 +204,10 @@ const EditPageUserDataForm = () =>{
                 }
             }
             else
+            {
                 setDU(true);
+            }
+                
 
             
         }

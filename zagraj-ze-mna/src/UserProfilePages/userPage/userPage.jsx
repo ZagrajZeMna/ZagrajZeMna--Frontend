@@ -25,6 +25,7 @@ import UserPageLobbys from './userPageLobbys';
 import Footer from '../../PageStructureElements/footer/footer';
 import UserProfile from '../../PageStructureElements/userProfile/userProfile';
 import { expandLink } from '../../fetches/expandLink';
+import ReviewList from '../../PageStructureElements/reviewsList/reviewsList';
 
 
 
@@ -154,7 +155,7 @@ const UserPage = () =>
                         setMed(0);
                     else
                         setMed(dataFromGet.averageRating);
-                    //console.log("Dane: ", dataFromGet);
+                    console.log("Dane: ", dataFromGet);
                     
                 }catch (error){
                 //setting error if occurs
@@ -275,6 +276,7 @@ const UserPage = () =>
             {/*Another parts of page */}
             <UserPageGames/>
             <UserPageLobbys/>
+            <ReviewList/>
             <Footer/>
 
         </div>

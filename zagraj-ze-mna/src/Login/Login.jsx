@@ -24,46 +24,6 @@ function Login(){
           } catch (error) {
             setError(error.message);
           }
-        // try {
-        //     const response = await fetch('http://localhost:4001/api/auth/signin', {
-        //         method: 'POST',
-        //         headers: {
-        //             'Content-Type' : 'application/json',
-        //         },
-        //         body: JSON.stringify({
-        //             email: email,
-        //             password: password  
-        //         }),
-        //     });
-
-        //     if(!response.ok){
-        //         const errorData = await response.json();
-        //         throw new Error(errorData.message || 'Błąd logowania');
-        //     }
-        
-        //     const token = await response.text();
-        //     localStorage.setItem('token', token);
-        //     const headers = {
-        //         'Content-Type' : 'application/json',
-        //         'Authorization': `Bearer ${token}`
-        //     };
-        //     const responseWithHeaders = await fetch('http://localhost:4001/api/auth/signin', {
-        //         method: 'POST',
-        //         headers: headers,
-        //         body: JSON.stringify({
-        //             email: email,
-        //             password: password  
-        //         }),
-        //     });
-
-
-        //     navigate('/');
-            
-        // } catch (error) {
-        //     setError(error.message);
-        // }
-
-        
     };
 
     const togglePasswordVisibility = () => {
@@ -84,7 +44,8 @@ function Login(){
                         type="text" 
                         placeholder="email" 
                         value={email} 
-                        onChange={(e) => setEmail(e.target.value)} ></input>
+                        onChange={(e) => setEmail(e.target.value)}
+                        maxLength={100} ></input>
                         <FaUser className={styles.icon}/>
                     </div>
 
@@ -94,7 +55,8 @@ function Login(){
                         type={showPassword ? "text" : "password"} 
                         placeholder="haslo" 
                         value={password} 
-                        onChange={(e) => setPassword(e.target.value)} ></input>
+                        onChange={(e) => setPassword(e.target.value)} 
+                        maxLength={20}></input>
 
                         <p onClick={togglePasswordVisibility} className={styles.icon_lock}>
                         {showPassword ? <FaLockOpen/> : <FaLock/>}
@@ -104,12 +66,12 @@ function Login(){
                     
                     <div className={styles.forgot}>
                         
-                        <a href="/resetPassword">Zresetuj hasło</a>
+                        <a className={styles.linkDwaZero} href="/resetPassword">Zresetuj hasło</a>
                     </div>
                     <div className={styles.error}>{error}</div>
                     <button className={styles.btnSub} type="submit">Zaloguj się</button>
                     
-                    <p className={styles.taxtToSignup}>Zarejestruj się <a href="/registration">tutaj</a></p>
+                    <p className={styles.taxtToSignup}>Zarejestruj się <a className={styles.linkDwaZero} href="/registration">tutaj</a></p>
                 </div>
                 </div>
             </form>

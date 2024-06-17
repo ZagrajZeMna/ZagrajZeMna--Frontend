@@ -100,7 +100,7 @@ const Messages = ({ socket, usernameMy ,roomId}) => {
   // dd/mm/yyyy, hh:mm:ss
   function formatDateFromTimestamp(timestamp, justtime) {
     //console.log("data: ", timestamp);
-    //console.log("czas: ",justtime);
+    console.log("czas: ",justtime);
     const date = new Date(timestamp);
     let value = date.toLocaleString();
    

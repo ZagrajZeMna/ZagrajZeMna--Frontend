@@ -166,14 +166,12 @@
   position: relative;
   display: flex;
   flex-direction: column;
-  justify-content: center;
+  justify-content: flex-start;
   align-items: center;
   text-align: center;
   text-decoration: none;
   color: #333;
   background-color: #111111;
-  /* border: 1.5px solid #313131; */
-  /*border-radius: 8px;*/
   overflow: hidden;
   transition: all 0.3s ease;
   margin: 10px;
@@ -189,10 +187,8 @@
 }
 
 .game-tile img {
-  margin-bottom: auto; /* Push the image to the top */
   width: 100%;
   height: auto;
-  transition: transform 0.3s ease;
 }
 
 .game-name {
@@ -249,7 +245,12 @@
 .game-tile:hover:before {
   opacity: 0.9;
 }
-
+.game-tile .game-name,
+.game-tile .lobby-count {
+  margin-top: 10px;
+  width: 100%;
+  text-align: center;
+}
 @media screen and (max-width: 768px) {
   .game-tiles-container {
     grid-template-columns: repeat(auto-fill, minmax(50px, 1fr));

@@ -174,7 +174,7 @@ function ResetPassword() {
                         <div className={styles.error}>{success}</div>
                         <button className={styles.resetBtn} type="submit">Zatwierdź</button>
                         
-                        <p className={styles.textToLogIn}>Zaloguj się <a href="/login">tutaj</a></p>
+                        <p className={styles.textToLogIn}>Zaloguj się <a className={styles.linkTRZY} href="/login">tutaj</a></p>
                     </div>
                 </form>
             </div>

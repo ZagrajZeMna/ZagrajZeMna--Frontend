@@ -294,10 +294,9 @@ const MyNavbar = () => {
 
                 {login && (<div className={addMenuClass + widerMenuAdditional + ' setting_margin_big'}>
                     <p className='settingsHeader'>USTAWIENIA</p>
-                    <Link to="/ResetPassword" onClick={settingHidder}> <p>Zmień hasło</p></Link>
                     <Link to="/editUserPage" onClick={settingHidder}><p>Ustawienia profilu</p></Link>
                     <Link to="/notification" onClick={settingHidder}><p>Powiadomienia</p></Link>
-                    {isAdmin && (<Link to="/adminPage" onClick={settingHidder}><p>Admin panel</p></Link>)}
+                    {isAdmin && (<Link to="/adminPage" onClick={settingHidder}><p>Panel administratorski</p></Link>)}
                     <Link to="/" onClick={handleFunction}> <p>Wyloguj</p></Link>
                 </div>)}
 

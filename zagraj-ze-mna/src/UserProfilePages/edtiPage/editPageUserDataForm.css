@@ -147,7 +147,7 @@
 
     .myInputClass select, input
     {
-        width: 100%;
+        width: 100% !important;
         border-radius: 5px;
         padding: 1%;
         font-size: 15px;

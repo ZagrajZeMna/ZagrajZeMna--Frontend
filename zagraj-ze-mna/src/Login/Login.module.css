@@ -126,6 +126,9 @@
 .taxtToSignup a:hover{
     text-decoration: underline;
 }
+.linkDwaZero{
+    color: black !important;
+}
 
 
 @media screen and (max-width: 796px) {

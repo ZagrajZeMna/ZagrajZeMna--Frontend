@@ -1,0 +1,59 @@
+.toTheLeft
+{
+    float: left;
+}
+
+.clearer
+{
+    clear: both;
+}
+
+.reviewConteiner
+{
+    border-radius: 25px;
+    color: #eee;
+    padding: 1%;
+    margin-bottom: 40px;
+    box-shadow: 0 0 8px #eee;
+    border: 2px solid #eee;
+}
+
+.myImageClass
+{
+    width: 100%;
+    height: auto;
+    border-radius: 50%;
+}
+
+.dataContainer
+{
+    padding: 5%;
+}
+
+.imageConteiner
+{
+    width: 60%;
+    margin-left: 20%;
+    background-color: #eee;
+    border-radius: 50%;
+}
+
+.userName
+{
+    font-size: 25px;
+    font-weight: bold;
+}
+
+.noReviews
+{
+    text-align: center;
+    font-size: 25px;
+    color: #eee;
+    margin-top: 50px;
+}
+
+.stars
+{
+    font-weight: bold;
+    font-size: 20px;
+}
