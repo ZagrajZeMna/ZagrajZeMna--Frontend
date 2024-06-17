@@ -5,9 +5,11 @@ import { expandLink } from "../fetches/expandLink";
 import Messages from "./Messages";
 import SendMessage from "./SendMessage";
 import io from "socket.io-client";
-import { Link } from 'react-router-dom';
+import { Link } from "react-router-dom";
+import { postFetchJWT } from "../fetches/postFetch";
+import { useNavigate } from "react-router-dom";
 
-const socket = io.connect(expandLink(''));
+const socket = io.connect(expandLink(""));
 
 export default function Lobby() {
   const [output, setOutput] = useState([]);
@@ -17,13 +19,12 @@ export default function Lobby() {
   const { lobbyId } = useParams();
   const { lobbyname } = useParams();
   const username = localStorage.getItem("username");
-
+  const navigate = useNavigate();
   useEffect(() => {
     fetchLobbyData();
     const room = lobbyId;
     socket.emit("joinchat", { username, room });
   }, [lobbyId]);
-
   const fetchLobbyData = async () => {
     try {
       const playersResponse = await fetch(
@@ -49,35 +50,31 @@ export default function Lobby() {
       console.error("Error fetching lobby data:", error);
     }
   };
-
-  const handleInputChange = (e) => {
-    setInputValue(e.target.value);
-  };
-
-  const handleKeyDown = async (e) => {
-    if (e.key === "Enter") {
-      const message = inputValue;
-      setOutput([...output, `C:Users\\User>${message}`]);
-      setInputValue("");
-
-      //------experimental code for adding the message to database------
-
-      //     try {
-      //         const response = await fetch("/api/lobbyInside/addMessage", {
-      //             method: 'POST',
-      //             headers: {
-      //                 'Content-Type': 'application/json',
-      //                 'x-access-token': localStorage.getItem('token')
-      //             },
-      //             body: JSON.stringify({ lobbyId, message, userId: localStorage.getItem('userId') })
-      //         });
-      //         if (!response.ok) {
-      //             throw new Error('Failed to send message');
-      //         }
-      //     } catch (error) {
-      //         console.error('Error sending message:', error);
-      //     }
+  const playerLeave = async () => {
+    try {
+      const response = await fetch(
+        expandLink(
+          `/api/lobbyInside/deleteUser?lobbyId=${lobbyId}&username=${username}`
+        ),
+        {
+          method: "DELETE",
+          headers: {
+            Accept: "*/*",
+          },
+        }
+      );
+      if (!response.ok) {
+        throw new Error("Network response was not ok");
+      }
+      const data = await response.json();
+      console.log("User deleted successfully:", data);
+    } catch (error) {
+      console.error("Error deleting user:", error);
     }
+  };
+  const handleLeaveButtonClick = async () => {
+    await playerLeave();
+    navigate("/myLobby");
   };
 
   return (
@@ -86,9 +83,17 @@ export default function Lobby() {
         <div className={styles.sidebar}>
           <div className={styles.lobbyheader}>Gracze:</div>
           {players.map((player, index) => (
-            <Link to={`/userProfile/${player.ID_USER}` }key={player.ID_USER} className={styles.myLink}>
-              <div  className={styles.players}>
-                <img src={player.avatar} alt="no avatar" className={styles.avatar} />
+            <Link
+              to={`/userProfile/${player.ID_USER}`}
+              key={player.ID_USER}
+              className={styles.myLink}
+            >
+              <div className={styles.players}>
+                <img
+                  src={player.avatar}
+                  alt="no avatar"
+                  className={styles.avatar}
+                />
                 <span className={styles.myText}>{player.username}</span>
               </div>
             </Link>
@@ -99,7 +104,12 @@ export default function Lobby() {
             <div className={styles.headerContent}>
               <span>Lobby: {lobbyname}</span>
             </div>
-            <button className={styles.leaveButton}>opusc lobby</button>
+            <button
+              className={styles.leaveButton}
+              onClick={handleLeaveButtonClick}
+            >
+              opusc lobby
+            </button>
           </div>
 
           <div className={styles.ownerheader}>Właściciel: {owner.username}</div>
