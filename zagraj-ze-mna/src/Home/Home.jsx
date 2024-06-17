@@ -29,7 +29,6 @@ function Home() {
     console.log(showPopular);
   }, [currentPage]);
 
-
   const fetchGames = async () => {
     setIsLoading(true);
     try {

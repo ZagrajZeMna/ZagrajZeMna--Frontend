@@ -177,9 +177,11 @@ const GameCategory = () => {
                   Dodaj
                 </button>
                 {error2 ? (
-                  <div>Error: {error2}</div>
+                  <span className="add-game-text">{error2}</span>
                 ) : response ? (
-                  <div>{JSON.stringify(response)}</div>
+                  <span className="add-game-text">
+                    {JSON.stringify(response)}
+                  </span>
                 ) : (
                   <span className="add-game-text">
                     Dodaj grę do kolekcji, aby wyświetlała się na twoim profilu!
