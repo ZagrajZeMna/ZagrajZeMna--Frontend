@@ -144,7 +144,7 @@ const NotiPage = () => {
             console.error(error);
         }
     };
-    const addLobbys = () => {
+    const addNoti = () => {
         const description = dataFromGet ? dataFromGet.Notification.map(noti => noti.message) : [];
         const notiIds = dataFromGet ? dataFromGet.Notification.map(noti => noti.idNoti) : [];
         const lobbyIds = dataFromGet ? dataFromGet.Notification.map(noti => noti.idLobby) : [];
@@ -231,7 +231,7 @@ const NotiPage = () => {
                     <div className='clearer'></div>
                 </div>
                 <div className='lobbylist'>                  
-                    {showLobbys && addLobbys()}
+                    {showLobbys && addNoti()}
                     {showInfo && addNotiInfo()}                
                 </div>
             </div>
