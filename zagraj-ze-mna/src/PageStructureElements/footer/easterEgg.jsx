@@ -91,7 +91,7 @@ const EasterEgg = () =>{
                                 <img src={logoBaki} alt="Member 1"/>
                                 <div class="description">
                                     <h3 className="IMIE">Przemysław Kubas</h3>
-                                    <p>Opis</p>
+                                    <p>Leader. <br/> "To ja twojemu staremu bojowe zadania dawałem"</p>
                                 </div>
                             </div>
                             <div class="memberBlack right">

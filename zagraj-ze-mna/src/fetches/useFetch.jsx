@@ -35,7 +35,7 @@
     react useState
 
     EXMAPLE II.
-     {DataRespond.data && (<div className='dataWritter'>DataRespond.data.myElement</div>)}
+    {DataRespond && DataRespond.data && (<div className='dataWritter'>DataRespond.data.myElement</div>)}
      this above displays div that contains some dataElement if there is no error
 
 

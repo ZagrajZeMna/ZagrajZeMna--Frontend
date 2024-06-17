@@ -21,6 +21,7 @@ import useGetToken from '../../fetches/useFetch';
 import { FaRegEdit, FaVenusMars } from "react-icons/fa";
 import { expandLink } from '../../fetches/expandLink';
 import { useToast } from 'react-toastify';
+import { TbColumnRemove } from 'react-icons/tb';
 
 
 
@@ -34,6 +35,9 @@ const UserProfile = () =>
     //use for setting interval
     const [firstTime, setFT] = useState(true);
     const [once, setOnce] = useState(true);
+
+    const [colour, setColour] = useState('greenBox');
+    const [colourSetted, setCS] = useState(false);
 
     //data
     const [mediocre, setMed] = useState(0);
@@ -53,7 +57,7 @@ const UserProfile = () =>
 
     //getting data
     if(currentUrl.slice(-9)=='/userPage'){
-        dataFromGet = useGetToken('/api/profile/getUserDetails');  
+        dataFromGet = useGetToken('/api/profile/getUserDetails'); 
         if(once){
             setAbleToChange(true);
             setOnce(false);
@@ -114,18 +118,37 @@ const UserProfile = () =>
         }
     }
 
-    //setting proper colours for profile evaluation
-    if(mediocre>=4.5)
+    function set_coloring_class(med)
     {
-        ColouringClass = 'greenBox';
-    }
-    else if(mediocre > 3)
-    {
-        ColouringClass = 'yellowBox';
-    }
-    else
-    {
-        ColouringClass = 'redBox';
+        //setting proper colours for profile evaluation
+        //console.log(parseFloat(med));
+        //console.log(med);
+        
+        if(parseFloat(med)>= 4.5)
+        {
+            
+            ColouringClass = 'greenBox';
+            console.log('a');
+            //console.log(parseFloat(med));
+        }
+        else if(parseFloat(med) >= 3)
+        {
+            ColouringClass = 'yellowBox';
+            console.log('b');
+        }
+        else
+        {
+            ColouringClass = 'redBox';
+            console.log('c');
+        }
+        if(!colourSetted)
+            {
+            setColour(med);
+            setCS(true);
+        }
+
+        return ColouringClass;
+        
     }
 
     
@@ -149,7 +172,14 @@ const UserProfile = () =>
         if(med == null)
             return (<><br/>'brak ocen'</>);
         else
+        {
+            set_coloring_class(med);
             return med;
+            
+        }
+            
+
+        
     }
 
     //------------------------------------------------
@@ -288,7 +318,7 @@ const UserProfile = () =>
                             <div className='myData'>
                                 <p className='nickname'> {dataFromGet.data && (!dataFromGet.data.isError) && dataFromGet.data.username}</p>
                                 <p> <span className='topSecret'>Kontakt: </span> {dataFromGet.data && (!dataFromGet.data.isError) && dataFromGet.data.contact}</p>
-                                <p className='Mymediocre'><span>Ocena profilu: </span> <span className={ColouringClass + ' Mymark'}>{dataFromGet.data && (!dataFromGet.data.isError) && (checkMed(dataFromGet.data.averageRating))}</span></p> 
+                                <p className='Mymediocre'><span>Ocena profilu: </span> {dataFromGet.data && (!dataFromGet.data.isError) && ( <span className={set_coloring_class(dataFromGet.data.averageRating) + ' Mymark'}>{checkMed(dataFromGet.data.averageRating)}</span>)}</p> 
                             </div>
                                 
 
