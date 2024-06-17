@@ -117,7 +117,7 @@ function MyLobby() {
             
             <h1 className={styles.title}>Moje Drużyny</h1>
             <div className={styles.myLobbies}>
-                <h2 className={styles.lobbySmallTitle}>Ostatnio aktwyne: </h2>
+                <h2 className={styles.lobbySmallTitle}>Ostatnio aktywne: </h2>
             </div>
            {lastLobbies.data && (<span>{renderLastLobies()}</span>) }
             
