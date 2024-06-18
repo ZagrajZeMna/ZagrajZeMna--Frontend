@@ -179,7 +179,7 @@ const NotiPage = () => {
         let info = [];
         const notiinfo = notificationInfo ? notificationInfo.Notification.map(noti => noti.message) : [];
         const notiIds = notificationInfo ? notificationInfo.Notification.map(noti => noti.idNoti) : [];
-        const avatar = dataFromGet ? dataFromGet.Notification.map(noti => noti.ownerAvatar): [];
+        const avatar = notificationInfo ? notificationInfo.Notification.map(noti => noti.ownerAvatar): [];
         console.log(avatar);
         for (let i = 0; i < notiinfo.length; i++) {
             info.push(
