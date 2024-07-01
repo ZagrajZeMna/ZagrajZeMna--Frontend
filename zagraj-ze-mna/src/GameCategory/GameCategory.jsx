@@ -222,7 +222,7 @@ const GameCategory = () => {
             {lobbies.map((lobby) => (
               <div key={lobby.ID_LOBBY} className="lobby-tile">
                 <img
-                  src={"https://i.ibb.co/7bs0bb6/chad.png"}
+                  src={lobby.ownerAvatar}
                   alt={lobby.Name}
                   className="lobby-image"
                 />
